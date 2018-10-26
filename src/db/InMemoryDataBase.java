@@ -1,10 +1,14 @@
+package db;
+
+import domain.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class InMemoryDataBase implements Database {
 
-    List<Product> shopList = new ArrayList<>();
+    private List<Product> shopList = new ArrayList<>();
 
     @Override
     public void add(Product product) {

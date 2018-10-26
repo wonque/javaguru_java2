@@ -1,4 +1,6 @@
-import java.util.List;
+package views;
+
+import services.GetShoppingListService;
 
 public class PrintShoppingListView {
 

@@ -1,8 +1,13 @@
+package services;
+
+import db.Database;
+import domain.Product;
+
 import java.util.List;
 
 public class GetShoppingListService {
 
-    Database database;
+    private Database database;
 
     public GetShoppingListService(Database database) {
         this.database = database;

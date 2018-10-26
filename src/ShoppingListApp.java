@@ -1,5 +1,14 @@
+import db.Database;
+import db.InMemoryDataBase;
+import services.AddProductService;
+import services.GetShoppingListService;
+import services.RemoveProductService;
+import views.AddProductView;
+import views.PrintShoppingListView;
+import views.RemoveProductView;
 
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class ShoppingListApp {
 

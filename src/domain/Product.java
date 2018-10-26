@@ -1,3 +1,5 @@
+package domain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
@@ -63,7 +65,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "domain.Product{" +
                 "title='" + title + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +

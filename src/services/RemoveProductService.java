@@ -1,9 +1,13 @@
-import java.util.List;
+package services;
+
+import db.Database;
+import domain.Product;
+
 import java.util.Optional;
 
 public class RemoveProductService {
 
-    Database database;
+    private Database database;
 
     public RemoveProductService (Database database){
         this.database = database;

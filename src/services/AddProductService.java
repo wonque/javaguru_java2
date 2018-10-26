@@ -1,7 +1,11 @@
+package services;
+
+import db.Database;
+import domain.Product;
 
 public class AddProductService {
 
-    Database database;
+    private Database database;
 
     public AddProductService(Database database){
         this.database = database;

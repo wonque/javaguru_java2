@@ -1,3 +1,8 @@
+package db;
+
+
+import domain.Product;
+
 import java.util.List;
 import java.util.Optional;
 
