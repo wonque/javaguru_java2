@@ -8,6 +8,10 @@ public class Product {
     private BigDecimal price;
     private String description;
 
+    public Product() {
+        this.price = BigDecimal.valueOf(0);
+    }
+
 
     public void setPrice(double price) {
         this.price = convertToBigDecimal(price);
@@ -48,7 +52,8 @@ public class Product {
         }
         Product other = (Product) obj;
         return price.compareTo(other.price) == 0 &&
-                Objects.equals(title, other.title);
+                Objects.equals(title, other.title) &&
+                Objects.equals(description, other.description);
     }
 
     @Override
@@ -61,6 +66,7 @@ public class Product {
         return "Product{" +
                 "title='" + title + '\'' +
                 ", price=" + price +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

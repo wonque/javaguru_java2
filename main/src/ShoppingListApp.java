@@ -3,83 +3,53 @@ import java.util.*;
 
 public class ShoppingListApp {
 
-    private List<Product> shopList;
-    private String title;
-    private Scanner scanner;
-    private Map<Integer, Runnable> options;
 
+    public static void main(String[] args) {
+        Database database = new InMemoryDataBase();
 
-    public ShoppingListApp(String title) {
-        scanner = new Scanner(System.in);
-        shopList = new ArrayList<>();
-        this.title = title;
-        options = new HashMap<>();
-        generateOptions();
-    }
+        AddProductService addProductService = new AddProductService(database);
+        AddProductView addProductView = new AddProductView(addProductService);
+        RemoveProductService removeProductService = new RemoveProductService(database);
+        RemoveProductView removeProductView = new RemoveProductView(removeProductService);
 
-    public List<Product> getShopList() {
-        return shopList;
-    }
+        GetShoppingListService getShoppingList = new GetShoppingListService(database);
+        PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
 
-    public String getTitle() {
-        return title;
-    }
-
-    private void generateOptions() {
-        options.put(1, this::addToShoppingList);
-        options.put(2, this::removeFromShoppingList);
-        options.put(3, this::printShoppingList);
-    }
-
-    private void addToShoppingList() {
-        System.out.println("Type product title: ");
-        String title = scanner.next();
-        System.out.println("Type some description: ");
-        String description = scanner.next();
-        Product newEntry = new Product();
-        newEntry.setTitle(title);
-        newEntry.setDescription(description);
-        shopList.add(newEntry);
-        System.out.println("Product "+ title + " added!");
-    }
-
-    private void removeFromShoppingList() {
-        System.out.println("To delete product enter products title: ");
-        String productName = scanner.next();
-        int itemsRemoved = 0;
-        for (Product product : shopList) {
-            if (product.getTitle().equals(productName)) {
-                shopList.remove(product);
-                itemsRemoved++;
+        while (true) {
+            int userInput = getUserInput();
+            if (userInput == 0) {
+                break;
+            }
+            switch (userInput) {
+                case 1:
+                    addProductView.execute();
+                    ;
+                    break;
+                case 2:
+                    removeProductView.execute();
+                    break;
+                case 3:
+                    printList.execute();
+                    break;
             }
         }
-        if (itemsRemoved == 0) {
-            System.out.println("Product " + productName + " not found!\n");
-        } else {
-            System.out.println("Product " + productName + " removed!\n");
-        }
     }
 
-    private void printShoppingList() {
-        for (Product product : shopList) {
-            System.out.println(product);
-        }
-    }
-
-    private boolean isUserAnswerValid(int ans) {
+    public static boolean isUserAnswerValid(int ans) {
         return (ans >= 0 && ans <= 3);
     }
 
-    private void printMenuOption() {
+    public static void printMenuOption() {
         System.out.println("Please, choose an option: \n");
-        System.out.println("To add a product to list enter 1");
-        System.out.println("To remove a product from current list enter 2");
-        System.out.println("To print list enter 3");
-        System.out.println("To terminate program enter 0");
+        System.out.println("1: Add product to list");
+        System.out.println("2: Remove product from list");
+        System.out.println("3: Print list");
+        System.out.println("0: Terminate program\n");
         System.out.println();
     }
 
-    public int getUserInput() throws InputMismatchException {
+    public static int getUserInput() throws InputMismatchException {
+        Scanner scanner = new Scanner(System.in);
         printMenuOption();
         int ans;
         System.out.println("Your option: ");
@@ -99,19 +69,10 @@ public class ShoppingListApp {
         }
         return ans;
     }
-
-    public static void main(String[] args) {
-        ShoppingListApp list1 = new ShoppingListApp("Some List");
-        while (true) {
-            int a = list1.getUserInput();
-            if (list1.options.containsKey(a)) {
-                list1.options.get(a).run();
-            } else {
-                break;
-            }
-
-
-        }
-
-    }
 }
+
+
+
+
+
+
