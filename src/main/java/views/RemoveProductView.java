@@ -17,9 +17,9 @@ public class RemoveProductView {
         System.out.println("To delete product enter product title: ");
         String productName = scanner.next();
         if (removeProductService.remove(productName)) {
-            System.out.println("domain.Product " + productName + " removed!\n");
+            System.out.println("Product " + productName + " removed!\n");
         } else {
-            System.out.println("domain.Product " + productName + " not found!\n");
+            System.out.println("Product " + productName + " not found!\n");
         }
     }
 }

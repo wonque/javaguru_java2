@@ -19,6 +19,6 @@ public class AddProductView {
         System.out.println("Type some description: ");
         String description = scanner.next();
         addProductService.add(title, description);
-        System.out.println("domain.Product " + title + " added!\n");
+        System.out.println("Product " + title + " added!\n");
     }
 }
