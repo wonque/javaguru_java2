@@ -3,18 +3,20 @@ import db.InMemoryDataBase;
 import services.AddProductService;
 import services.GetShoppingListService;
 import services.RemoveProductService;
+import services.UserInputService;
 import views.AddProductView;
 import views.PrintShoppingListView;
 import views.RemoveProductView;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import views.UserInputView;
 
 public class ShoppingListApp {
 
 
     public static void main(String[] args) {
         Database database = new InMemoryDataBase();
+
+        UserInputService userInputService = new UserInputService();
+        UserInputView userInputView = new UserInputView(userInputService);
 
         AddProductService addProductService = new AddProductService(database);
         AddProductView addProductView = new AddProductView(addProductService);
@@ -25,11 +27,11 @@ public class ShoppingListApp {
         PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
 
         while (true) {
-            int userInput = getUserInput();
-            if (userInput == 0) {
+            int option = userInputView.getUserInput();
+            if (option == 0) {
                 break;
             }
-            switch (userInput) {
+            switch (option) {
                 case 1:
                     addProductView.execute();
                     ;
@@ -44,40 +46,6 @@ public class ShoppingListApp {
         }
     }
 
-    public static boolean isUserAnswerValid(int ans) {
-        return (ans >= 0 && ans <= 3);
-    }
-
-    public static void printMenuOption() {
-        System.out.println("Please, choose an option: \n");
-        System.out.println("1: Add product to list");
-        System.out.println("2: Remove product from list");
-        System.out.println("3: Print list");
-        System.out.println("0: Terminate program\n");
-        System.out.println();
-    }
-
-    public static int getUserInput() throws InputMismatchException {
-        Scanner scanner = new Scanner(System.in);
-        printMenuOption();
-        int ans;
-        System.out.println("Your option: ");
-        try {
-            ans = scanner.nextInt();
-            if (isUserAnswerValid(ans)) {
-                return ans;
-            } else {
-                System.out.println("Not a valid option!\n");
-                ans = getUserInput();
-            }
-
-        } catch (InputMismatchException e) {
-            System.out.println("This is not a number!\n");
-            scanner.next();
-            ans = getUserInput();
-        }
-        return ans;
-    }
 }
 
 

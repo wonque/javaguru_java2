@@ -1,7 +1,8 @@
 package domain;
 
+import services.ProductPriceService;
+
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
 
 public class Product {
@@ -9,14 +10,15 @@ public class Product {
     private String title;
     private BigDecimal price;
     private String description;
+    private ProductPriceService priceService;
 
-    public Product() {
+    public Product (){
+        this.priceService = new ProductPriceService();
         this.price = BigDecimal.valueOf(0);
     }
 
-
     public void setPrice(double price) {
-        this.price = convertToBigDecimal(price);
+        this.price = priceService.returnValidatedPrice(price);
     }
 
     public String getTitle() {
@@ -39,10 +41,6 @@ public class Product {
         return description;
     }
 
-    private BigDecimal convertToBigDecimal(double value) {
-        BigDecimal decimalValue = new BigDecimal(value);
-        return decimalValue.setScale(3, RoundingMode.HALF_UP);
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -65,7 +63,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "domain.Product{" +
+        return "Product{" +
                 "title='" + title + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
