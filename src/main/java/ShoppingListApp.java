@@ -1,13 +1,7 @@
 import db.Database;
 import db.InMemoryDataBase;
-import services.AddProductService;
-import services.GetShoppingListService;
-import services.RemoveProductService;
-import services.UserInputService;
-import views.AddProductView;
-import views.PrintShoppingListView;
-import views.RemoveProductView;
-import views.UserInputView;
+import services.*;
+import views.*;
 
 public class ShoppingListApp {
 
@@ -15,11 +9,14 @@ public class ShoppingListApp {
     public static void main(String[] args) {
         Database database = new InMemoryDataBase();
 
-        UserInputService userInputService = new UserInputService();
-        UserInputView userInputView = new UserInputView(userInputService);
+        UserMenuView userMenuView = new UserMenuView();
 
+        ProductPriceService priceService = new ProductPriceService();
+        AddProductDetailsService detailsService = new AddProductDetailsService(priceService);
+        AddProductDetailsView addProductDetailsView = new AddProductDetailsView(detailsService);
         AddProductService addProductService = new AddProductService(database);
-        AddProductView addProductView = new AddProductView(addProductService);
+        AddProductView addProductView = new AddProductView(addProductService, addProductDetailsView);
+
         RemoveProductService removeProductService = new RemoveProductService(database);
         RemoveProductView removeProductView = new RemoveProductView(removeProductService);
 
@@ -27,7 +24,8 @@ public class ShoppingListApp {
         PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
 
         while (true) {
-            int option = userInputView.getUserInput();
+            userMenuView.printMenuOption();
+            int option = userMenuView.getDetailsMenuItemToExecute();
             if (option == 0) {
                 break;
             }

@@ -1,7 +1,5 @@
 package domain;
 
-import services.ProductPriceService;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -10,15 +8,11 @@ public class Product {
     private String title;
     private BigDecimal price;
     private String description;
-    private ProductPriceService priceService;
+    private String category;
 
-    public Product (){
-        this.priceService = new ProductPriceService();
-        this.price = BigDecimal.valueOf(0);
-    }
 
-    public void setPrice(double price) {
-        this.price = priceService.returnValidatedPrice(price);
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getTitle() {
@@ -37,6 +31,14 @@ public class Product {
         this.description = description;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -51,8 +53,7 @@ public class Product {
             return false;
         }
         Product other = (Product) obj;
-        return price.compareTo(other.price) == 0 &&
-                Objects.equals(title, other.title) &&
+        return Objects.equals(title.toLowerCase(), other.title.toLowerCase()) &&
                 Objects.equals(description, other.description);
     }
 

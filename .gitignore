@@ -47,6 +47,7 @@ Thumbs.db
 /out/*
 /_mac/*
 /.idea/*
+/lib/
 *.xlm
 *.txt
 

@@ -1,24 +1,25 @@
 package views;
 
+import domain.Product;
 import services.AddProductService;
 
-import java.util.Scanner;
 
 public class AddProductView {
 
     private AddProductService addProductService;
+    private AddProductDetailsView addProductDetailsView;
 
-    public AddProductView(AddProductService addProductService) {
+    public AddProductView(AddProductService addProductService, AddProductDetailsView detailsView) {
         this.addProductService = addProductService;
+        this.addProductDetailsView = detailsView;
     }
 
     public void execute() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Type product title: ");
-        String title = scanner.next();
-        System.out.println("Type some description: ");
-        String description = scanner.next();
-        addProductService.add(title, description);
-        System.out.println("Product " + title + " added!\n");
+        Product newEntry = addProductService.createNewProduct();
+        addProductDetailsView.setTitle(newEntry);
+        addProductDetailsView.execute(newEntry);
+        addProductService.add(newEntry);
+        System.out.println("Product " + newEntry.getTitle() + " added!\n");
     }
+
 }
