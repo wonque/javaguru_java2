@@ -1,23 +1,23 @@
 package services;
 
-import db.Database;
+import db.ProductBase;
 import domain.Product;
 
 import java.util.Optional;
 
 public class RemoveProductService {
 
-    private Database database;
+    private ProductBase productBase;
 
-    public RemoveProductService (Database database){
-        this.database = database;
+    public RemoveProductService(ProductBase productBase) {
+        this.productBase = productBase;
     }
 
     public boolean remove(String title) {
-        Optional<Product> foundedProduct = database.findProductByTitle(title);
+        Optional<Product> foundedProduct = productBase.findByTitle(title);
         if (foundedProduct.isPresent()) {
             Product productToDelete = foundedProduct.get();
-            return database.remove(productToDelete);
+            return productBase.remove(productToDelete);
         }
         return false;
     }

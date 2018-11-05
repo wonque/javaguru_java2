@@ -7,16 +7,12 @@ public class ProductPriceService {
 
     private BigDecimal decimalValue = new BigDecimal(0);
 
-    private boolean isPriceNegative(double price) {
-        return price < 0;
+    public boolean isUserEnteredPriceBiggerThanZero(double price) {
+        return price > 0;
     }
 
-    public BigDecimal returnValidatedPrice (double value) {
-        if (isPriceNegative(value)) {
-            return decimalValue.setScale(2,RoundingMode.HALF_UP);
-        } else {
-            decimalValue = BigDecimal.valueOf(value);
-            return decimalValue.setScale(2, RoundingMode.HALF_UP);
-        }
+    public BigDecimal returnDecimalPrice(double value) {
+        decimalValue = BigDecimal.valueOf(value);
+        return decimalValue.setScale(2, RoundingMode.HALF_UP);
     }
 }

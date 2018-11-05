@@ -4,7 +4,7 @@ import domain.Product;
 
 import java.util.*;
 
-public class InMemoryDataBase implements Database {
+public class InMemoryDataBase implements ProductBase {
 
     private List<Product> shopList;
     private Map<Integer, String> categories;
@@ -15,13 +15,13 @@ public class InMemoryDataBase implements Database {
     }
 
     @Override
-    public void add(Product product) {
+    public void addToDataBase(Product product) {
         shopList.add(product);
 
     }
 
     @Override
-    public Optional<Product> findProductByTitle(String title) {
+    public Optional<Product> findByTitle(String title) {
         return shopList.stream().filter(product -> product.getTitle().equals(title)).findFirst();
     }
 
@@ -36,10 +36,6 @@ public class InMemoryDataBase implements Database {
         return new ArrayList<>(shopList);
     }
 
-    @Override
-    public void addCustomCategory(String categoryTitle) {
-        categories.put(categories.size() + 1, categoryTitle);
-    }
 
     public Map<Integer, String> getCategories() {
         return new HashMap<>(categories);

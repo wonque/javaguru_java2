@@ -9,6 +9,7 @@ public class Product {
     private BigDecimal price;
     private String description;
     private String category;
+    private Long id;
 
 
     public void setPrice(BigDecimal price) {
@@ -41,6 +42,14 @@ public class Product {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 
