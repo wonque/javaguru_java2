@@ -2,11 +2,15 @@ package services;
 
 import db.jdbc.ProductRepositoryImpl;
 import domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ProductDescriptionService {
 
+    @Autowired
     private ProductRepositoryImpl productRepository;
 
     public ProductDescriptionService(ProductRepositoryImpl productRepository) {

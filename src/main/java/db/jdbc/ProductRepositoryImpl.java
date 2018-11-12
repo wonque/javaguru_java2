@@ -2,6 +2,7 @@ package db.jdbc;
 
 import domain.Product;
 import db.*;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository, ProductDetailsUpdate, ProductRepositorySearch {
 
     @Override

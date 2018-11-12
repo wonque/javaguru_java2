@@ -1,6 +1,6 @@
-
-import db.jdbc.ProductRepositoryImpl;
-import services.*;
+import config.SpringAppConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import views.*;
 
 
@@ -8,26 +8,33 @@ public class ShoppingListApp {
 
 
     public static void main(String[] args) {
-        ProductRepositoryImpl database = new ProductRepositoryImpl();
+        ApplicationContext context
+                = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
-//        ProductPriceService priceService = new ProductPriceService();
-//        UserMenuService menuService = new UserMenuService();
-        UserInputValidation validationService = new UserInputValidation();
-        UserInputGetters inputGetters = new UserInputGetters(validationService);
+//        ProductRepositoryImpl database = new ProductRepositoryImpl();
 
-        AddProductService addProductService = new AddProductService(database);
-        AddProductView addProductView = new AddProductView(addProductService);
+//        UserInputValidation validationService = new UserInputValidation();
+//        UserInputGetters inputGetters = new UserInputGetters(validationService);
 
-        ProductDescriptionService descriptionService = new ProductDescriptionService(database);
-        ProductPriceService priceService = new ProductPriceService(database);
-        ProductDetailsView productDetailsView = new ProductDetailsView(inputGetters, descriptionService,
-                priceService);
+//        AddProductService addProductService = new AddProductService(database);
+//        AddProductView addProductView = new AddProductView(addProductService);
 
-        RemoveProductService removeProductService = new RemoveProductService(database);
-        RemoveProductView removeProductView = new RemoveProductView(removeProductService);
+//        ProductDescriptionService descriptionService = new ProductDescriptionService(database);
+//        ProductPriceService priceService = new ProductPriceService(database);
+//        ProductDetailsView productDetailsView = new ProductDetailsView(inputGetters, descriptionService,
+//                priceService);
+//
+//        RemoveProductService removeProductService = new RemoveProductService(database);
+//        RemoveProductView removeProductView = new RemoveProductView(removeProductService);
+//
+//        GetShoppingListService getShoppingList = new GetShoppingListService(database);
+//        PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
 
-        GetShoppingListService getShoppingList = new GetShoppingListService(database);
-        PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
+        UserInputGetters inputGetters = context.getBean(UserInputGetters.class);
+        AddProductView addProductView = context.getBean(AddProductView.class);
+        ProductDetailsView productDetailsView = context.getBean(ProductDetailsView.class);
+        RemoveProductView removeProductView = context.getBean(RemoveProductView.class);
+        PrintShoppingListView printList = context.getBean(PrintShoppingListView.class);
 
         while (true) {
             printMenuOption();

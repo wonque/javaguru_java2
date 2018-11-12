@@ -1,7 +1,9 @@
 package views;
 
+import org.springframework.stereotype.Component;
 import services.GetShoppingListService;
 
+@Component
 public class PrintShoppingListView {
 
     private GetShoppingListService getListService;

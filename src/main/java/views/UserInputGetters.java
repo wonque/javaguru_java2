@@ -1,11 +1,15 @@
 package views;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import services.UserInputValidation;
 
 import java.util.Scanner;
 
+@Component
 public class UserInputGetters {
 
+    @Autowired
     private UserInputValidation validationService;
 
     public UserInputGetters(UserInputValidation validationService) {

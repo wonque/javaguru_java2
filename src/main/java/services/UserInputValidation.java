@@ -1,5 +1,8 @@
 package services;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserInputValidation {
 
     public boolean isEnteredProductTitleEmpty(String title) {

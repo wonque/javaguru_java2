@@ -1,11 +1,14 @@
 package services;
 
-import db.ProductRepository;
 import db.jdbc.ProductRepositoryImpl;
 import domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AddProductService {
 
+    @Autowired
     private ProductRepositoryImpl productRepository;
 
     public AddProductService(ProductRepositoryImpl productRepository) {

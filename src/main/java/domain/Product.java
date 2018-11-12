@@ -11,8 +11,6 @@ public class Product {
     private String description;
     private String category;
 
-
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }

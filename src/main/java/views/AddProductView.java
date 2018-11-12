@@ -1,10 +1,13 @@
 package views;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import services.AddProductService;
 
-
+@Component
 public class AddProductView {
 
+    @Autowired
     private AddProductService addProductService;
 
     public AddProductView(AddProductService addProductService) {

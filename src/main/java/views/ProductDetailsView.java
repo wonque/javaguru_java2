@@ -1,13 +1,18 @@
 package views;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import services.ProductDescriptionService;
 import services.ProductPriceService;
 
+@Component
 public class ProductDetailsView {
 
+    @Autowired
     private ProductDescriptionService descriptionService;
+    @Autowired
     private ProductPriceService priceService;
+    @Autowired
     private UserInputGetters inputGetter;
 
     public ProductDetailsView(UserInputGetters inputGetter,

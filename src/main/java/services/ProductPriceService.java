@@ -2,13 +2,17 @@ package services;
 
 import db.jdbc.ProductRepositoryImpl;
 import domain.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Optional;
 
+@Component
 public class ProductPriceService {
 
+    @Autowired
     private ProductRepositoryImpl productRepository;
 
     public ProductPriceService(ProductRepositoryImpl productRepository) {
