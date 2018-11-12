@@ -4,12 +4,12 @@ import domain.Product;
 
 import java.util.*;
 
-public class InMemoryDataBase implements ProductBase {
+public class InMemoryDataRepository implements ProductRepository {
 
     private List<Product> shopList;
     private Map<Integer, String> categories;
 
-    public InMemoryDataBase() {
+    public InMemoryDataRepository() {
         shopList = new ArrayList<>();
         generateDefaultCategories();
     }

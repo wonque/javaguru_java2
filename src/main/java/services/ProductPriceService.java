@@ -1,18 +1,32 @@
 package services;
 
+import db.jdbc.ProductRepositoryImpl;
+import domain.Product;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Optional;
 
 public class ProductPriceService {
 
-    private BigDecimal decimalValue = new BigDecimal(0);
+    private ProductRepositoryImpl productRepository;
 
-    public boolean isUserEnteredPriceBiggerThanZero(double price) {
-        return price > 0;
+    public ProductPriceService(ProductRepositoryImpl productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public BigDecimal returnDecimalPrice(double value) {
-        decimalValue = BigDecimal.valueOf(value);
-        return decimalValue.setScale(2, RoundingMode.HALF_UP);
+    public boolean update(String productTitle, double price) {
+        BigDecimal priceToSet = returnDecimalPrice(price);
+        Optional<Product> foundedProduct = productRepository.findByTitle(productTitle);
+        if (foundedProduct.isPresent()) {
+            Product product = foundedProduct.get();
+            productRepository.updatePrice(product, priceToSet);
+            return true;
+        }
+        return false;
+    }
+
+    private BigDecimal returnDecimalPrice(double value) {
+        return new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
     }
 }

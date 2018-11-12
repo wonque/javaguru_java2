@@ -1,19 +1,19 @@
 package services;
 
-import db.ProductBase;
+import db.jdbc.ProductRepositoryImpl;
 import domain.Product;
 
 import java.util.List;
 
 public class GetShoppingListService {
 
-    private ProductBase productBase;
+    private ProductRepositoryImpl productRepository;
 
-    public GetShoppingListService(ProductBase productBase) {
-        this.productBase = productBase;
+    public GetShoppingListService(ProductRepositoryImpl productRepository) {
+        this.productRepository = productRepository;
     }
 
     public List<Product> getList() {
-        return productBase.getProductList();
+        return productRepository.getProductList();
     }
 }

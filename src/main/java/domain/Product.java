@@ -5,11 +5,12 @@ import java.util.Objects;
 
 public class Product {
 
+    private Long id;
     private String title;
     private BigDecimal price;
     private String description;
     private String category;
-    private Long id;
+
 
 
     public void setPrice(BigDecimal price) {

@@ -15,7 +15,7 @@ public class RemoveProductView {
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("To delete product enter product title: ");
-        String productName = scanner.next();
+        String productName = scanner.nextLine();
         if (removeProductService.remove(productName)) {
             System.out.println("Product " + productName + " removed!\n");
         } else {

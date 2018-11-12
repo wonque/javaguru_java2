@@ -1,9 +1,9 @@
 package db.jdbc;
 
-import db.ProductBase;
 import domain.Product;
-import services.SetProductDetailsService;
+import db.*;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,13 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProductBaseImpl extends PostgreJDBC implements ProductBase {
-
-    private SetProductDetailsService productDetailsService;
-
-    public ProductBaseImpl(SetProductDetailsService productDetailsService) {
-        this.productDetailsService = productDetailsService;
-    }
+public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository, ProductDetailsUpdate, ProductRepositorySearch {
 
     @Override
     public void addToDataBase(Product product) {
@@ -37,7 +31,7 @@ public class ProductBaseImpl extends PostgreJDBC implements ProductBase {
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 Long productId = resultSet.getLong(1);
-                productDetailsService.modifyProductId(productId, product);
+                product.setId(productId);
             }
         } catch (Throwable e) {
             System.out.println("Exception acquired while executing ProductBaseimpl.addProductToDB");
@@ -61,11 +55,11 @@ public class ProductBaseImpl extends PostgreJDBC implements ProductBase {
             Product product = null;
             if (resultSet.next()) {
                 product = new Product();
-                productDetailsService.modifyProductId(resultSet.getLong("id"), product);
-                productDetailsService.modifyProductTitle(resultSet.getString("title"), product);
-                productDetailsService.modifyProductCategory(resultSet.getString("description"), product);
-                productDetailsService.modifyProductPrice(resultSet.getBigDecimal("price"), product);
-                productDetailsService.modifyProductCategory(resultSet.getString("category"), product);
+                product.setId(resultSet.getLong("id"));
+                product.setTitle(resultSet.getString("title"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setCategory(resultSet.getString("category"));
             }
             return Optional.ofNullable(product);
         } catch (Throwable e) {
@@ -110,11 +104,11 @@ public class ProductBaseImpl extends PostgreJDBC implements ProductBase {
 
             while (resultSet.next()) {
                 Product product = new Product();
-                productDetailsService.modifyProductId(resultSet.getLong("id"), product);
-                productDetailsService.modifyProductTitle(resultSet.getString("title"), product);
-                productDetailsService.modifyProductCategory(resultSet.getString("description"), product);
-                productDetailsService.modifyProductPrice(resultSet.getBigDecimal("price"), product);
-                productDetailsService.modifyProductCategory(resultSet.getString("category"), product);
+                product.setId(resultSet.getLong("id"));
+                product.setTitle(resultSet.getString("title"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setCategory(resultSet.getString("category"));
                 products.add(product);
             }
         } catch (Throwable e) {
@@ -125,6 +119,47 @@ public class ProductBaseImpl extends PostgreJDBC implements ProductBase {
             closeConnection(connection);
         }
         return products;
+    }
+
+    @Override
+    public void updateDescription (domain.Product product, String description) {
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            String sql = "UPDATE java2.products SET description = ? WHERE id = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, description);
+            preparedStatement.setLong(2, product.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Throwable e) {
+            System.out.println("Exception acquired while executing ProductRepositoryImpl.updateProductDescription");
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    @Override
+    public void updatePrice (domain.Product product, BigDecimal price){
+        Connection connection = null;
+        try{
+            connection = getConnection();
+            String sql = "UPDATE java2.products SET price = ? WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBigDecimal(1, price);
+            preparedStatement.setLong(2, product.getId());
+
+            preparedStatement.executeUpdate();
+        }catch (Throwable e) {
+            System.out.println("Exception acquired while executing ProductRepositoryImpl.updatePrice");
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            closeConnection(connection);
+        }
     }
 }
 

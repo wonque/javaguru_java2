@@ -1,29 +1,21 @@
 package services;
 
-import db.ProductBase;
+import db.ProductRepository;
+import db.jdbc.ProductRepositoryImpl;
 import domain.Product;
 
 public class AddProductService {
 
-    private ProductBase productBase;
+    private ProductRepositoryImpl productRepository;
 
-    public AddProductService(ProductBase productBase) {
-        this.productBase = productBase;
+    public AddProductService(ProductRepositoryImpl productRepository) {
+        this.productRepository = productRepository;
     }
 
-    public void add(Product newEntry) {
-        productBase.addToDataBase(newEntry);
-    }
-
-    public Product createNewProduct(String title) {
+    public void add(String title) {
         Product newEntry = new Product();
         newEntry.setTitle(title);
-        return newEntry;
-    }
-
-    public boolean isProductTitleEmpty(String title){
-        return title == null || title.isEmpty() || "\"\"".equals(title)
-                || "\"".equals(title);
+        productRepository.addToDataBase(newEntry);
     }
 
 }
