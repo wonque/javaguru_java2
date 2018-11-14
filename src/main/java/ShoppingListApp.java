@@ -11,24 +11,6 @@ public class ShoppingListApp {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
-//        ProductRepositoryImpl database = new ProductRepositoryImpl();
-
-//        UserInputValidation validationService = new UserInputValidation();
-//        UserInputGetters inputGetters = new UserInputGetters(validationService);
-
-//        AddProductService addProductService = new AddProductService(database);
-//        AddProductView addProductView = new AddProductView(addProductService);
-
-//        ProductDescriptionService descriptionService = new ProductDescriptionService(database);
-//        ProductPriceService priceService = new ProductPriceService(database);
-//        ProductDetailsView productDetailsView = new ProductDetailsView(inputGetters, descriptionService,
-//                priceService);
-//
-//        RemoveProductService removeProductService = new RemoveProductService(database);
-//        RemoveProductView removeProductView = new RemoveProductView(removeProductService);
-//
-//        GetShoppingListService getShoppingList = new GetShoppingListService(database);
-//        PrintShoppingListView printList = new PrintShoppingListView(getShoppingList);
 
         UserInputGetters inputGetters = context.getBean(UserInputGetters.class);
         AddProductView addProductView = context.getBean(AddProductView.class);

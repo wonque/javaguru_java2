@@ -16,9 +16,14 @@ public class AddProductService {
     }
 
     public void add(String title) {
+        Product newProduct = createNewProduct(title);
+        productRepository.addToDataBase(newProduct);
+    }
+
+    private Product createNewProduct(String title) {
         Product newEntry = new Product();
         newEntry.setTitle(title);
-        productRepository.addToDataBase(newEntry);
+        return newEntry;
     }
 
 }

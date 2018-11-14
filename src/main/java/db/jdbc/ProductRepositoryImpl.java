@@ -124,7 +124,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
     }
 
     @Override
-    public void updateDescription (domain.Product product, String description) {
+    public void updateDescription (Product product, String description) {
         Connection connection = null;
         try {
             connection = getConnection();
@@ -145,7 +145,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
     }
 
     @Override
-    public void updatePrice (domain.Product product, BigDecimal price){
+    public void updatePrice (Product product, BigDecimal price){
         Connection connection = null;
         try{
             connection = getConnection();
