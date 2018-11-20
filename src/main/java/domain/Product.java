@@ -2,7 +2,7 @@ package domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-
+//соотетствует спецификации Javabeans
 public class Product {
 
     private Long id;

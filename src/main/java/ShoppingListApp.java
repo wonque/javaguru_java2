@@ -26,9 +26,8 @@ public class ShoppingListApp {
             }
             switch (option) {
                 case 1:
-                    String title = inputGetters.getProductTitleFromUser();
-                    addProductView.execute(title);
-                    productDetailsView.execute(title);
+                    addProductView.execute();
+//                    productDetailsView.execute();
                     break;
                 case 2:
                     removeProductView.execute();

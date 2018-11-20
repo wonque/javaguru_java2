@@ -2,7 +2,9 @@ package views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import services.AddProductService;
+import services.add.AddProductRequest;
+import services.add.AddProductResponse;
+import services.add.AddProductService;
 
 @Component
 public class AddProductView {
@@ -10,15 +12,19 @@ public class AddProductView {
     @Autowired
     private AddProductService addProductService;
 
-    public AddProductView(AddProductService addProductService) {
-        this.addProductService = addProductService;
-    }
+    @Autowired
+    private UserInputGetters inputGetters;
 
-    public void execute(String title) {
+    public void execute() {
         System.out.println("Add product process started.");
-        addProductService.add(title);
-//        details.execute(title);
-//        setProductDetailsView.execute(newEntry);
-        System.out.println("Product " + title + " added!\n");
+        String title = inputGetters.getProductTitleFromUser();
+        AddProductRequest newRequest = new AddProductRequest(title);
+        AddProductResponse response = addProductService.add(newRequest);
+        if (response.isSuccess()) {
+            System.out.println("Product " + title + " added!\n");
+
+        } else {
+            response.displayErrors();
+        }
     }
 }

@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository, ProductDetailsUpdate, ProductRepositorySearch {
+public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository, ProductDetailsUpdate {
+
+    //case sensitive search sql query - select * from java2.products where title ILIKE <someTitle>
 
     @Override
     public void addToDataBase(Product product) {
