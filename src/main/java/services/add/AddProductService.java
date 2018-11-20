@@ -34,9 +34,7 @@ public class AddProductService {
 
 
     private Product createNewProduct(String title) {
-        Product newEntry = new Product();
-        newEntry.setTitle(title);
-        return newEntry;
+        return new Product(title);
     }
 
 }

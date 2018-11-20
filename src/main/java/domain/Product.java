@@ -2,6 +2,7 @@ package domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+
 //соотетствует спецификации Javabeans
 public class Product {
 
@@ -10,6 +11,10 @@ public class Product {
     private BigDecimal price;
     private String description;
     private String category;
+
+    public Product(String title) {
+        this.title = title;
+    }
 
     public void setPrice(BigDecimal price) {
         this.price = price;

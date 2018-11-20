@@ -58,9 +58,8 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
             Product product = null;
             if (resultSet.next()) {
-                product = new Product();
+                product = new Product(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
-                product.setTitle(resultSet.getString("title"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
                 product.setCategory(resultSet.getString("category"));
@@ -107,9 +106,8 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Product product = new Product();
+                Product product = new Product(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
-                product.setTitle(resultSet.getString("title"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
                 product.setCategory(resultSet.getString("category"));
