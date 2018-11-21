@@ -1,0 +1,27 @@
+package services.add.validation.rules;
+
+import org.junit.Test;
+import services.Error;
+
+import java.util.Optional;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+public class FirstCharacterRuleTest {
+
+    private FirstCharacterRule rule = new FirstCharacterRule();
+
+    @Test
+    public void returnErrorWhenFirstCharacterNotALetter() {
+        Optional<Error> error = rule.execute("*title");
+        assertTrue(error.isPresent());
+    }
+
+    @Test
+    public void returnNoErrorIfFirstCharacterIsWordCharacter() {
+        Optional<Error> error = rule.execute("6title");
+        assertFalse(error.isPresent());
+    }
+
+}

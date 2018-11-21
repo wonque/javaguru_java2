@@ -16,7 +16,7 @@ public class AddProductService {
     private ProductRepositoryImpl productRepository;
 
     @Autowired
-    AddProductValidator validator;
+    private AddProductValidator validator;
 
 
     public AddProductResponse add(AddProductRequest request) {
@@ -25,16 +25,10 @@ public class AddProductService {
             return new AddProductResponse(errors);
         }
 
-        Product product = createNewProduct(request.getTitle());
+        Product newEntry = new Product((request.getTitle()));
 
-        productRepository.addToDataBase(product);
+        productRepository.addToDataBase(newEntry);
 
-        return new AddProductResponse(product.getId());
+        return new AddProductResponse(newEntry.getId());
     }
-
-
-    private Product createNewProduct(String title) {
-        return new Product(title);
-    }
-
 }

@@ -41,4 +41,6 @@ public class EmptyTitleRuleTest {
         Optional<Error> error = rule.execute("tomato");
         assertFalse(error.isPresent());
     }
+
+
 }

@@ -1,14 +1,16 @@
 package services;
 
-import db.jdbc.ShoppingListRepositoryImpl;
+import db.ShoppingListRepository;
 
 public class AddShoppingListService {
 
-    private ShoppingListRepositoryImpl database;
+    private ShoppingListRepository database;
 
-    public AddShoppingListService(ShoppingListRepositoryImpl database) {
+    public AddShoppingListService(ShoppingListRepository database) {
         this.database = database;
     }
 
+    public void addList() {
+    }
 
 }

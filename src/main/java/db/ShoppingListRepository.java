@@ -2,7 +2,9 @@ package db;
 
 import domain.ShoppingList;
 
+import java.util.Optional;
+
 public interface ShoppingListRepository {
 
-    void addToDataBase(ShoppingList shoppingList);
+    Optional<Long> addToDataBase(ShoppingList shoppingList);
 }

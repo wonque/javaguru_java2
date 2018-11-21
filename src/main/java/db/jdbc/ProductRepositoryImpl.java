@@ -51,7 +51,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
         Connection connection = null;
         try {
             connection = getConnection();
-            String sql = "SELECT * FROM java2.products WHERE TITLE = ?";
+            String sql = "SELECT * FROM java2.products WHERE TITLE ILIKE ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, title);
             //executequery() returns ResultSet object

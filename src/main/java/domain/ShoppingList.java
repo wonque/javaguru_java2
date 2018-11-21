@@ -13,6 +13,9 @@ public class ShoppingList {
     private Timestamp dateModified;
     private List<Product> productList;
 
+    public ShoppingList(String title) {
+        this.title = title;
+    }
 
     public void injectProductListDependency() {
         this.productList = new ArrayList<>();
