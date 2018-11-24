@@ -1,12 +1,12 @@
 package services.add.validation.rules;
 
-import db.ProductRepository;
-import domain.Product;
+import lv.java2.shopping_list.db.ProductRepository;
+import lv.java2.shopping_list.domain.Product;
+import lv.java2.shopping_list.services.add.validation.rules.DuplicateProductTitleRule;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import services.Error;
-import services.add.validation.rules.DuplicateProductTitleRule;
+import lv.java2.shopping_list.services.Error;
 
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public class DuplicateTitleRuleTest {
     @Before
     public void init() {
         this.repository = Mockito.mock(ProductRepository.class);
-        rule = new DuplicateProductTitleRule(repository);
+        rule = new DuplicateProductTitleRule();
     }
 
 

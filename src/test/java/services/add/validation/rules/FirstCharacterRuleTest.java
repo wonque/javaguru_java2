@@ -1,7 +1,8 @@
 package services.add.validation.rules;
 
+import lv.java2.shopping_list.services.add.validation.rules.FirstCharacterRule;
 import org.junit.Test;
-import services.Error;
+import lv.java2.shopping_list.services.Error;
 
 import java.util.Optional;
 

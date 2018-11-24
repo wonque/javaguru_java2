@@ -1,15 +1,17 @@
 package services.add.validation;
 
+import lv.java2.shopping_list.services.add.validation.AddProductValidator;
+import lv.java2.shopping_list.services.add.validation.AddProductValidatorImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import services.Error;
-import services.add.AddProductRequest;
-import services.add.validation.rules.DuplicateProductTitleRule;
-import services.add.validation.rules.EmptyTitleRule;
+import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.services.add.AddProductRequest;
+import lv.java2.shopping_list.services.add.validation.rules.DuplicateProductTitleRule;
+import lv.java2.shopping_list.services.add.validation.rules.EmptyTitleRule;
 
 import java.util.List;
 import java.util.Optional;
