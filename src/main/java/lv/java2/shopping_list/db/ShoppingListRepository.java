@@ -6,5 +6,9 @@ import java.util.Optional;
 
 public interface ShoppingListRepository {
 
-    Optional<Long> addToDataBase(ShoppingList shoppingList);
+    ShoppingList addToDataBase(ShoppingList shoppingList);
+
+    Optional<ShoppingList> getByTitle (String title);
+
+    boolean isInDataBase(String title);
 }

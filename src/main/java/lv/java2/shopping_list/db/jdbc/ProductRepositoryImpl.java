@@ -1,9 +1,10 @@
 package lv.java2.shopping_list.db.jdbc;
 
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.db.ProductDetailsUpdate;
 import lv.java2.shopping_list.db.ProductRepository;
-import org.springframework.stereotype.Component;
+import lv.java2.shopping_list.domain.ProductFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -14,9 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 //@Component
-public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository  {
+public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository {
 
     //case sensitive search sql query - select * from java2.products where title ILIKE <someTitle>
+    @Autowired
+    private ProductFactory productFactory;
 
     @Override
     public Product addToDataBase(Product product) {
@@ -62,7 +65,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
             Product product = null;
             if (resultSet.next()) {
-                product = new Product(resultSet.getString("title"));
+                product = productFactory.createNewProductWithTitle(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
@@ -110,7 +113,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Product product = new Product(resultSet.getString("title"));
+                Product product = productFactory.createNewProductWithTitle(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
@@ -127,7 +130,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
         return products;
     }
 
-//    @Override
+    //    @Override
     public void updateDescription(Product product, String description) {
         Connection connection = null;
         try {
@@ -148,7 +151,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
         }
     }
 
-//    @Override
+    //    @Override
     public void updatePrice(Product product, BigDecimal price) {
         Connection connection = null;
         try {

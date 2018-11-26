@@ -5,9 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserInputValidation {
 
-    public boolean isEnteredProductTitleEmpty(String title) {
-        return title == null || title.isEmpty() || "\"\"".equals(title)
-                || "\"".equals(title);
+    public boolean isEnteredTitleEmpty(String title) {
+        return (title == null || title.isEmpty() || title.matches("\\s+"));
     }
 
     public boolean isUserEnteredPriceBiggerThanZero(double price) {

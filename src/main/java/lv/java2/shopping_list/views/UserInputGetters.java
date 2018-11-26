@@ -22,8 +22,19 @@ public class UserInputGetters {
         do {
             System.out.println("Type product title: ");
             title = scanner.nextLine();
-        } while (validationService.isEnteredProductTitleEmpty(title));
+        } while (validationService.isEnteredTitleEmpty(title));
         return title;
+    }
+
+    public String getShoppingListTitleFromUser() {
+        String title;
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.println("Type shopping list title: ");
+            title = scanner.nextLine();
+        } while (validationService.isEnteredTitleEmpty(title));
+        return title;
+
     }
 
     public String getProductCategoryFromUser() {

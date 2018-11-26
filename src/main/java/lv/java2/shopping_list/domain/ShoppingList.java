@@ -1,24 +1,32 @@
 package lv.java2.shopping_list.domain;
 
+
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(schema = "java2", name = "shopping_lists")
 public class ShoppingList {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "title", nullable = false, unique = true)
     private String title;
+
+    @Column(name = "date_created")
     private Timestamp dateCreated;
+    @Column(name = "date_modified")
     private Timestamp dateModified;
-    private List<Product> productList;
+
+    //default constructor for orm (Hibernate)
+    protected ShoppingList() { }
 
     public ShoppingList(String title) {
         this.title = title;
-    }
-
-    public void injectProductListDependency() {
-        this.productList = new ArrayList<>();
     }
 
     public void setTitle(String title) {

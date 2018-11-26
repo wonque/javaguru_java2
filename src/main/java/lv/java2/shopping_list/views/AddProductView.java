@@ -22,6 +22,7 @@ public class AddProductView {
         AddProductResponse response = addProductService.add(newRequest);
         if (response.isSuccess()) {
             System.out.println("Product " + title + " added!\n");
+            System.out.println("ID: " + response.getProductId());
 
         } else {
             response.displayErrors();

@@ -2,6 +2,7 @@ package services.add.validation;
 
 import lv.java2.shopping_list.services.add.validation.AddProductValidator;
 import lv.java2.shopping_list.services.add.validation.AddProductValidatorImpl;
+import lv.java2.shopping_list.services.add.validation.rules.FirstCharacterRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,23 +24,29 @@ import static junit.framework.TestCase.assertTrue;
 public class AddProductValidatorTest {
 
     @Mock
-    DuplicateProductTitleRule duplicateProductTitleRule;
+    private DuplicateProductTitleRule duplicateProductTitleRule;
 
     @Mock
-    EmptyTitleRule emptyTitleRule;
+    private EmptyTitleRule emptyTitleRule;
+
+    @Mock
+    private FirstCharacterRule firstCharacterRule;
 
     @InjectMocks
-    AddProductValidator validator = new AddProductValidatorImpl();
+    private AddProductValidator validator = new AddProductValidatorImpl();
 
     @Test
-    public void collectAndReturnErrorsIfBothRulesFailed() {
-        Mockito.when(emptyTitleRule.execute("milk")).thenReturn(Optional.of(new Error("title", "empty")));
+    public void collectAndReturnErrorsIfAllRulesFailed() {
+        Mockito.when(emptyTitleRule.execute("milk"))
+                .thenReturn(Optional.of(new Error("title", "empty")));
+        Mockito.when(firstCharacterRule.execute("milk"))
+                .thenReturn(Optional.of(new Error("title", "first char")));
         Mockito.when(duplicateProductTitleRule.execute("milk"))
                 .thenReturn(Optional.of(new Error("title", "duplicate")));
 
         List<Error> errors = validator.validate(new AddProductRequest("milk"));
 
-        assertEquals(2, errors.size());
+        assertEquals(3, errors.size());
     }
 
 }

@@ -15,13 +15,6 @@ public class ProductDetailsView {
     @Autowired
     private UserInputGetters inputGetter;
 
-    public ProductDetailsView(UserInputGetters inputGetter,
-                              ProductDescriptionService descriptionService, ProductPriceService priceService) {
-        this.priceService = priceService;
-        this.descriptionService = descriptionService;
-        this.inputGetter = inputGetter;
-    }
-
 
     private void printDetailsSettingsMenu() {
         System.out.println("1: add product description");

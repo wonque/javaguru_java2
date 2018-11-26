@@ -2,6 +2,7 @@ package lv.java2.shopping_list.services.add;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
+import lv.java2.shopping_list.domain.ProductFactory;
 import lv.java2.shopping_list.services.Error;
 import lv.java2.shopping_list.services.add.validation.AddProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class AddProductService {
     @Autowired
     private AddProductValidator validator;
 
+    @Autowired
+    private ProductFactory productFactory;
 
     public AddProductResponse add(AddProductRequest request) {
         List<Error> errors = validator.validate(request);
@@ -25,10 +28,11 @@ public class AddProductService {
             return new AddProductResponse(errors);
         }
 
-        Product newEntry = new Product((request.getTitle()));
+        Product newEntry = productFactory.createNewProductWithTitle(request.getTitle());
 
-        productRepository.addToDataBase(newEntry);
+        newEntry = productRepository.addToDataBase(newEntry);
 
         return new AddProductResponse(newEntry.getId());
     }
+
 }

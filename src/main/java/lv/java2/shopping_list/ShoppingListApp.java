@@ -14,6 +14,7 @@ public class ShoppingListApp {
                 = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
 
+        AddShoppingListView addShoppingListView = context.getBean(AddShoppingListView.class);
         AddProductView addProductView = context.getBean(AddProductView.class);
         RemoveProductView removeProductView = context.getBean(RemoveProductView.class);
         PrintShoppingListView printList = context.getBean(PrintShoppingListView.class);
@@ -26,25 +27,31 @@ public class ShoppingListApp {
             }
             switch (option) {
                 case 1:
-                    addProductView.execute();
-//                    productDetailsView.execute();
+                    addShoppingListView.execute();
                     break;
-                case 2:
-                    removeProductView.execute();
-                    break;
-                case 3:
-                    printList.execute();
-                    break;
+//                case 2:
+//                    addProductView.execute();
+////                    productDetailsView.execute();
+//                    break;
+//                case 3:
+//                    removeProductView.execute();
+//                    break;
+//                case 4:
+//                    printList.execute();
+//                    break;
+//            }
             }
         }
     }
 
     public static void printMenuOption() {
         System.out.println("Please, choose an option: \n");
-        System.out.println("1: Add product to list");
-        System.out.println("2: Remove product from list");
-        System.out.println("3: Print list");
-        System.out.println("0: Terminate program\n");
+        System.out.println("1: Create new Shopping List");
+        System.out.println("0: Terminate program");
+//        System.out.println("2: Add product to list");
+//        System.out.println("3: Remove product from list");
+//        System.out.println("4: Print list");
+//        System.out.println("0: Terminate program\n");
     }
 
     public static int getFromUserMenuItemToExecute() {

@@ -21,12 +21,12 @@ public class UserInputValidationTest {
 
     @Test
     public void falseIfProductTitleIsNotEmpty() {
-        assertFalse(inputValidation.isEnteredProductTitleEmpty("title"));
+        assertFalse(inputValidation.isEnteredTitleEmpty("title"));
     }
 
     @Test
     public void trueIfProductTitleIsEmpty() {
-        assertTrue(inputValidation.isEnteredProductTitleEmpty(""));
+        assertTrue(inputValidation.isEnteredTitleEmpty(""));
     }
 
 
