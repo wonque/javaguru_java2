@@ -62,9 +62,9 @@ public class ProductDetailsView {
 //    }
 }
 
-//TODO AddProductView->AddProductService(Product Added)->SetDetailsView->(DescriptionService+PriceService+CategoryService)->
-//TODO -> DataBase UPDATE request->Response to User;
-//AddProductService adding product to DB with title and null values for other fields
+//TODO AddProductView->ProductAdditionService(Product Added)->SetDetailsView->(DescriptionService+PriceService+CategoryService)->
+//TODO -> DataBase UPDATE request->AdditionResponse to User;
+//ProductAdditionService adding product to DB with title and null values for other fields
 //Than SetProductDetailsView is called
 //DetailService will UPDATE either description, price or category and save it to base;
 //

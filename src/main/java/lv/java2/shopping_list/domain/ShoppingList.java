@@ -3,14 +3,20 @@ package lv.java2.shopping_list.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(schema = "java2", name = "shopping_lists")
 public class ShoppingList {
 
+    //default constructor for orm (Hibernate)
+    protected ShoppingList() {
+    }
+
     @Id
-    @Column(name = "id")
+    @Column(name = "list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -19,11 +25,10 @@ public class ShoppingList {
 
     @Column(name = "date_created")
     private Timestamp dateCreated;
+
     @Column(name = "date_modified")
     private Timestamp dateModified;
 
-    //default constructor for orm (Hibernate)
-    protected ShoppingList() { }
 
     public ShoppingList(String title) {
         this.title = title;

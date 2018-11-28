@@ -2,7 +2,7 @@ package services.add.validation.rules;
 
 import org.junit.Test;
 import lv.java2.shopping_list.services.Error;
-import lv.java2.shopping_list.services.add.validation.rules.EmptyTitleRule;
+import lv.java2.shopping_list.services.add.product.validation.rules.EmptyTitleRule;
 
 import java.util.Optional;
 

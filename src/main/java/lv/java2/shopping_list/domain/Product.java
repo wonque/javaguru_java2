@@ -7,7 +7,7 @@ import java.util.Objects;
 //соотетствует спецификации Javabeans
 @Entity
 @Table(schema = "java2", name = "products")
-public class Product  {
+public class Product {
 
     //default constructor for orm HIbernate
     protected Product() {
@@ -21,11 +21,14 @@ public class Product  {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column (name = "lisT_id", nullable = false)
-    private Long listId;
     private BigDecimal price;
     private String description;
     private String category;
+
+    public Product(String title) {
+        this.title = title;
+    }
+
 
     public void setPrice(BigDecimal price) {
         this.price = price;
@@ -65,14 +68,6 @@ public class Product  {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getListId() {
-        return listId;
-    }
-
-    public void setListId(Long listId) {
-        this.listId = listId;
     }
 
     @Override

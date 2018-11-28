@@ -1,12 +1,11 @@
-package lv.java2.shopping_list.services.add;
+package lv.java2.shopping_list.services.add.product;
 
 
-
-public class AddProductRequest {
+public class ProductAdditionRequest {
 
     private String title;
 
-    public AddProductRequest(String title){
+    public ProductAdditionRequest(String title) {
         this.title = title;
     }
 
@@ -17,4 +16,5 @@ public class AddProductRequest {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }

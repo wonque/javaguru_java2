@@ -2,7 +2,6 @@ package services.remove.validation;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.domain.ProductFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,7 +10,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import lv.java2.shopping_list.services.Error;
 import lv.java2.shopping_list.services.remove.RemoveProductRules;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
@@ -25,8 +23,6 @@ public class RemoveProductRulesTest {
     @Mock
     private ProductRepository repository;
 
-    @Autowired
-    private ProductFactory productFactory;
 
     @InjectMocks
     private RemoveProductRules rules = new RemoveProductRules();
@@ -55,8 +51,7 @@ public class RemoveProductRulesTest {
 
     @Test
     public void returnNoErrorWhenProductInDatabase() {
-        productFactory = new ProductFactory();
-        Product product = productFactory.createNewProductWithTitle("milk");
+        Product product = new Product("milk");
         Mockito.when(repository.findByTitle("milk")).thenReturn(Optional.of(product));
         Optional<Error> error = rules.productPresenceInDataBaseRule("milk");
         assertFalse(error.isPresent());

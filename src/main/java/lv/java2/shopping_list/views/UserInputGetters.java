@@ -37,6 +37,21 @@ public class UserInputGetters {
 
     }
 
+    public int getAddProductProcessItemFromUser() {
+        int option;
+        do {
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            System.out.println("Select menu option: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input!");
+                scanner.next();
+            }
+            option = scanner.nextInt();
+        }
+        while (!validationService.isAddProductProcessMenuInputValid(option));
+        return option;
+    }
+
     public String getProductCategoryFromUser() {
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();

@@ -16,4 +16,8 @@ public class UserInputValidation {
     public boolean isMainMenuUserInputValid(int input) {
         return (input >= 0 && input <= 3);
     }
+
+    public boolean isAddProductProcessMenuInputValid(int input) {
+        return (input == 0 || input == 1);
+    }
 }

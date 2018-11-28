@@ -1,28 +1,28 @@
 package lv.java2.shopping_list.views;
 
+import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.services.add.product.ProductAdditionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import lv.java2.shopping_list.services.add.AddProductRequest;
-import lv.java2.shopping_list.services.add.AddProductResponse;
-import lv.java2.shopping_list.services.add.AddProductService;
+import lv.java2.shopping_list.services.add.product.ProductAdditionRequest;
+import lv.java2.shopping_list.services.add.product.ProductAdditionResponse;
 
 @Component
 public class AddProductView {
 
     @Autowired
-    private AddProductService addProductService;
+    private ProductAdditionService productAdditionService;
 
     @Autowired
     private UserInputGetters inputGetters;
 
-    public void execute() {
+    public void execute(ShoppingList shoppingList) {
         System.out.println("Add product process started.");
         String title = inputGetters.getProductTitleFromUser();
-        AddProductRequest newRequest = new AddProductRequest(title);
-        AddProductResponse response = addProductService.add(newRequest);
+        ProductAdditionRequest newRequest = new ProductAdditionRequest(title);
+        ProductAdditionResponse response = productAdditionService.add(newRequest);
         if (response.isSuccess()) {
             System.out.println("Product " + title + " added!\n");
-            System.out.println("ID: " + response.getProductId());
 
         } else {
             response.displayErrors();

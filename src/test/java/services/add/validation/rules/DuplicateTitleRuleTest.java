@@ -2,8 +2,8 @@ package services.add.validation.rules;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.domain.ProductFactory;
-import lv.java2.shopping_list.services.add.validation.rules.DuplicateProductTitleRule;
+import lv.java2.shopping_list.factories.ProductFactory;
+import lv.java2.shopping_list.services.add.product.validation.rules.DuplicateProductTitleRule;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,12 +19,10 @@ public class DuplicateTitleRuleTest {
 
     private ProductRepository repository;
     private DuplicateProductTitleRule rule;
-    private ProductFactory productFactory;
 
 
     @Before
     public void init() {
-        this.productFactory = new ProductFactory();
         this.repository = Mockito.mock(ProductRepository.class);
         rule = new DuplicateProductTitleRule(repository);
     }
@@ -32,7 +30,7 @@ public class DuplicateTitleRuleTest {
 
     @Test
     public void returnTrueIfProductExists() {
-        Product product = productFactory.createNewProductWithTitle("milk");
+        Product product = new Product("milk");
         Mockito.when(repository.findByTitle("milk")).thenReturn(Optional.of(product));
         Optional<Error> error = rule.execute("milk");
 

@@ -10,5 +10,6 @@ public interface ShoppingListRepository {
 
     Optional<ShoppingList> getByTitle (String title);
 
-    boolean isInDataBase(String title);
+    boolean remove(ShoppingList shoppingList);
+
 }

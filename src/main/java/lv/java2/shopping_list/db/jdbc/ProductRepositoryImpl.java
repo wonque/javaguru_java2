@@ -2,8 +2,6 @@ package lv.java2.shopping_list.db.jdbc;
 
 import lv.java2.shopping_list.domain.Product;
 import lv.java2.shopping_list.db.ProductRepository;
-import lv.java2.shopping_list.domain.ProductFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.math.BigDecimal;
@@ -18,8 +16,6 @@ import java.util.Optional;
 public class ProductRepositoryImpl extends PostgreJDBC implements ProductRepository {
 
     //case sensitive search sql query - select * from java2.products where title ILIKE <someTitle>
-    @Autowired
-    private ProductFactory productFactory;
 
     @Override
     public Product addToDataBase(Product product) {
@@ -65,7 +61,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
             Product product = null;
             if (resultSet.next()) {
-                product = productFactory.createNewProductWithTitle(resultSet.getString("title"));
+                product = new Product(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
@@ -113,7 +109,7 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Product product = productFactory.createNewProductWithTitle(resultSet.getString("title"));
+                Product product = new Product(resultSet.getString("title"));
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));

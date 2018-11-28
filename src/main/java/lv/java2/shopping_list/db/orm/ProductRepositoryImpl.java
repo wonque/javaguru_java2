@@ -7,15 +7,14 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Component
-@Transactional
 public class ProductRepositoryImpl implements ProductRepository {
 
     @Autowired
