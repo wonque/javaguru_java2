@@ -22,14 +22,13 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
         Connection connection = null;
         try {
             connection = getConnection();
-            String sql = "INSERT INTO java2.products (ID, TITLE, DESCRIPTION, CATEGORY, PRICE) VALUES (default, ?, ?, ?, ?)";
+            String sql = "INSERT INTO java2.products (ID, TITLE, DESCRIPTION, PRICE) VALUES (default, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 //            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, product.getTitle());
             preparedStatement.setString(2, product.getDescription());
-            preparedStatement.setString(3, product.getCategory());
-            preparedStatement.setBigDecimal(4, product.getPrice());
+            preparedStatement.setBigDecimal(3, product.getPrice());
 
             preparedStatement.executeUpdate();
 
@@ -65,7 +64,6 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
-                product.setCategory(resultSet.getString("category"));
             }
             return Optional.ofNullable(product);
         } catch (Throwable e) {
@@ -113,7 +111,6 @@ public class ProductRepositoryImpl extends PostgreJDBC implements ProductReposit
                 product.setId(resultSet.getLong("id"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getBigDecimal("price"));
-                product.setCategory(resultSet.getString("category"));
                 products.add(product);
             }
         } catch (Throwable e) {
