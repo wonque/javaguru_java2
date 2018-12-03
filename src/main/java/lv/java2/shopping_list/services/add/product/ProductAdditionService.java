@@ -1,32 +1,38 @@
 package lv.java2.shopping_list.services.add.product;
 
+import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.factories.ProductFactory;
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.domain.builders.ProductBuilder;
+import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.add.product.validation.ProductAdditionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
+@Transactional
 public class ProductAdditionService {
+
+    @Autowired
+    private ProductRepository repository;
 
     @Autowired
     private ProductAdditionValidator validator;
 
     @Autowired
-    private ProductFactory productFactory;
+    private ProductBuilder productBuilder;
 
     public ProductAdditionResponse add(ProductAdditionRequest request) {
-        List<Error> errors = validator.validate(request);
+        List<ShoppingListError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new ProductAdditionResponse(errors);
         }
-        //        newEntry.setListId(request.getShoppingListId());
-        Product newEntry = productFactory.saveProductToBase(request.getTitle());
-
-        return new ProductAdditionResponse(newEntry);
+        Product newEntry = productBuilder.buildInstance(request.getTitle());
+        repository.addToDataBase(newEntry);
+//        System.out.println(newEntry);
+        return new ProductAdditionResponse(newEntry.getId());
     }
 
 }

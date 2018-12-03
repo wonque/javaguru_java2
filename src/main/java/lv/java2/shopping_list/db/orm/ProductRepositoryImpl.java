@@ -15,38 +15,45 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ProductRepositoryImpl implements ProductRepository {
+@Transactional
+public class ProductRepositoryImpl extends ORMRepository implements ProductRepository {
 
-    @Autowired
-    private SessionFactory sessionFactory;
 
     @Override
     public Product addToDataBase(Product product) {
-        sessionFactory.getCurrentSession().save(product);
+        session().save(product);
         return product;
     }
 
     @Override
     @Nullable
     public Optional<Product> findByTitle(String title) {
-        Query query = sessionFactory.getCurrentSession().createQuery("FROM Product WHERE lower(title) = :title");
-        query.setParameter("title", title.toLowerCase());
-        Product product = (Product) query.uniqueResult();
+        String query = "FROM Product WHERE lower(title) = :title";
+        Product product = (Product) session().createQuery(query)
+                .setParameter("title", title.toLowerCase()).uniqueResult();
+        return Optional.ofNullable(product);
+    }
+
+    @Override
+    @Nullable
+    public Optional<Product> getById(Long id) {
+        String query = "FROM Product WHERE id = :id";
+        Product product = (Product) session().createQuery(query)
+                .setParameter("id", id).uniqueResult();
         return Optional.ofNullable(product);
     }
 
     @Override
     public boolean remove(Product product) {
-        sessionFactory.getCurrentSession().remove(product);
+        session().remove(product);
         return true;
     }
 
     @Override
     public List<Product> getProductList() {
-        CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+        CriteriaBuilder builder = session().getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         query.from(Product.class);
-        return sessionFactory.getCurrentSession().createQuery(query).getResultList();
+        return session().createQuery(query).getResultList();
     }
-
 }

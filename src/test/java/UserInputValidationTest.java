@@ -11,12 +11,12 @@ public class UserInputValidationTest {
 
     @Test
     public void negativePriceTest() {
-        assertFalse(inputValidation.isUserEnteredPriceBiggerThanZero(-9));
+        assertFalse(inputValidation.isBiggerZero(-9));
     }
 
     @Test
     public void positivePriceTest() {
-        assertTrue(inputValidation.isUserEnteredPriceBiggerThanZero(9));
+        assertTrue(inputValidation.isBiggerZero(9));
     }
 
     @Test

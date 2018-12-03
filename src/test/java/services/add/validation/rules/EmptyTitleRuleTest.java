@@ -1,7 +1,7 @@
 package services.add.validation.rules;
 
+import lv.java2.shopping_list.services.ShoppingListError;
 import org.junit.Test;
-import lv.java2.shopping_list.services.Error;
 import lv.java2.shopping_list.services.add.product.validation.rules.EmptyTitleRule;
 
 import java.util.Optional;
@@ -16,13 +16,13 @@ public class EmptyTitleRuleTest {
 
     @Test
     public void returnErrorIfTitleIsNull() {
-        Optional<Error> error = rule.execute(null);
+        Optional<ShoppingListError> error = rule.execute(null);
         assertTrue(error.isPresent());
     }
 
     @Test
     public void returnErrorIfTitleIsEmptyString() {
-        Optional<Error> error = rule.execute("");
+        Optional<ShoppingListError> error = rule.execute("");
         assertTrue(error.isPresent());
         assertEquals("title", error.get().getField());
         assertEquals("Empty title not allowed!", error.get().getErrorDescription());
@@ -30,7 +30,7 @@ public class EmptyTitleRuleTest {
 
     @Test
     public void returnErrorIfTitleIsWhitespaceCharacters() {
-        Optional<Error> error = rule.execute("      ");
+        Optional<ShoppingListError> error = rule.execute("      ");
         assertTrue(error.isPresent());
         assertEquals("title", error.get().getField());
         assertEquals("Empty title not allowed!", error.get().getErrorDescription());
@@ -38,7 +38,7 @@ public class EmptyTitleRuleTest {
 
     @Test
     public void returnNoErrorIfTitleValid() {
-        Optional<Error> error = rule.execute("tomato");
+        Optional<ShoppingListError> error = rule.execute("tomato");
         assertFalse(error.isPresent());
     }
 

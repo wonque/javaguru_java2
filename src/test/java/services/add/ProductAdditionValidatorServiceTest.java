@@ -1,8 +1,9 @@
 package services.add;
 
+import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.factories.ProductFactory;
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.domain.builders.ProductBuilder;
+import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.add.product.ProductAdditionRequest;
 import lv.java2.shopping_list.services.add.product.ProductAdditionResponse;
 import lv.java2.shopping_list.services.add.product.ProductAdditionService;
@@ -28,10 +29,13 @@ public class ProductAdditionValidatorServiceTest {
     private ProductAdditionValidator validator;
 
     @Mock
-    private ProductFactory factory;
+    private ProductBuilder productBuilder;
 
     @Mock
-    private List<Error> errors;
+    private ProductRepository repository;
+
+    @Mock
+    private List<ShoppingListError> errors;
 
     @InjectMocks
     private ProductAdditionService productAdditionService = new ProductAdditionService();
@@ -44,7 +48,7 @@ public class ProductAdditionValidatorServiceTest {
         ProductAdditionResponse response = productAdditionService.add(request);
         assertFalse(response.isSuccess());
         assertEquals(1, response.getErrors().size());
-        Mockito.verifyZeroInteractions(factory);
+        Mockito.verifyZeroInteractions(repository);
     }
 
     @Test
@@ -52,10 +56,10 @@ public class ProductAdditionValidatorServiceTest {
         Product product = Mockito.mock(Product.class);
         Mockito.when(validator.validate(request)).thenReturn(errors);
         Mockito.when(errors.isEmpty()).thenReturn(true);
-        Mockito.when(factory.saveProductToBase(request.getTitle())).thenReturn(product);
+        Mockito.when(productBuilder.buildInstance(request.getTitle())).thenReturn(product);
         Mockito.when(product.getId()).thenReturn(4L);
         ProductAdditionResponse response = productAdditionService.add(request);
-        assertEquals(4L, (long) response.getAddedProduct().getId());
+        assertEquals(4L, (long) response.getId());
         assertTrue(response.isSuccess());
     }
 }

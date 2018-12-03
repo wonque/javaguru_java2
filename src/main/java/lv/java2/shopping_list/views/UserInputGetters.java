@@ -37,7 +37,7 @@ public class UserInputGetters {
 
     }
 
-    public int getAddProductProcessItemFromUser() {
+    public int getAddShoppingListMenuItemFromUser() {
         int option;
         do {
             java.util.Scanner scanner = new java.util.Scanner(System.in);
@@ -48,8 +48,24 @@ public class UserInputGetters {
             }
             option = scanner.nextInt();
         }
-        while (!validationService.isAddProductProcessMenuInputValid(option));
+        while (!validationService.isEqualOrBiggerZeroLessOrEqual3(option));
         return option;
+    }
+
+    public int getAddedProductQuantityFromUser() {
+        int option;
+        do {
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            System.out.println("Enter quantity: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input!");
+                scanner.next();
+            }
+            option = scanner.nextInt();
+        }
+        while (option <= 0);
+        return option;
+
     }
 
     public String getProductCategoryFromUser() {
@@ -69,7 +85,7 @@ public class UserInputGetters {
                 scanner.next();
             }
             input = scanner.nextDouble();
-        } while (!validationService.isUserEnteredPriceBiggerThanZero(input));
+        } while (!validationService.isBiggerZero(input));
         return input;
     }
 
@@ -84,7 +100,7 @@ public class UserInputGetters {
             }
             option = scanner.nextInt();
         }
-        while (!validationService.isMainMenuUserInputValid(option));
+        while (!validationService.isEqualOrBiggerZeroLessOrEqual3(option));
         return option;
     }
 

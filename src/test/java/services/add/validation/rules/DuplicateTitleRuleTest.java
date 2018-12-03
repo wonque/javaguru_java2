@@ -2,12 +2,12 @@ package services.add.validation.rules;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.factories.ProductFactory;
+import lv.java2.shopping_list.domain.builders.ProductBuilder;
+import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.add.product.validation.rules.DuplicateProductTitleRule;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import lv.java2.shopping_list.services.Error;
 
 import java.util.Optional;
 
@@ -19,20 +19,22 @@ public class DuplicateTitleRuleTest {
 
     private ProductRepository repository;
     private DuplicateProductTitleRule rule;
+    private ProductBuilder productBuilder;
 
 
     @Before
     public void init() {
         this.repository = Mockito.mock(ProductRepository.class);
         rule = new DuplicateProductTitleRule(repository);
+        productBuilder = new ProductBuilder();
     }
 
 
     @Test
     public void returnTrueIfProductExists() {
-        Product product = new Product("milk");
+        Product product = productBuilder.buildInstance("milk");
         Mockito.when(repository.findByTitle("milk")).thenReturn(Optional.of(product));
-        Optional<Error> error = rule.execute("milk");
+        Optional<ShoppingListError> error = rule.execute("milk");
 
         assertTrue(error.isPresent());
         assertEquals("title", error.get().getField());
@@ -43,14 +45,14 @@ public class DuplicateTitleRuleTest {
     @Test
     public void returnNoErrorsIfProductNotExists() {
         Mockito.when(repository.findByTitle("milk")).thenReturn(Optional.empty());
-        Optional<Error> error = rule.execute("milk");
+        Optional<ShoppingListError> error = rule.execute("milk");
         assertFalse(error.isPresent());
 
     }
 
     @Test
     public void returnNoErrorsIfProductIsNull() {
-        Optional<Error> error = rule.execute(null);
+        Optional<ShoppingListError> error = rule.execute(null);
 
         assertFalse(error.isPresent());
 

@@ -1,8 +1,8 @@
 package services.add.validation.rules;
 
+import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.add.product.validation.rules.FirstCharacterRule;
 import org.junit.Test;
-import lv.java2.shopping_list.services.Error;
 
 import java.util.Optional;
 
@@ -15,13 +15,13 @@ public class FirstCharacterRuleTest {
 
     @Test
     public void returnErrorWhenFirstCharacterNotALetter() {
-        Optional<Error> error = rule.execute("*title");
+        Optional<ShoppingListError> error = rule.execute("*title");
         assertTrue(error.isPresent());
     }
 
     @Test
     public void returnNoErrorIfFirstCharacterIsWordCharacter() {
-        Optional<Error> error = rule.execute("6title");
+        Optional<ShoppingListError> error = rule.execute("6title");
         assertFalse(error.isPresent());
     }
 

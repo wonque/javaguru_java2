@@ -1,8 +1,8 @@
-package lv.java2.shopping_list.services.remove;
+package lv.java2.shopping_list.services.remove.product;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.services.ShoppingListError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ public class RemoveProductService {
 
 
     public RemoveProductResponse remove(RemoveProductRequest request) {
-        List<Error> errors = validator.validate(request);
+        List<ShoppingListError> errors = validator.validate(request);
         if (!errors.isEmpty()) {
             return new RemoveProductResponse(errors);
         }

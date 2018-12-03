@@ -1,10 +1,10 @@
-package lv.java2.shopping_list.services.remove;
+package lv.java2.shopping_list.services.remove.shoppinglist;
 
-public class RemoveProductRequest {
+public class RemoveShoppingListRequest {
 
     private String title;
 
-    public RemoveProductRequest(String title) {
+    public RemoveShoppingListRequest(String title) {
         this.title = title;
     }
 

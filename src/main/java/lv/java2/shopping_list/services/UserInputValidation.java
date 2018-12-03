@@ -9,15 +9,19 @@ public class UserInputValidation {
         return (title == null || title.isEmpty() || title.matches("\\s+"));
     }
 
-    public boolean isUserEnteredPriceBiggerThanZero(double price) {
+    public boolean isBiggerZero(double price) {
         return price > 0;
     }
 
-    public boolean isMainMenuUserInputValid(int input) {
+    public boolean isEqualOrBiggerZeroLessOrEqual3(int input) {
         return (input >= 0 && input <= 3);
     }
 
-    public boolean isAddProductProcessMenuInputValid(int input) {
+    public boolean isEqualZeroOrEqualOne(int input) {
         return (input == 0 || input == 1);
+    }
+
+    public boolean isEqualOrBiggerZeroLessOrEqual4(int input) {
+        return (input >= 0 && input <= 4);
     }
 }

@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 //соотетствует спецификации Javabeans
-@Entity
-@Table(schema = "java2", name = "product")
+//@Entity
+//@Table(schema = "java2", name = "product")
 public class Product {
 
     //default constructor for orm HIbernate
-    protected Product() {
+    public Product() {
     }
 
     @Id
@@ -24,10 +24,9 @@ public class Product {
     private BigDecimal price;
     private String description;
 
-    public Product(String title) {
-        this.title = title;
-    }
-
+//    public Product(String title) {
+//        this.title = title;
+//    }
 
     public void setPrice(BigDecimal price) {
         this.price = price;

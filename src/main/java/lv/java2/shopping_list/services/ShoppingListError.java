@@ -1,12 +1,12 @@
 package lv.java2.shopping_list.services;
 
-public class Error {
+public class ShoppingListError {
 
     private String field;
     private String errorDescription;
 
 
-    public Error(String field, String errorDescription) {
+    public ShoppingListError(String field, String errorDescription) {
         this.field = field;
         this.errorDescription = errorDescription;
     }

@@ -1,37 +1,37 @@
 package lv.java2.shopping_list.services.add.shoppinglist;
 
 import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.services.ShoppingListError;
 
 import java.util.List;
 
 public class ShoppingListAdditionResponse {
 
 
-    private ShoppingList addedList;
-    private List<Error> errors;
+    private Long addedListId;
+    private List<ShoppingListError> errors;
 
-    public ShoppingListAdditionResponse(List<Error> errors) {
+    public ShoppingListAdditionResponse(List<ShoppingListError> errors) {
         this.errors = errors;
     }
 
-    public ShoppingListAdditionResponse(ShoppingList addedList) {
-        this.addedList = addedList;
+    public ShoppingListAdditionResponse(Long addedListId) {
+        this.addedListId = addedListId;
     }
 
     public boolean isSuccess() {
-        return (addedList != null && errors == null || errors.isEmpty());
+        return (addedListId != null && errors == null || errors.isEmpty());
     }
 
-    public ShoppingList getAddedList() {
-        return addedList;
+    public Long getAddedListId() {
+        return addedListId;
     }
 
-    public List<Error> getErrors() {
+    public List<ShoppingListError> getShoppingListErrors() {
         return errors;
     }
 
-    public void setErrors(List<Error> errors) {
+    public void setShoppingListErrors(List<ShoppingListError> errors) {
         this.errors = errors;
     }
 

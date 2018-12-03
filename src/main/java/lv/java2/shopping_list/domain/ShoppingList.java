@@ -3,21 +3,26 @@ package lv.java2.shopping_list.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
-@Entity
-@Table(schema = "java2", name = "shopping_lists")
+//@Entity
+//@Table(schema = "java2", name = "shopping_lists")
 public class ShoppingList {
 
     //default constructor for orm (Hibernate)
-    protected ShoppingList() {
+    public ShoppingList() {
     }
 
     @Id
     @Column(name = "list_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "accounts")
+    private Account account;
 
     @Column(name = "title", nullable = false, unique = true)
     private String title;

@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.add.product.validation.rules;
 
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.services.ShoppingListError;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -9,9 +9,9 @@ import java.util.Optional;
 public class EmptyTitleRule {
 
 
-    public Optional<Error> execute(String title) {
+    public Optional<ShoppingListError> execute(String title) {
         if (title == null || title.isEmpty() || title.matches("\\s+")) {
-            Error error = new Error("title", "Empty title not allowed!");
+            ShoppingListError error = new ShoppingListError("title", "Empty title not allowed!");
             return Optional.of(error);
         } else {
             return Optional.empty();

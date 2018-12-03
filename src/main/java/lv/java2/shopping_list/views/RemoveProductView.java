@@ -2,9 +2,9 @@ package lv.java2.shopping_list.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import lv.java2.shopping_list.services.remove.RemoveProductRequest;
-import lv.java2.shopping_list.services.remove.RemoveProductResponse;
-import lv.java2.shopping_list.services.remove.RemoveProductService;
+import lv.java2.shopping_list.services.remove.product.RemoveProductRequest;
+import lv.java2.shopping_list.services.remove.product.RemoveProductResponse;
+import lv.java2.shopping_list.services.remove.product.RemoveProductService;
 
 @Component
 public class RemoveProductView {

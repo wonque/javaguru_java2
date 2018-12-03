@@ -1,9 +1,7 @@
 package lv.java2.shopping_list.services;
 
 import lv.java2.shopping_list.db.ProductRepository;
-import lv.java2.shopping_list.db.jdbc.ProductRepositoryImpl;
 import lv.java2.shopping_list.domain.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

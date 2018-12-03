@@ -1,29 +1,29 @@
-package lv.java2.shopping_list.services.remove;
+package lv.java2.shopping_list.services.remove.product;
 
-import lv.java2.shopping_list.services.Error;
+import lv.java2.shopping_list.services.ShoppingListError;
 
 import java.util.List;
 
 public class RemoveProductResponse {
 
     //    private Long productId;
-    private List<Error> errors;
+    private List<ShoppingListError> errors;
     private boolean isSuccess;
 
     public RemoveProductResponse(boolean isSuccess) {
         this.isSuccess = isSuccess;
     }
 
-    public RemoveProductResponse(List<Error> errors) {
+    public RemoveProductResponse(List<ShoppingListError> errors) {
         isSuccess = false;
         this.errors = errors;
     }
 
-    public List<Error> getErrors() {
+    public List<ShoppingListError> getErrors() {
         return errors;
     }
 
-    public void setErrors(List<Error> errors) {
+    public void setErrors(List<ShoppingListError> errors) {
         this.errors = errors;
     }
 

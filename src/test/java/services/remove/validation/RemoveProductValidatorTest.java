@@ -1,16 +1,16 @@
 package services.remove.validation;
 
-import lv.java2.shopping_list.services.Error;
-import lv.java2.shopping_list.services.remove.RemoveProductRequest;
-import lv.java2.shopping_list.services.remove.RemoveProductValidatorImpl;
+import lv.java2.shopping_list.services.ShoppingListError;
+import lv.java2.shopping_list.services.remove.product.RemoveProductRequest;
+import lv.java2.shopping_list.services.remove.product.RemoveProductValidatorImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import lv.java2.shopping_list.services.remove.RemoveProductRules;
-import lv.java2.shopping_list.services.remove.RemoveProductValidator;
+import lv.java2.shopping_list.services.remove.product.RemoveProductRules;
+import lv.java2.shopping_list.services.remove.product.RemoveProductValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +30,11 @@ public class RemoveProductValidatorTest {
     @Test
     public void collectAndReturnErrorsIfAllRulesFailed() {
         Mockito.when(rules.nullTitleRule("milk"))
-                .thenReturn(Optional.of(new Error("title", "NUll title")));
+                .thenReturn(Optional.of(new ShoppingListError("title", "NUll title")));
         Mockito.when(rules.productPresenceInDataBaseRule("milk"))
-                .thenReturn(Optional.of(new Error("title", "No product found")));
+                .thenReturn(Optional.of(new ShoppingListError("title", "No product found")));
 
-        List<Error> errors = validator.validate(new RemoveProductRequest("milk"));
+        List<ShoppingListError> errors = validator.validate(new RemoveProductRequest("milk"));
         assertEquals(2, errors.size());
     }
 }

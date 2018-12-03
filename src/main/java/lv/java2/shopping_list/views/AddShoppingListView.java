@@ -9,48 +9,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddShoppingListView {
 
-    private ShoppingListAdditionResponse response;
+    private ShoppingListAdditionResponse listAdditionResponse;
 
     @Autowired
     private ShoppingListAdditionService shoppingListService;
 
-    @Autowired
-    private AddProductView addProductView;
 
     @Autowired
     private UserInputGetters inputGetters;
 
-    public void execute() {
+    public Long execute() {
         System.out.println("Add shopping list process started.");
-        String title = inputGetters.getShoppingListTitleFromUser();
-        ShoppingListAdditionRequest newRequest = new ShoppingListAdditionRequest(title);
-        response = shoppingListService.addList(newRequest);
-        if (response.isSuccess()) {
-            System.out.println("Shopping list " + title.toUpperCase() + " created!\n");
-            executeAddProductProcess(title);
-
+        String listTitle = inputGetters.getShoppingListTitleFromUser();
+        ShoppingListAdditionRequest newRequest = new ShoppingListAdditionRequest(listTitle);
+        listAdditionResponse = shoppingListService.addList(newRequest);
+        if (listAdditionResponse.isSuccess()) {
+            System.out.println("Shopping list " + listTitle.toUpperCase() + " added!\n");
         } else {
-            response.displayErrors();
+            listAdditionResponse.displayErrors();
         }
-    }
-
-    private void printAddProductMenu(String listTitle) {
-        System.out.println("1: Add new product to " + listTitle.toUpperCase());
-        System.out.println("0: End shopping list addition");
-    }
-
-    private void executeAddProductProcess(String listTitle) {
-        while (true) {
-            printAddProductMenu(listTitle);
-            int option = inputGetters.getAddProductProcessItemFromUser();
-            if (option == 0) {
-                break;
-            }
-            switch (option) {
-                case 1:
-                    addProductView.execute(response.getAddedList());
-                    break;
-            }
-        }
+        return listAdditionResponse.getAddedListId();
     }
 }
