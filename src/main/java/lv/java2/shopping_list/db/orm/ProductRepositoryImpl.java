@@ -28,7 +28,7 @@ public class ProductRepositoryImpl extends ORMRepository implements ProductRepos
     @Override
     @Nullable
     public Optional<Product> findByTitle(String title) {
-        String query = "FROM Product WHERE lower(title) = :title";
+        String query = "FROM Product WHERE title = :title";
         Product product = (Product) session().createQuery(query)
                 .setParameter("title", title.toLowerCase()).uniqueResult();
         return Optional.ofNullable(product);
@@ -36,7 +36,7 @@ public class ProductRepositoryImpl extends ORMRepository implements ProductRepos
 
     @Override
     @Nullable
-    public Optional<Product> getById(Long id) {
+    public Optional<Product> findById(Long id) {
         String query = "FROM Product WHERE id = :id";
         Product product = (Product) session().createQuery(query)
                 .setParameter("id", id).uniqueResult();

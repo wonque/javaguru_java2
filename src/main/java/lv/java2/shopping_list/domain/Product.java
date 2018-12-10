@@ -6,7 +6,7 @@ import java.util.Objects;
 
 //соотетствует спецификации Javabeans
 //@Entity
-//@Table(schema = "java2", name = "product")
+//@Table(schema = "java2", name = "products")
 public class Product {
 
     //default constructor for orm HIbernate
@@ -21,23 +21,15 @@ public class Product {
     @Column(name = "title", nullable = false)
     private String title;
 
-    private BigDecimal price;
+    @Column (name = "DESCRIPTION")
     private String description;
 
-//    public Product(String title) {
-//        this.title = title;
-//    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public Product(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
         return title;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
     }
 
     public void setTitle(String title) {
@@ -66,21 +58,17 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(id, product.id) &&
-                Objects.equals(title, product.title) &&
-                Objects.equals(price, product.price) &&
-                Objects.equals(description, product.description);
-    }
+                Objects.equals(title, product.title);}
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, price, description);
+        return Objects.hash(id, title);
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "title='" + title + '\'' +
-                ", price=" + price +
                 ", description='" + description + '\'' +
                 '}';
     }

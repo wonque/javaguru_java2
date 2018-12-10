@@ -1,6 +1,7 @@
 package lv.java2.shopping_list.services.add.shoppinglist.validation;
 
 import lv.java2.shopping_list.db.ShoppingListRepository;
+import lv.java2.shopping_list.domain.Account;
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.services.ShoppingListError;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,9 @@ public class ShoppingListValidationRules {
         }
     }
 
-    public Optional<ShoppingListError> duplicateEntryRule(String title) {
-        Optional<ShoppingList> shoppingList = shoppingListRepository.getByTitle(title);
-        if(shoppingList.isPresent()){
+    public Optional<ShoppingListError> duplicateEntryRule(Account account, String title) {
+        Optional<ShoppingList> shoppingList = shoppingListRepository.findByAccountAndTitle(account, title);
+        if (shoppingList.isPresent()) {
             ShoppingListError error = new ShoppingListError("title",
                     "Shopping list with title " + title + " already in database!");
             return Optional.of(error);

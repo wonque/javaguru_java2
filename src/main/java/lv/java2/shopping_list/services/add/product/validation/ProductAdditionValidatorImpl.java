@@ -11,7 +11,7 @@ import lv.java2.shopping_list.services.add.product.validation.rules.EmptyTitleRu
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class ProductAdditionValidatorImpl implements ProductAdditionValidator {
 
 
@@ -23,11 +23,11 @@ public class ProductAdditionValidatorImpl implements ProductAdditionValidator {
     private FirstCharacterRule firstCharacterRule;
 
     @Override
-    public List<ShoppingListError> validate(ProductAdditionRequest addProductAdditionRequest) {
+    public List<ShoppingListError> validate(ProductAdditionRequest productAdditionRequest) {
         List<ShoppingListError> errors = new ArrayList<>();
-        emptyTitleRule.execute(addProductAdditionRequest.getTitle()).ifPresent(errors::add);
-        firstCharacterRule.execute(addProductAdditionRequest.getTitle()).ifPresent(errors::add);
-        duplicateProductTitleRule.execute(addProductAdditionRequest.getTitle()).ifPresent(errors::add);
+        emptyTitleRule.execute(productAdditionRequest.getTitle()).ifPresent(errors::add);
+        firstCharacterRule.execute(productAdditionRequest.getTitle()).ifPresent(errors::add);
+        duplicateProductTitleRule.execute(productAdditionRequest.getTitle()).ifPresent(errors::add);
         return errors;
     }
 }

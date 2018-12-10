@@ -20,7 +20,7 @@ public class ShoppingListAdditionValidatorImpl implements ShoppingListAdditionVa
     public List<ShoppingListError> validate(ShoppingListAdditionRequest additionRequest) {
         List<ShoppingListError> errors = new ArrayList<>();
         rules.emptyTitleRule(additionRequest.getTitle()).ifPresent(errors::add);
-        rules.duplicateEntryRule(additionRequest.getTitle()).ifPresent(errors::add);
+        rules.duplicateEntryRule(additionRequest.getAccount(), additionRequest.getTitle()).ifPresent(errors::add);
         return errors;
     }
 }

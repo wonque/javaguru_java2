@@ -7,12 +7,10 @@ import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.add.product.validation.ProductAdditionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
-@Transactional
+//@Component
 public class ProductAdditionService {
 
     @Autowired

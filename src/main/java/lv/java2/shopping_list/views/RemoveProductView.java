@@ -6,7 +6,7 @@ import lv.java2.shopping_list.services.remove.product.RemoveProductRequest;
 import lv.java2.shopping_list.services.remove.product.RemoveProductResponse;
 import lv.java2.shopping_list.services.remove.product.RemoveProductService;
 
-@Component
+//@Component
 public class RemoveProductView {
 
     @Autowired

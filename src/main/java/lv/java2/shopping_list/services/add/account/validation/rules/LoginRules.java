@@ -57,8 +57,7 @@ public class LoginRules {
 
     public Optional<ShoppingListError> duplicateLogin(String login) {
         if (login != null) {
-            Optional<Account> account = accountRepository.findAccountByLogin(login);
-            if (account.isPresent()) {
+            if (accountRepository.checkIfLoginExists(login)) {
                 ShoppingListError error = new ShoppingListError("login", "Account " + login + " already registered!");
                 return Optional.of(error);
             }

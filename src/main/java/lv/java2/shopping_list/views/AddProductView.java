@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import lv.java2.shopping_list.services.add.product.ProductAdditionRequest;
 import lv.java2.shopping_list.services.add.product.ProductAdditionResponse;
 
-@Component
+//@Component
 public class AddProductView {
 
     @Autowired

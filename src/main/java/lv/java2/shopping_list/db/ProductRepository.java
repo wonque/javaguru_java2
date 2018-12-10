@@ -13,7 +13,7 @@ public interface ProductRepository {
 
     Optional<Product> findByTitle(String title);
 
-    Optional<Product> getById(Long id);
+    Optional<Product> findById(Long id);
 
     boolean remove(Product product);
 

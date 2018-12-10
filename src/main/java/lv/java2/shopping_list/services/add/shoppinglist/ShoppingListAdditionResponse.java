@@ -8,23 +8,23 @@ import java.util.List;
 public class ShoppingListAdditionResponse {
 
 
-    private Long addedListId;
+    private ShoppingList shoppingList;
     private List<ShoppingListError> errors;
 
     public ShoppingListAdditionResponse(List<ShoppingListError> errors) {
         this.errors = errors;
     }
 
-    public ShoppingListAdditionResponse(Long addedListId) {
-        this.addedListId = addedListId;
+    public ShoppingListAdditionResponse(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
     public boolean isSuccess() {
-        return (addedListId != null && errors == null || errors.isEmpty());
+        return (shoppingList != null && errors == null || errors.isEmpty());
     }
 
-    public Long getAddedListId() {
-        return addedListId;
+    public ShoppingList getAddedList() {
+        return shoppingList;
     }
 
     public List<ShoppingListError> getShoppingListErrors() {

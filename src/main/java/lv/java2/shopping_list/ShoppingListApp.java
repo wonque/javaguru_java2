@@ -1,7 +1,7 @@
 package lv.java2.shopping_list;
 
 import lv.java2.shopping_list.config.SpringAppConfig;
-import lv.java2.shopping_list.views.account.AddAccountView;
+import lv.java2.shopping_list.views.AddShoppingListView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,12 +13,13 @@ public class ShoppingListApp {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
-        AddAccountView addAccountView = context.getBean(AddAccountView.class);
-        addAccountView.execute();
+        AddShoppingListView addShoppingListView = context.getBean(AddShoppingListView.class);
+//        addShoppingListView.execute();
+//        AddAccountView addAccountView = context.getBean(AddAccountView.class);
+//        addAccountView.execute();
 //        AccountRepositoryImpl accountRepository = context.getBean(AccountRepositoryImpl.class);
 //        AddProductView addProductView = context.getBean(AddProductView.class);
 //        RemoveProductView removeProductView = context.getBean(RemoveProductView.class);
-//        PrintShoppingListView printList = context.getBean(PrintShoppingListView.class);
 //        Optional<Account> accountOptional = accountRepository.findAccountByLogin("login@tv.lv");
 //        if(accountOptional.isPresent()){
 //            System.out.println("SUCCESS!");

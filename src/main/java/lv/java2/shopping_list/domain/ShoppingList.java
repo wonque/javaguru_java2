@@ -1,15 +1,17 @@
 package lv.java2.shopping_list.domain;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
 
-//@Entity
-//@Table(schema = "java2", name = "shopping_lists")
+@Entity
+@Table(schema = "java2", name = "shopping_lists")
 public class ShoppingList {
 
     //default constructor for orm (Hibernate)
@@ -17,11 +19,12 @@ public class ShoppingList {
     }
 
     @Id
-    @Column(name = "list_id")
+    @Column(name = "LIST_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "accounts")
+    @ManyToOne
+    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
     private Account account;
 
     @Column(name = "title", nullable = false, unique = true)
@@ -30,16 +33,20 @@ public class ShoppingList {
     @Column(name = "category")
     private String category;
 
+//An option to cascade delete/get shopping list items
+//    @OneToMany(mappedBy = "shoppingList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Set<ShoppingListItem> listItems;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_created")
-    private Timestamp dateCreated;
+    private Date dateCreated;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
-    private Timestamp dateModified;
+    private Date dateModified;
 
-
-    public ShoppingList(String title) {
-        this.title = title;
-    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -49,11 +56,11 @@ public class ShoppingList {
         this.id = id;
     }
 
-    public void setDateCreated(Timestamp dateCreated) {
+    public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public void setDateModified(Timestamp dateModified) {
+    public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
     }
 
@@ -61,11 +68,11 @@ public class ShoppingList {
         return id;
     }
 
-    public Timestamp getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
-    public Timestamp getDateModified() {
+    public Date getDateModified() {
         return dateModified;
     }
 
@@ -80,6 +87,22 @@ public class ShoppingList {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    //    public Set<ShoppingListItem> getListItems() {
+//        return listItems;
+//    }
+//
+//    public void setListItems(Set<ShoppingListItem> listItems) {
+//        this.listItems = listItems;
+//    }
 
     @Override
     public boolean equals(Object o) {

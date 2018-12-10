@@ -18,16 +18,16 @@ public class AddShoppingListView {
     @Autowired
     private UserInputGetters inputGetters;
 
-    public Long execute() {
-        System.out.println("Add shopping list process started.");
-        String listTitle = inputGetters.getShoppingListTitleFromUser();
-        ShoppingListAdditionRequest newRequest = new ShoppingListAdditionRequest(listTitle);
-        listAdditionResponse = shoppingListService.addList(newRequest);
-        if (listAdditionResponse.isSuccess()) {
-            System.out.println("Shopping list " + listTitle.toUpperCase() + " added!\n");
-        } else {
-            listAdditionResponse.displayErrors();
-        }
-        return listAdditionResponse.getAddedListId();
-    }
+//    public Long execute() {
+//        System.out.println("Add shopping list process started.");
+//        String listTitle = inputGetters.getShoppingListTitleFromUser();
+//        ShoppingListAdditionRequest newRequest = new ShoppingListAdditionRequest(listTitle);
+//        listAdditionResponse = shoppingListService.addList(newRequest);
+//        if (listAdditionResponse.isSuccess()) {
+//            System.out.println("Shopping list " + listTitle.toUpperCase() + " added!\n");
+//        } else {
+//            listAdditionResponse.displayErrors();
+//        }
+//        return listAdditionResponse.getAddedListId();
+
 }

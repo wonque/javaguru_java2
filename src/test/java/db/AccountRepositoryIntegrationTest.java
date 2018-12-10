@@ -24,12 +24,12 @@ public class AccountRepositoryIntegrationTest {
     private Account account;
 
     @Before
-    public void init(){
+    public void init() {
         this.account = new Account("onetwo@in.out", "password");
     }
 
     @Test
-    public void returnAccountWithIdIfAddedToBase(){
+    public void returnAccountWithIdIfAddedToBase() {
         assertNull(account.getId());
         accountRepository.addToBase(account);
         assertNotNull(account.getId());
@@ -37,18 +37,22 @@ public class AccountRepositoryIntegrationTest {
 
     @Test
     public void returnTrueIfAccountIsInDataBase() {
-        Optional<Account> accountOptional = accountRepository.findAccountByLogin("onetwo@in.out");
-        assertTrue(accountOptional.isPresent());
+        assertTrue(accountRepository.checkIfLoginExists("onetwo@in.out"));
     }
 
     @Test
     public void returnFalseIfAccountNotInDatabase() {
-        Optional<Account> accountOptional = accountRepository.findAccountByLogin("somelogin");
-        assertFalse(accountOptional.isPresent());
+        assertFalse(accountRepository.checkIfLoginExists("somelogin"));
     }
 
     @Test
-    public void returnTrueIfAccountDeleted(){
+    public void returnTrueIfLoginAndPasswordCorrect() {
+        Optional<Account> optionalAccount = accountRepository.findByLoginAndPass("onetwo@in.out", "password");
+        assertTrue(optionalAccount.isPresent());
+    }
+
+    @Test
+    public void returnTrueIfAccountDeleted() {
         assertTrue(accountRepository.deleteAccount(account));
     }
 

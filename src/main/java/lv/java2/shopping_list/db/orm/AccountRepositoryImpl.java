@@ -2,10 +2,13 @@ package lv.java2.shopping_list.db.orm;
 
 import lv.java2.shopping_list.db.AccountRepository;
 import lv.java2.shopping_list.domain.Account;
+import lv.java2.shopping_list.domain.ShoppingList;
+import org.hibernate.query.Query;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -14,11 +17,19 @@ public class AccountRepositoryImpl extends ORMRepository implements AccountRepos
 
 
     @Override
-    @Nullable
-    public Optional<Account> findAccountByLogin(String login) {
-        String query = "FROM Account WHERE lower(login) = :login";
-        Account account = (Account) session().createQuery(query)
-                .setParameter("login", login).uniqueResult();
+    public boolean checkIfLoginExists(String login) {
+        Query query = session().createQuery("FROM Account WHERE lower(login) = :login");
+        query.setParameter("login", login);
+        return query.uniqueResult() != null;
+    }
+
+    @Override
+    public Optional<Account> findByLoginAndPass(String login, String password) {
+        String stringQuery = "FROM Account ac WHERE lower(ac.login) = :login AND lower(ac.password) = :password";
+        Query query = session().createQuery(stringQuery);
+        query.setParameter("login", login);
+        query.setParameter("password", password);
+        Account account = (Account) query.uniqueResult();
         return Optional.ofNullable(account);
     }
 
@@ -40,5 +51,12 @@ public class AccountRepositoryImpl extends ORMRepository implements AccountRepos
     public boolean deleteAccount(Account account) {
         session().remove(account);
         return true;
+    }
+
+    @Override
+    public List<ShoppingList> findAllLists(Account account) {
+        String query = "FROM ShoppingList sl WHERE sl.account = :account";
+        return session().createQuery(query, ShoppingList.class)
+                .setParameter("account", account).list();
     }
 }

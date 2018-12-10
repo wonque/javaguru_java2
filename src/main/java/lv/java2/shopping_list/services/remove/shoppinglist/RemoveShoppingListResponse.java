@@ -1,39 +1,34 @@
 package lv.java2.shopping_list.services.remove.shoppinglist;
 
-
 import lv.java2.shopping_list.services.ShoppingListError;
-
-import java.util.List;
 
 public class RemoveShoppingListResponse {
 
-    //    private Long productId;
-    private List<ShoppingListError> errors;
-    private boolean isSuccess;
+    private ShoppingListError error;
+    private boolean listRemoved;
 
-    public RemoveShoppingListResponse(boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public RemoveShoppingListResponse(ShoppingListError error) {
+        listRemoved = false;
+        this.error = error;
     }
 
-    public RemoveShoppingListResponse(List<ShoppingListError> errors) {
-        isSuccess = false;
-        this.errors = errors;
+    public RemoveShoppingListResponse(boolean listRemoved) {
+        this.listRemoved = listRemoved;
     }
 
-    public List<ShoppingListError> getErrors() {
-        return errors;
+    public ShoppingListError getError() {
+        return error;
     }
 
-    public void setErrors(List<ShoppingListError> errors) {
-        this.errors = errors;
+    public void setError(ShoppingListError error) {
+        this.error = error;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public boolean isListRemoved() {
+        return listRemoved;
     }
 
-    public void displayErrors() {
-        errors.forEach(error -> System.out.println(error.getErrorDescription()));
+    public void setListRemoved(boolean listRemoved) {
+        this.listRemoved = listRemoved;
     }
-
 }

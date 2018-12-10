@@ -23,7 +23,6 @@ public class LoginRulesTest {
     @Mock
     private AccountRepository accountRepository;
 
-
     @InjectMocks
     private LoginRules loginRules;
 
@@ -101,7 +100,7 @@ public class LoginRulesTest {
     @Test
     public void returnErrorIfLoginInDatabase() {
         Account account = new Account("login@one.ku", "password");
-        Mockito.when(accountRepository.findAccountByLogin("login@one.ku")).thenReturn(Optional.of(account));
+        Mockito.when(accountRepository.checkIfLoginExists("login@one.ku")).thenReturn(true);
         Optional<ShoppingListError> error = loginRules.duplicateLogin("login@one.ku");
         assertTrue(error.isPresent());
         assertEquals("login", error.get().getField());

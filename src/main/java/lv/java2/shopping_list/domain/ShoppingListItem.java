@@ -2,32 +2,37 @@ package lv.java2.shopping_list.domain;
 
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
-import static com.sun.tools.doclint.Entity.or;
-
-//@Entity
-//@Table(schema = "java2", name = "shopping_list_item")
+@Entity
+@Table(schema = "java2", name = "shopping_list_item")
 public class ShoppingListItem {
 
     public ShoppingListItem() {
     }
 
     @Id
-    @Column(name = "id")
+    @Column(name = "ITEM_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long itemId;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "SHOPPING_LIST_ID", nullable = false)
     private ShoppingList shoppingList;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false)
-    private Product product;
+    @Column(name = "TITLE", nullable = false)
+    private String title;
 
-    @Column(name = "QUANTITY", nullable = false)
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "QUANTITY")
     private int quantity;
+
+    @Column(name = "PRICE")
+    private BigDecimal price;
+
 
     public Long getItemId() {
         return itemId;
@@ -45,20 +50,28 @@ public class ShoppingListItem {
         this.shoppingList = shoppingList;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -68,13 +81,12 @@ public class ShoppingListItem {
         ShoppingListItem item = (ShoppingListItem) o;
         return quantity == item.quantity &&
                 Objects.equals(itemId, item.itemId) &&
-                Objects.equals(shoppingList, item.shoppingList) &&
-                Objects.equals(product, item.product);
+                Objects.equals(shoppingList, item.shoppingList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, shoppingList, product, quantity);
+        return Objects.hash(itemId, shoppingList, quantity);
     }
 
     @Override
@@ -82,8 +94,7 @@ public class ShoppingListItem {
         return "ShoppingListItem{" +
                 "itemId=" + itemId +
                 ", shoppingList=" + shoppingList +
-                ", product=" + product +
-                ", userEnteredProductTitle='"  +
+                ", userEnteredProductTitle='" +
                 ", quantity=" + quantity +
                 '}';
     }

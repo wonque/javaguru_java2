@@ -1,11 +1,15 @@
 package lv.java2.shopping_list.services.add.shoppinglist;
 
 
+import lv.java2.shopping_list.domain.Account;
+
 public class ShoppingListAdditionRequest {
 
     private String title;
+    private Account account;
 
-    public ShoppingListAdditionRequest(String title) {
+    public ShoppingListAdditionRequest(Account account, String title) {
+        this.account = account;
         this.title = title;
     }
 
@@ -17,4 +21,11 @@ public class ShoppingListAdditionRequest {
         this.title = title;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

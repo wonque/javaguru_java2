@@ -30,9 +30,8 @@ public class Account {
     @Column(name = "LAST_SESSION_DATE")
     private Timestamp lastSessionDate;
 
-    @Column(name = "STATUS")
-    @Enumerated(EnumType.STRING)
-    private AccountStatus status;
+    @Transient
+    private boolean isActive;
 
 
     public Account(String login, String password) {
@@ -76,16 +75,20 @@ public class Account {
         this.lastSessionDate = lastSessionDate;
     }
 
-    public AccountStatus getStatus() {
-        return status;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setStatus(AccountStatus status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.isActive = active;
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setUserName(String userName) {
