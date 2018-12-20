@@ -26,4 +26,12 @@ public class AccountSessionResponse {
         this.account = account;
     }
 
+    public ShoppingListError getError() {
+        return error;
+    }
+
+    public boolean isSuccess() {
+        return (account != null && error == null);
+    }
+
 }

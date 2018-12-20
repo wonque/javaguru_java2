@@ -18,5 +18,7 @@ public interface AccountRepository {
 
     boolean deleteAccount(Account account);
 
-    List<ShoppingList> findAllLists (Account account);
+    List<ShoppingList> findAllActiveLists (Account account);
+
+    List<ShoppingList> findAllArchivedLists(Account account);
 }

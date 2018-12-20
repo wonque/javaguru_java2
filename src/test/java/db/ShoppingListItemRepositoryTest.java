@@ -1,73 +1,89 @@
 package db;
 
 import lv.java2.shopping_list.config.SpringAppConfig;
+import lv.java2.shopping_list.db.AccountRepository;
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
+import lv.java2.shopping_list.db.ShoppingListRepository;
+import lv.java2.shopping_list.domain.Account;
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.domain.ShoppingListItem;
-import lv.java2.shopping_list.domain.builders.ShoppingListItemBuilder;
-import lv.java2.shopping_list.services.remove.item.ItemRemoveRequest;
-import org.junit.Before;
+import lv.java2.shopping_list.domain.factories.AccountFactory;
+import lv.java2.shopping_list.domain.factories.ShoppingListFactory;
+import lv.java2.shopping_list.domain.factories.ShoppingListItemFactory;
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static junit.framework.TestCase.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ShoppingListItemRepositoryTest {
 
     @Autowired
     private ShoppingListItemRepository itemRepository;
     @Autowired
-    private ShoppingListItemBuilder itemBuilder;
+    private AccountRepository accountRepository;
+    @Autowired
+    private ShoppingListRepository shoppingListRepository;
 
-    private ShoppingList shoppingList;
-    private ShoppingListItem item;
+    private static Account account;
+    private static ShoppingList shoppingList;
+    private static ShoppingListFactory shoppingListFactory;
+    private static AccountFactory accountFactory;
+    private static ShoppingListItem item;
+    private static ShoppingListItemFactory itemBuilder;
 
-    @Before
-    public void init() {
-        shoppingList = new ShoppingList();
-        shoppingList.setId(1L);
-        shoppingList.setTitle("list1");
-        this.item = itemBuilder.createWithTitle(shoppingList, "ItemTitle");
+    @BeforeClass
+    public static void init() {
+        accountFactory = new AccountFactory();
+        account = accountFactory.buildInstance("login@login.com", "12345", "Dude");
+        shoppingListFactory = new ShoppingListFactory();
+        itemBuilder = new ShoppingListItemFactory();
     }
 
+
     @Test
-    public void returnTrueIfItemAddedToBase() {
+    public void testingItemRepository() {
+        account = accountRepository.addToBase(account);
+        shoppingList = shoppingListFactory.createInstance(account, "list1");
+        shoppingList = shoppingListRepository.addToDataBase(shoppingList);
+        item = itemBuilder.createWithTitle(shoppingList, "item1");
+
         assertNull(item.getItemId());
         itemRepository.addItemToShoppingList(item);
         assertNotNull(item.getItemId());
-    }
 
-    @Test
-    public void returnTrueIfItemIfInDataBase() {
-        Optional<ShoppingListItem> shoppingListItem = itemRepository.findItemByTitle(shoppingList, "ItemTitle");
+        Optional<ShoppingListItem> shoppingListItem = itemRepository.findItemByTitle(shoppingList, "item1");
         assertTrue(shoppingListItem.isPresent());
-    }
 
-    @Test
-    public void returnTrueIfItemDescriptionUpdated() {
+        assertNull(shoppingListItem.get().getDescription());
         String description = "any description";
-        Optional<ShoppingListItem> shoppingListItem = itemRepository.findItemByTitle(shoppingList, "ItemTitle");
-        if (shoppingListItem.isPresent()) {
-            item = shoppingListItem.get();
-            assertTrue(itemRepository.updateDescription(item, description));
+        assertEquals(1, itemRepository.updateDescription(shoppingListItem.get(), description));
 
-        }
-    }
+        assertNull(shoppingListItem.get().getPrice());
+        BigDecimal price = new BigDecimal(100);
+        assertEquals(1, itemRepository.updatePrice(shoppingListItem.get(), price));
 
-    @Test
-    public void returnTrueIfAllItemsInShoppingListDeleted(){
-        ShoppingListItem item = new ShoppingListItem();
-        item.setShoppingList(shoppingList);
-        item.setTitle("ITEM6");
-        itemRepository.removeSingleItem(item);
+        assertTrue(itemRepository.removeSingleItem(shoppingListItem.get()));
+        shoppingListItem = itemRepository.findItemByTitle(shoppingList, "item1");
+        assertFalse(shoppingListItem.isPresent());
+
+        shoppingListRepository.remove(shoppingList);
+        Optional<ShoppingList> optionalShoppingList =
+                shoppingListRepository.findByAccountAndTitle(account, shoppingList.getTitle());
+        assertFalse(optionalShoppingList.isPresent());
+
+        accountRepository.deleteAccount(account);
     }
 
 }

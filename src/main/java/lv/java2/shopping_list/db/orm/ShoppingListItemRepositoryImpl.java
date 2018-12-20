@@ -6,6 +6,7 @@ import lv.java2.shopping_list.domain.ShoppingListItem;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,12 +44,22 @@ public class ShoppingListItemRepositoryImpl extends ORMRepository implements Sho
     }
 
     @Override
-    public boolean updateDescription(ShoppingListItem item, String description) {
+    public int updateDescription(ShoppingListItem item, String description) {
         String query = "UPDATE ShoppingListItem sl SET sl.description = :description WHERE sl.itemId = :itemId";
-        int rowAffected = session().createQuery(query)
+        return session().createQuery(query)
                 .setParameter("description", description)
                 .setParameter("itemId", item.getItemId())
                 .executeUpdate();
-        return rowAffected == 1;
     }
+
+    @Override
+    public int updatePrice(ShoppingListItem item, BigDecimal price) {
+        String query = "UPDATE ShoppingListItem sl SET sl.price = :price WHERE sl.itemId = :itemId";
+        return session().createQuery(query)
+                .setParameter("price", price)
+                .setParameter("itemId", item.getItemId())
+                .executeUpdate();
+    }
+
+
 }

@@ -3,6 +3,7 @@ package lv.java2.shopping_list.db.orm;
 import lv.java2.shopping_list.db.AccountRepository;
 import lv.java2.shopping_list.domain.Account;
 import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.ShoppingListStatus;
 import org.hibernate.query.Query;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -54,9 +55,17 @@ public class AccountRepositoryImpl extends ORMRepository implements AccountRepos
     }
 
     @Override
-    public List<ShoppingList> findAllLists(Account account) {
-        String query = "FROM ShoppingList sl WHERE sl.account = :account";
+    public List<ShoppingList> findAllActiveLists(Account account) {
+        String query = "FROM ShoppingList sl WHERE sl.account = :account AND sl.status = :status";
         return session().createQuery(query, ShoppingList.class)
-                .setParameter("account", account).list();
+                .setParameter("account", account).setParameter("status", ShoppingListStatus.ACTIVE).list();
     }
+
+    @Override
+    public List<ShoppingList> findAllArchivedLists(Account account) {
+        String query = "FROM ShoppingList sl WHERE sl.account = :account AND sl.status = :status";
+        return session().createQuery(query, ShoppingList.class)
+                .setParameter("account", account).setParameter("status", ShoppingListStatus.ARCHIVED).list();
+    }
+
 }

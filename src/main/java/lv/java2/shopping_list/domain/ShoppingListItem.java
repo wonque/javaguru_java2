@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "java2", name = "shopping_list_item")
+@Table(schema = "java2", name = "shopping_list_items")
 public class ShoppingListItem {
 
     public ShoppingListItem() {
@@ -21,7 +21,7 @@ public class ShoppingListItem {
     @JoinColumn(name = "SHOPPING_LIST_ID", nullable = false)
     private ShoppingList shoppingList;
 
-    @Column(name = "TITLE", nullable = false)
+    @Column(name = "TITLE")
     private String title;
 
     @Column(name = "DESCRIPTION")
@@ -32,7 +32,6 @@ public class ShoppingListItem {
 
     @Column(name = "PRICE")
     private BigDecimal price;
-
 
     public Long getItemId() {
         return itemId;
@@ -58,14 +57,6 @@ public class ShoppingListItem {
         return quantity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -74,19 +65,36 @@ public class ShoppingListItem {
         this.description = description;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShoppingListItem item = (ShoppingListItem) o;
-        return quantity == item.quantity &&
-                Objects.equals(itemId, item.itemId) &&
-                Objects.equals(shoppingList, item.shoppingList);
+        return Objects.equals(itemId, item.itemId) &&
+                Objects.equals(shoppingList, item.shoppingList) &&
+                Objects.equals(title, item.getTitle()) &&
+                Objects.equals(description, item.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, shoppingList, quantity);
+        return Objects.hash(itemId, shoppingList, title, description);
     }
 
     @Override
@@ -94,8 +102,11 @@ public class ShoppingListItem {
         return "ShoppingListItem{" +
                 "itemId=" + itemId +
                 ", shoppingList=" + shoppingList +
-                ", userEnteredProductTitle='" +
+                ", title=" + title +
+                ", description='" + description + '\'' +
                 ", quantity=" + quantity +
+                ", price=" + price +
                 '}';
     }
 }
+

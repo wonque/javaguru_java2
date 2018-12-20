@@ -1,7 +1,12 @@
 package lv.java2.shopping_list.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(schema = "java2", name = "accounts")
@@ -24,15 +29,15 @@ public class Account {
     @Column(name = "USERNAME")
     private String userName;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE_CREATED")
-    private Timestamp dateCreated;
+    private Date dateCreated;
 
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "LAST_SESSION_DATE")
-    private Timestamp lastSessionDate;
-
-    @Transient
-    private boolean isActive;
-
+    private Date lastSessionDate;
 
     public Account(String login, String password) {
         this.login = login;
@@ -59,7 +64,7 @@ public class Account {
         this.password = password;
     }
 
-    public Timestamp getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
@@ -67,20 +72,12 @@ public class Account {
         this.dateCreated = dateCreated;
     }
 
-    public Timestamp getLastSessionDate() {
+    public Date getLastSessionDate() {
         return lastSessionDate;
     }
 
     public void setLastSessionDate(Timestamp lastSessionDate) {
         this.lastSessionDate = lastSessionDate;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        this.isActive = active;
     }
 
     public String getUserName() {
@@ -93,5 +90,23 @@ public class Account {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(id, account.id) &&
+                Objects.equals(login, account.login) &&
+                Objects.equals(password, account.password) &&
+                Objects.equals(userName, account.userName) &&
+                Objects.equals(dateCreated, account.dateCreated) &&
+                Objects.equals(lastSessionDate, account.lastSessionDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, userName, dateCreated, lastSessionDate);
     }
 }

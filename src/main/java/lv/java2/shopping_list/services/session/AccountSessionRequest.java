@@ -18,7 +18,7 @@ public class AccountSessionRequest {
         this.login = login;
     }
 
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 

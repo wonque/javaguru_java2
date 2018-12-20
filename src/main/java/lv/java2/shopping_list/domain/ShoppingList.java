@@ -33,9 +33,9 @@ public class ShoppingList {
     @Column(name = "category")
     private String category;
 
-//An option to cascade delete/get shopping list items
-//    @OneToMany(mappedBy = "shoppingList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Set<ShoppingListItem> listItems;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private ShoppingListStatus status;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -96,13 +96,14 @@ public class ShoppingList {
         return account;
     }
 
-    //    public Set<ShoppingListItem> getListItems() {
-//        return listItems;
-//    }
-//
-//    public void setListItems(Set<ShoppingListItem> listItems) {
-//        this.listItems = listItems;
-//    }
+    public ShoppingListStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ShoppingListStatus status) {
+        this.status = status;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -110,14 +111,12 @@ public class ShoppingList {
         if (o == null || getClass() != o.getClass()) return false;
         ShoppingList that = (ShoppingList) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(title, that.title) &&
-                Objects.equals(dateCreated, that.dateCreated) &&
-                Objects.equals(dateModified, that.dateModified);
+                Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, dateCreated, dateModified);
+        return Objects.hash(id, title);
     }
 
     @Override

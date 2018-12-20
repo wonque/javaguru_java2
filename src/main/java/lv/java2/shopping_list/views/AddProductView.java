@@ -1,10 +1,9 @@
 package lv.java2.shopping_list.views;
 
-import lv.java2.shopping_list.services.add.product.ProductAdditionService;
+import lv.java2.shopping_list.services.product.adition.ProductAdditionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import lv.java2.shopping_list.services.add.product.ProductAdditionRequest;
-import lv.java2.shopping_list.services.add.product.ProductAdditionResponse;
+import lv.java2.shopping_list.services.product.adition.ProductAdditionRequest;
+import lv.java2.shopping_list.services.product.adition.ProductAdditionResponse;
 
 //@Component
 public class AddProductView {
@@ -13,7 +12,7 @@ public class AddProductView {
     private ProductAdditionService productAdditionService;
 
     @Autowired
-    private UserInputGetters inputGetters;
+    private UserInputGetter inputGetters;
 
     public Long execute() {
 //        System.out.println("Add product process started.");

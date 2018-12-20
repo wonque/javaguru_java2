@@ -21,9 +21,6 @@ public class Product {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column (name = "DESCRIPTION")
-    private String description;
-
     public Product(String title) {
         this.title = title;
     }
@@ -34,14 +31,6 @@ public class Product {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setId(Long id) {
@@ -58,7 +47,8 @@ public class Product {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return Objects.equals(id, product.id) &&
-                Objects.equals(title, product.title);}
+                Objects.equals(title, product.title);
+    }
 
     @Override
     public int hashCode() {
@@ -68,8 +58,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                "title='" + title +
                 '}';
     }
 }

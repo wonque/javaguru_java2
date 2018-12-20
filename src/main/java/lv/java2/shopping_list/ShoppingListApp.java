@@ -1,7 +1,7 @@
 package lv.java2.shopping_list;
 
 import lv.java2.shopping_list.config.SpringAppConfig;
-import lv.java2.shopping_list.views.AddShoppingListView;
+import lv.java2.shopping_list.views.account.AccountRegistrationView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -13,10 +13,9 @@ public class ShoppingListApp {
         ApplicationContext context
                 = new AnnotationConfigApplicationContext(SpringAppConfig.class);
 
-        AddShoppingListView addShoppingListView = context.getBean(AddShoppingListView.class);
+        AccountRegistrationView accountRegistrationView = context.getBean(AccountRegistrationView.class);
+        accountRegistrationView.execute();
 //        addShoppingListView.execute();
-//        AddAccountView addAccountView = context.getBean(AddAccountView.class);
-//        addAccountView.execute();
 //        AccountRepositoryImpl accountRepository = context.getBean(AccountRepositoryImpl.class);
 //        AddProductView addProductView = context.getBean(AddProductView.class);
 //        RemoveProductView removeProductView = context.getBean(RemoveProductView.class);

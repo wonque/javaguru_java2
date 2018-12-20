@@ -3,6 +3,7 @@ package lv.java2.shopping_list.db;
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.domain.ShoppingListItem;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,9 @@ public interface ShoppingListItemRepository {
 
     boolean removeSingleItem(ShoppingListItem item);
 
-    boolean updateDescription(ShoppingListItem item, String description);
+    int updateDescription(ShoppingListItem item, String description);
+
+    int updatePrice (ShoppingListItem item, BigDecimal price);
 
 
 }
