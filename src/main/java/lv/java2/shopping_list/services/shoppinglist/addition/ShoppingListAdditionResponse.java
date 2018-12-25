@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.shoppinglist.addition;
 
-import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.services.ShoppingListError;
 
 import java.util.List;

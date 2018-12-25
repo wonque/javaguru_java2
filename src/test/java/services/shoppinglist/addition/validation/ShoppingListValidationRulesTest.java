@@ -1,8 +1,8 @@
 package services.shoppinglist.addition.validation;
 
 import lv.java2.shopping_list.db.ShoppingListRepository;
-import lv.java2.shopping_list.domain.Account;
-import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.account.Account;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.shoppinglist.addition.validation.ShoppingListValidationRules;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.shoppinglist;
 
-import lv.java2.shopping_list.domain.Account;
+import lv.java2.shopping_list.domain.account.Account;
 
 public class ShoppingListSharedRequest {
 

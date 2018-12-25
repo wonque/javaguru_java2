@@ -1,6 +1,7 @@
 package lv.java2.shopping_list.services.item;
 
-import lv.java2.shopping_list.domain.ShoppingList;
+
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 
 public class ItemAddRemoveSharedRequest {
 

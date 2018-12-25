@@ -1,8 +1,8 @@
 package lv.java2.shopping_list.services.item.addition;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingListItem;
-import lv.java2.shopping_list.domain.factories.ShoppingListItemFactory;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
+import lv.java2.shopping_list.domain.item.ShoppingListItemFactory;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.addition.validation.ItemAdditionValidator;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;

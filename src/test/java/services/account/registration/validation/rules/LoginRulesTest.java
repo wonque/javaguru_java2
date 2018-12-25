@@ -1,9 +1,9 @@
 package services.account.registration.validation.rules;
 
 import lv.java2.shopping_list.db.AccountRepository;
-import lv.java2.shopping_list.domain.Account;
+import lv.java2.shopping_list.domain.account.Account;
 import lv.java2.shopping_list.services.ShoppingListError;
-import lv.java2.shopping_list.services.account.validation.rules.LoginRules;
+import lv.java2.shopping_list.services.account.registration.validation.rules.LoginRules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -75,8 +75,10 @@ public class LoginRulesTest {
 
     @Test
     public void returnErrorIfLoginInDatabase() {
-        Account account = new Account("login@one.ku", "password");
-        Mockito.when(accountRepository.checkIfLoginExists("login@one.ku")).thenReturn(true);
+        Account account = new Account();
+        account.setLogin("login@one.ku");
+        account.setPassword("password");
+        Mockito.when(accountRepository.findByLogin("login@one.ku")).thenReturn(Optional.of(account));
         Optional<ShoppingListError> error = loginRules.duplicateLogin("login@one.ku");
         assertTrue(error.isPresent());
         assertEquals("login", error.get().getField());

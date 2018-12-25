@@ -1,7 +1,7 @@
 package services.item.update.description;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.item.ItemUpdateSharedRequest;
 import lv.java2.shopping_list.services.item.update.ItemUpdateSharedResponse;
 import lv.java2.shopping_list.services.item.update.description.UpdateItemDescriptionService;
@@ -41,20 +41,19 @@ public class UpdateItemDescriptionServiceTest {
     public void returnNoErrorsIf1ItemIsUpdated() {
         Mockito.when(itemRepository.updateDescription(updateSharedRequest.getShoppingListItm(),
                 updateSharedRequest.getDescription()))
-                .thenReturn(1);
+                .thenReturn(true);
         ItemUpdateSharedResponse response = descriptionService.updateDescription(updateSharedRequest);
         assertTrue(response.isUpdated());
-        assertNull(response.getErrors());
+        assertNull(response.getError());
     }
 
     @Test
     public void returnErrorIfOneItemUpdateFailed() {
         Mockito.when(itemRepository.updateDescription(updateSharedRequest.getShoppingListItm(),
                 updateSharedRequest.getDescription()))
-                .thenReturn(0);
+                .thenReturn(false);
         ItemUpdateSharedResponse response = descriptionService.updateDescription(updateSharedRequest);
         assertFalse(response.isUpdated());
-        assertNotNull(response.getErrors());
-        assertEquals(1, response.getErrors().size());
+        assertNotNull(response.getError());
     }
 }

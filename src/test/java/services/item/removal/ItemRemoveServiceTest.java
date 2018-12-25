@@ -1,8 +1,8 @@
 package services.item.removal;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;
 import lv.java2.shopping_list.services.item.removal.ItemRemoveResponse;
 import lv.java2.shopping_list.services.item.removal.ItemRemoveService;
@@ -63,7 +63,7 @@ public class ItemRemoveServiceTest {
 
     @Test
     public void returnErrorIfZeroItemsWereRemoved() {
-        Mockito.when(repository.removeAllItemsFromShoppingList(removeSharedRequest.getShoppingList()))
+        Mockito.when(repository.removeAllItems(removeSharedRequest.getShoppingList()))
                 .thenReturn(0);
         removeResponse = removeService.removeAllItems(removeSharedRequest);
         assertFalse(removeResponse.isRemoved());
@@ -75,7 +75,7 @@ public class ItemRemoveServiceTest {
 
     @Test
     public void returnNoErrorIfAllItemsRemoved() {
-        Mockito.when(repository.removeAllItemsFromShoppingList(removeSharedRequest.getShoppingList()))
+        Mockito.when(repository.removeAllItems(removeSharedRequest.getShoppingList()))
                 .thenReturn(10);
         removeResponse = removeService.removeAllItems(removeSharedRequest);
         assertTrue(removeResponse.isRemoved());

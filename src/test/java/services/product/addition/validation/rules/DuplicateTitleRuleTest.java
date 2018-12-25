@@ -2,7 +2,7 @@ package services.product.addition.validation.rules;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.domain.factories.ProductBuilder;
+import lv.java2.shopping_list.domain.ProductBuilder;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.product.adition.validation.rules.DuplicateProductTitleRule;
 import org.junit.Before;

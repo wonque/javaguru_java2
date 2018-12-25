@@ -1,9 +1,9 @@
 package lv.java2.shopping_list.db.orm;
 
 import lv.java2.shopping_list.db.ShoppingListRepository;
-import lv.java2.shopping_list.domain.Account;
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.account.Account;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +39,11 @@ public class ShoppingListRepositoryImpl extends ORMRepository implements Shoppin
     }
 
     @Override
-    public List<ShoppingListItem> findAllItems(ShoppingList shoppingList) {
+    public List<ShoppingListItem> getShoppingList(ShoppingList shoppingList) {
         String query = "FROM ShoppingListItem sl WHERE shoppingList = :shoppingList";
         return session().createQuery(query, ShoppingListItem.class)
                 .setParameter("shoppingList", shoppingList).list();
     }
 }
+
+

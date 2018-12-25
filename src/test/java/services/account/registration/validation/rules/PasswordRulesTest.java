@@ -2,7 +2,7 @@ package services.account.registration.validation.rules;
 
 
 import lv.java2.shopping_list.services.ShoppingListError;
-import lv.java2.shopping_list.services.account.validation.rules.PasswordRules;
+import lv.java2.shopping_list.services.account.registration.validation.rules.PasswordRules;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -29,21 +29,13 @@ public class PasswordRulesTest {
         Optional<ShoppingListError> error = passwordRules.containsDigits("password");
         assertTrue(error.isPresent());
         assertEquals("password", error.get().getField());
-        assertEquals("Password must contain at least one digit", error.get().getErrorDescription());
-
+        assertEquals("Password must contain at least three digits", error.get().getErrorDescription());
     }
 
-//    @Test
-//    public void returnErrorIfPasswordsNotEquals() {
-//        Optional<ShoppingListError> error = passwordRules.matchPasswords("pass1", "pass2");
-//        assertTrue(error.isPresent());
-//        assertEquals("password", error.get().getField());
-//        assertEquals("Entered password and confirmation password must match!", error.get().getErrorDescription());
-//    }
-//
-//    @Test
-//    public void returnTrueIfPasswordsAreEquals() {
-//        Optional<ShoppingListError> error = passwordRules.matchPasswords("pass1", "pass1");
-//        assertFalse(error.isPresent());
-//    }
+    @Test
+    public void returnTrueIfPasswordContainsThreeDigits(){
+        Optional<ShoppingListError> error = passwordRules.containsDigits("pass123");
+        assertFalse(error.isPresent());
+    }
+
 }

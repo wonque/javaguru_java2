@@ -4,7 +4,7 @@ import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.product.adition.validation.ProductAdditionValidator;
 import lv.java2.shopping_list.services.product.adition.validation.ProductAdditionValidatorImpl;
 import lv.java2.shopping_list.services.product.adition.validation.rules.FirstCharacterRule;
-import lv.java2.shopping_list.services.EmptyTitleSharedRule;
+import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

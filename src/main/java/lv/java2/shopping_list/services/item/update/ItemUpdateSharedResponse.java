@@ -6,11 +6,11 @@ import java.util.List;
 
 public class ItemUpdateSharedResponse {
 
-    private List<ShoppingListError> errors;
+    private ShoppingListError error;
     private boolean updated;
 
-    public ItemUpdateSharedResponse(List<ShoppingListError> errors) {
-        this.errors = errors;
+    public ItemUpdateSharedResponse(ShoppingListError error) {
+        this.error = error;
         this.updated = false;
     }
 
@@ -18,12 +18,12 @@ public class ItemUpdateSharedResponse {
         this.updated = isUpdated;
     }
 
-    public List<ShoppingListError> getErrors() {
-        return errors;
+    public ShoppingListError getError() {
+        return error;
     }
 
-    public void setError(List<ShoppingListError> errors) {
-        this.errors = errors;
+    public void setError(ShoppingListError error) {
+        this.error = error;
     }
 
     public boolean isUpdated() {

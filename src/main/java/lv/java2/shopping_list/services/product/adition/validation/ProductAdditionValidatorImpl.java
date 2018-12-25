@@ -3,7 +3,7 @@ package lv.java2.shopping_list.services.product.adition.validation;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.product.adition.ProductAdditionRequest;
 import lv.java2.shopping_list.services.product.adition.validation.rules.FirstCharacterRule;
-import lv.java2.shopping_list.services.EmptyTitleSharedRule;
+import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import lv.java2.shopping_list.services.product.adition.validation.rules.DuplicateProductTitleRule;
 

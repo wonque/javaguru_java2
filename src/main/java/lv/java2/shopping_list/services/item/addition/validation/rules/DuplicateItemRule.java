@@ -1,8 +1,8 @@
 package lv.java2.shopping_list.services.item.addition.validation.rules;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.ShoppingListError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

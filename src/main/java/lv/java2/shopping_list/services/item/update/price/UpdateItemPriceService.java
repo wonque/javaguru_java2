@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class UpdateItemPriceService {
@@ -20,21 +21,22 @@ public class UpdateItemPriceService {
     private ShoppingListItemRepository itemRepository;
 
     public ItemUpdateSharedResponse updatePrice(ItemUpdateSharedRequest priceRequest) {
-        List<ShoppingListError> errors = validator.validate(priceRequest);
-        if (errors.isEmpty()) {
-            BigDecimal convertedPrice = convertToBigDecimal(priceRequest.getPrice());
-            int itemsUpdated = itemRepository.updatePrice(priceRequest.getShoppingListItm(), convertedPrice);
-            if (itemsUpdated > 0) {
-                return new ItemUpdateSharedResponse(true);
-            } else {
-                errors.add(new ShoppingListError("price", "Unable to update price!"));
-            }
+        Optional<ShoppingListError> error = validator.validate(priceRequest);
+        if (error.isPresent()) {
+            return new ItemUpdateSharedResponse(error.get());
+        }else {
+            boolean updated = itemRepository.updatePrice(priceRequest.getShoppingListItm(),
+                    priceRequest.getPrice());
+            return generatePriceUpdateResponse(updated);
         }
-        return new ItemUpdateSharedResponse(errors);
-
     }
 
-    private BigDecimal convertToBigDecimal(double price) {
-        return new BigDecimal(price);
+    private ItemUpdateSharedResponse generatePriceUpdateResponse(boolean isUpdated) {
+        if (isUpdated) {
+            return new ItemUpdateSharedResponse(isUpdated);
+        } else {
+            ShoppingListError error = new ShoppingListError("price", "Unable to update price!");
+            return new ItemUpdateSharedResponse(error);
+        }
     }
 }

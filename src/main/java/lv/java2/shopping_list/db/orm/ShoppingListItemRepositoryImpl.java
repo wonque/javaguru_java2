@@ -1,13 +1,12 @@
 package lv.java2.shopping_list.db.orm;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -30,7 +29,7 @@ public class ShoppingListItemRepositoryImpl extends ORMRepository implements Sho
     }
 
     @Override
-    public int removeAllItemsFromShoppingList(ShoppingList shoppingList) {
+    public int removeAllItems(ShoppingList shoppingList) {
         String query = "DELETE FROM ShoppingListItem sl WHERE shoppingList = :shoppingList";
         return session().createQuery(query)
                 .setParameter("shoppingList", shoppingList)
@@ -44,22 +43,26 @@ public class ShoppingListItemRepositoryImpl extends ORMRepository implements Sho
     }
 
     @Override
-    public int updateDescription(ShoppingListItem item, String description) {
+    public boolean updateDescription(ShoppingListItem item, String description) {
         String query = "UPDATE ShoppingListItem sl SET sl.description = :description WHERE sl.itemId = :itemId";
-        return session().createQuery(query)
+        int itemsUpdated = session().createQuery(query)
                 .setParameter("description", description)
                 .setParameter("itemId", item.getItemId())
                 .executeUpdate();
+        return itemsUpdated > 0;
     }
 
     @Override
-    public int updatePrice(ShoppingListItem item, BigDecimal price) {
+    public boolean updatePrice(ShoppingListItem item, BigDecimal price) {
         String query = "UPDATE ShoppingListItem sl SET sl.price = :price WHERE sl.itemId = :itemId";
-        return session().createQuery(query)
+        int itemsUpdated = session().createQuery(query)
                 .setParameter("price", price)
                 .setParameter("itemId", item.getItemId())
                 .executeUpdate();
+        return itemsUpdated > 0;
     }
 
-
 }
+
+
+

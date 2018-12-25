@@ -1,7 +1,7 @@
 package services.shared.rules;
 
 import lv.java2.shopping_list.services.ShoppingListError;
-import lv.java2.shopping_list.services.EmptyTitleSharedRule;
+import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.junit.Test;
 
 import java.util.Optional;

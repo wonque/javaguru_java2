@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.account.registration;
 
-import lv.java2.shopping_list.domain.Account;
+import lv.java2.shopping_list.domain.account.Account;
 import lv.java2.shopping_list.services.ShoppingListError;
 
 import java.util.List;

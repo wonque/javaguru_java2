@@ -1,12 +1,12 @@
 package services.item.addition.validation;
 
-import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.addition.validation.ItemAdditionValidator;
 import lv.java2.shopping_list.services.item.addition.validation.ItemAdditionValidatorImpl;
 import lv.java2.shopping_list.services.item.addition.validation.rules.DuplicateItemRule;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;
-import lv.java2.shopping_list.services.EmptyTitleSharedRule;
+import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

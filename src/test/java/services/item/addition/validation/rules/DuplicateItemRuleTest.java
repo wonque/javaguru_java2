@@ -1,8 +1,8 @@
 package services.item.addition.validation.rules;
 
 import lv.java2.shopping_list.db.ShoppingListItemRepository;
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.addition.validation.rules.DuplicateItemRule;
 import org.junit.Test;

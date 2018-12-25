@@ -1,7 +1,6 @@
 package lv.java2.shopping_list.services.item;
 
-import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 
 import java.math.BigDecimal;
 
@@ -10,13 +9,14 @@ public class ItemUpdateSharedRequest {
     private ShoppingListItem item;
     private String title;
     private String description;
-    private double price;
+    private BigDecimal price;
     private int quantity;
 
 
     public ItemUpdateSharedRequest(ShoppingListItem item) {
         this.item = item;
     }
+
     public String getDescription() {
         return description;
     }
@@ -25,12 +25,12 @@ public class ItemUpdateSharedRequest {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setBigDecimalPrice(double price) {
+        this.price = BigDecimal.valueOf(price);
     }
 
     public int getQuantity() {

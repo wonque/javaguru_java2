@@ -1,14 +1,14 @@
 package services.item.update.price;
 
 
-import lv.java2.shopping_list.domain.ShoppingListItem;
+import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.ItemUpdateSharedRequest;
 import lv.java2.shopping_list.services.item.update.price.validation.UpdateItemPriceValidator;
 import lv.java2.shopping_list.services.item.update.price.validation.UpdateItemPriceValidatorImpl;
 import org.junit.Test;
 
-import java.util.List;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
@@ -23,17 +23,15 @@ public class UpdateItemPriceValidatorTest {
 
     @Test
     public void returnErrorIfEnteredPriceIsLessThanZero() {
-        request.setPrice(-10);
-        List<ShoppingListError> errors = validator.validate(request);
-        assertFalse(errors.isEmpty());
-        assertEquals(1, errors.size());
+        request.setBigDecimalPrice(-10);
+        Optional<ShoppingListError> error = validator.validate(request);
+        assertTrue(error.isPresent());
     }
 
     @Test
     public void returnNoErrorIfPriceIsZeroOrBigger() {
-        request.setPrice(10);
-        List<ShoppingListError> errors = validator.validate(request);
-        assertTrue(errors.isEmpty());
-        assertEquals(0, errors.size());
+        request.setBigDecimalPrice(10);
+        Optional<ShoppingListError> error = validator.validate(request);
+        assertFalse(error.isPresent());
     }
 }

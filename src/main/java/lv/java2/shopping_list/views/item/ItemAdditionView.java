@@ -1,14 +1,18 @@
 package lv.java2.shopping_list.views.item;
 
-import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;
 import lv.java2.shopping_list.services.item.addition.ItemAdditionResponse;
 import lv.java2.shopping_list.services.item.addition.ItemAdditionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class ItemAdditionView {
 
+    @Autowired
     private ItemAdditionService itemAdditionService;
 
     public void execute(ShoppingList shoppingList) {

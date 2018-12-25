@@ -2,7 +2,7 @@ package lv.java2.shopping_list.services.product.adition;
 
 import lv.java2.shopping_list.db.ProductRepository;
 import lv.java2.shopping_list.domain.Product;
-import lv.java2.shopping_list.domain.factories.ProductBuilder;
+import lv.java2.shopping_list.domain.ProductBuilder;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.product.adition.validation.ProductAdditionValidator;
 import org.springframework.beans.factory.annotation.Autowired;

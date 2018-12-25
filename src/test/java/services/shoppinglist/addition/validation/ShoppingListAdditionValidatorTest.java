@@ -1,12 +1,12 @@
 package services.shoppinglist.addition.validation;
 
-import lv.java2.shopping_list.domain.Account;
+import lv.java2.shopping_list.domain.account.Account;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.shoppinglist.ShoppingListSharedRequest;
 import lv.java2.shopping_list.services.shoppinglist.addition.validation.ShoppingListAdditionValidator;
 import lv.java2.shopping_list.services.shoppinglist.addition.validation.ShoppingListAdditionValidatorImpl;
 import lv.java2.shopping_list.services.shoppinglist.addition.validation.ShoppingListValidationRules;
-import lv.java2.shopping_list.services.EmptyTitleSharedRule;
+import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

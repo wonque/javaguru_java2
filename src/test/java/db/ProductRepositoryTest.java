@@ -3,7 +3,7 @@
 //import lv.java2.shopping_list.config.SpringAppConfig;
 //import lv.java2.shopping_list.db.ProductRepository;
 //import lv.java2.shopping_list.domain.Product;
-//import lv.java2.shopping_list.domain.factories.ProductBuilder;
+//import lv.java2.shopping_list.domain.ProductBuilder;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

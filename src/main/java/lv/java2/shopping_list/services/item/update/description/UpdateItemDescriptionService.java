@@ -17,15 +17,17 @@ public class UpdateItemDescriptionService {
     private ShoppingListItemRepository itemRepository;
 
     public ItemUpdateSharedResponse updateDescription(ItemUpdateSharedRequest request) {
-        List<ShoppingListError> errors = new ArrayList<>();
-        int rowAffected = itemRepository.updateDescription(request.getShoppingListItm(), request.getDescription());
-        if (rowAffected > 0) {
-            return new ItemUpdateSharedResponse(true);
+        boolean isUpdated = itemRepository.updateDescription(request.getShoppingListItm(), request.getDescription());
+        if (isUpdated) {
+            return new ItemUpdateSharedResponse(isUpdated);
         } else {
-            ShoppingListError error = new ShoppingListError("description",
-                    "No items were updated!");
-            errors.add(error);
-            return new ItemUpdateSharedResponse(errors);
+            return createNoItemsUpdatedResponse();
         }
+    }
+
+    private ItemUpdateSharedResponse createNoItemsUpdatedResponse() {
+        ShoppingListError error = new ShoppingListError("description",
+                "No items were updated!");
+        return new ItemUpdateSharedResponse(error);
     }
 }
