@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountRegistrationServiceValidatorTest {
@@ -38,10 +39,30 @@ public class AccountRegistrationServiceValidatorTest {
     private AccountRegistrationValidator validator = new AccountRegistrationValidatorImpl();
 
     @Test
-    public void collectAndReturnLoginErrors() {
-
+    public void emptyLoginErrorTest() {
         Mockito.when(emptyTitleSharedRule.execute(registrationRequest.getLogin(), "login"))
-                .thenReturn(createError("login", "empty"));
+                .thenReturn(createError("login", "null"));
+        List<ShoppingListError> errors = validator.validate(registrationRequest);
+        Mockito.verifyZeroInteractions(loginRules);
+        Mockito.verifyZeroInteractions(passwordRules);
+        assertEquals(1, errors.size());
+    }
+
+    @Test
+    public void emptyPasswordErrorTest() {
+        Mockito.when(emptyTitleSharedRule.execute(registrationRequest.getLogin(), "login"))
+                .thenReturn(Optional.empty());
+        Mockito.when(emptyTitleSharedRule.execute(registrationRequest.getPassword(), "password"))
+                .thenReturn(createError("password", "null"));
+        List<ShoppingListError> errors = validator.validate(registrationRequest);
+        Mockito.verifyZeroInteractions(loginRules);
+        Mockito.verifyZeroInteractions(passwordRules);
+        assertEquals(1, errors.size());
+    }
+
+
+    @Test
+    public void loginErrorsTestExceptEpmty() {
         Mockito.when(loginRules.lessThan5Length(registrationRequest.getLogin()))
                 .thenReturn(createError("login", "less than five rule"));
         Mockito.when(loginRules.doesNotContainLetters(registrationRequest.getLogin()))
@@ -52,21 +73,40 @@ public class AccountRegistrationServiceValidatorTest {
                 .thenReturn(createError("login", "duplicate"));
 
         List<ShoppingListError> errors = validator.validate(registrationRequest);
-        assertEquals(5, errors.size());
+        assertEquals(4, errors.size());
     }
 
     @Test
-    public void collectAndReturnPasswordErrors() {
-
-        Mockito.when(passwordRules.containsDigits(registrationRequest.getPlainTextPassword()))
+    public void passwordErrorsTestExcemptEmpty() {
+        Mockito.when(passwordRules.containsDigits(registrationRequest.getPassword()))
                 .thenReturn(createError("password", "digits"));
-        Mockito.when(passwordRules.lessThan6Length(registrationRequest. getPlainTextPassword()))
+        Mockito.when(passwordRules.lessThan6Length(registrationRequest.getPassword()))
                 .thenReturn(createError("password", "less than 6"));
-//        Mockito.when(passwordRules.matchPasswords(registrationRequest.getMainPassword(), registrationRequest.getPasswordToMatch()))
-//                .thenReturn(createError("password", "match"));
 
         List<ShoppingListError> errors = validator.validate(registrationRequest);
         assertEquals(2, errors.size());
+    }
+
+    @Test
+    public void noErrorsIfLoginAndPassValid(){
+        Mockito.when(emptyTitleSharedRule.execute(registrationRequest.getLogin(), "login"))
+                .thenReturn(Optional.empty());
+        Mockito.when(emptyTitleSharedRule.execute(registrationRequest.getPassword(), "password"))
+                .thenReturn(Optional.empty());
+        Mockito.when(loginRules.lessThan5Length(registrationRequest.getLogin()))
+                .thenReturn(Optional.empty());
+        Mockito.when(loginRules.doesNotContainLetters(registrationRequest.getLogin()))
+                .thenReturn(Optional.empty());
+        Mockito.when(loginRules.containsAtSignAndDotSign(registrationRequest.getLogin()))
+                .thenReturn(Optional.empty());
+        Mockito.when(loginRules.duplicateLogin(registrationRequest.getLogin()))
+                .thenReturn(Optional.empty());
+        Mockito.when(passwordRules.containsDigits(registrationRequest.getPassword()))
+                .thenReturn(Optional.empty());
+        Mockito.when(passwordRules.lessThan6Length(registrationRequest.getPassword()))
+                .thenReturn(Optional.empty());
+        List<ShoppingListError> errors = validator.validate(registrationRequest);
+        assertTrue(errors.isEmpty());
     }
 
     private Optional<ShoppingListError> createError(String field, String description) {

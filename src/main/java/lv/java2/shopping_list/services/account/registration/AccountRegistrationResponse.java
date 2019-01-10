@@ -34,6 +34,10 @@ public class AccountRegistrationResponse {
         this.errors = errors;
     }
 
+    public void displayErrors(){
+        errors.forEach(System.out::println);
+    }
+
     public boolean isSuccess() {
         return (account != null && errors == null || errors.isEmpty());
     }

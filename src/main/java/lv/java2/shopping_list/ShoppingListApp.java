@@ -2,6 +2,7 @@ package lv.java2.shopping_list;
 
 import lv.java2.shopping_list.config.SpringAppConfig;
 
+import lv.java2.shopping_list.views.AccountRegistrationView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -10,8 +11,11 @@ public class ShoppingListApp {
 
 
     public static void main(String[] args) {
-//        ApplicationContext context
-//                = new AnnotationConfigApplicationContext(SpringAppConfig.class);
+        ApplicationContext context
+                = new AnnotationConfigApplicationContext(SpringAppConfig.class);
+
+        AccountRegistrationView accountRegistrationView = context.getBean(AccountRegistrationView.class);
+        accountRegistrationView.register();
 
 //        AccountRepositoryImpl accountRepository = context.getBean(AccountRepositoryImpl.class);
 //        AddProductView addProductView = context.getBean(AddProductView.class);

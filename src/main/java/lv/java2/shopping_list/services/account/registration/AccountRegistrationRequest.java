@@ -3,12 +3,15 @@ package lv.java2.shopping_list.services.account.registration;
 public class AccountRegistrationRequest {
 
     private String login;
-    private String plainTextPassword;
+    private String password;
     private String userName;
 
-    public AccountRegistrationRequest(String login, String plainTextPassword) {
+    public AccountRegistrationRequest() {
+    }
+
+    public AccountRegistrationRequest(String login, String password) {
         this.login = login;
-        this.plainTextPassword = plainTextPassword;
+        this.password = password;
     }
 
     public String getLogin() {
@@ -19,12 +22,12 @@ public class AccountRegistrationRequest {
         this.login = login;
     }
 
-    public String getPlainTextPassword() {
-        return plainTextPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPlainTextPassword(String plainTextPassword) {
-        this.plainTextPassword = plainTextPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserName() {

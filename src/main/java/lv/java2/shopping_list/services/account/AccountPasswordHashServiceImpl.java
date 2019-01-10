@@ -1,8 +1,9 @@
 package lv.java2.shopping_list.services.account;
 
-import lv.java2.shopping_list.services.account.get.GetAccountRequest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AccountPasswordHashServiceImpl implements AccountPasswordHashService {
 
     @Override

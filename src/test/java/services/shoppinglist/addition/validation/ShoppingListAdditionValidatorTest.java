@@ -36,14 +36,11 @@ public class ShoppingListAdditionValidatorTest {
         Account account = Mockito.mock(Account.class);
         ShoppingListSharedRequest request = new ShoppingListSharedRequest(account, "title");
 
-        Mockito.when(emptyTitleSharedRule.execute(request.getTitle(), "title"))
-                .thenReturn(createError("title", "empty"));
-
         Mockito.when(validationRules.duplicateEntryRule(account, "title"))
                 .thenReturn(createError("title", "duplicate"));
 
         List<ShoppingListError> errors = validator.validate(request);
-        assertEquals(2, errors.size());
+        assertEquals(1, errors.size());
     }
 
     private Optional<ShoppingListError> createError(String field, String description) {

@@ -7,11 +7,11 @@ import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.addition.validation.ItemAdditionValidator;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class ItemAdditionService {
 
     @Autowired

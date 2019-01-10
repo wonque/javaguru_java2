@@ -14,6 +14,8 @@ public class AccountPasswordHashServiceTest {
     @Test
     public void test() {
         String hashPass = passwordHashService.hashPassword("password");
+        System.out.println(hashPass);
+        System.out.println(hashPass.length());
         assertNotNull(hashPass);
         assertEquals(hashPass.getClass(), String.class);
     }

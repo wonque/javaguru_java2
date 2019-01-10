@@ -18,9 +18,7 @@ public class LoginRules {
 
     public Optional<ShoppingListError> lessThan5Length(String login) {
         if (login.length() < 5) {
-            ShoppingListError error = new ShoppingListError("login",
-                    "Login too short! Minimum length is 5 symbols");
-            return Optional.of(error);
+            return Optional.of(createError("Login too short! Minimum length is 5 symbols"));
         } else {
             return Optional.empty();
         }
@@ -29,9 +27,7 @@ public class LoginRules {
     public Optional<ShoppingListError> containsAtSignAndDotSign(String login) {
         if (!login.contains("@") && !login.contains(".") || login.contains("@") && !login.contains(".")
                 || !login.contains("@") && login.contains(".")) {
-            ShoppingListError error = new ShoppingListError("login",
-                    "Login is not an email address!");
-            return Optional.of(error);
+            return Optional.of(createError("Login is not an email address!"));
         } else {
             return Optional.empty();
         }
@@ -41,23 +37,30 @@ public class LoginRules {
         Pattern pattern = Pattern.compile(".*[a-zA-Z].*");
         Matcher matcher = pattern.matcher(login);
         if (!matcher.find()) {
-            ShoppingListError error = new ShoppingListError("login",
-                    "Login must contain letters and numbers");
-            return Optional.of(error);
+            return Optional.of(createError("Login must contain letters and numbers"));
         }
         return Optional.empty();
     }
-
 
     public Optional<ShoppingListError> duplicateLogin(String login) {
         if (login != null) {
             Optional<Account> founded = accountRepository.findByLogin(login);
             if (founded.isPresent()) {
-                ShoppingListError error = new ShoppingListError("login",
-                        "Account " + login + " already registered!");
-                return Optional.of(error);
+                return Optional.of(createError("Account with this login is already registered"));
             }
         }
         return Optional.empty();
     }
+
+    public Optional<ShoppingListError> longerThat100symbols(String login) {
+        if (login != null && login.length() > 100) {
+            return Optional.of(createError("Login is too long - maximum 100 symbols"));
+        }
+        return Optional.empty();
+    }
+
+    private ShoppingListError createError(String description) {
+        return new ShoppingListError("login", description);
+    }
+
 }

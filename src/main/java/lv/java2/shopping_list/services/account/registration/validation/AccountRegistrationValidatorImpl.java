@@ -6,12 +6,12 @@ import lv.java2.shopping_list.services.account.registration.validation.rules.Log
 import lv.java2.shopping_list.services.account.registration.validation.rules.PasswordRules;
 import lv.java2.shopping_list.services.sharedrules.EmptyTitleSharedRule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class AccountRegistrationValidatorImpl implements AccountRegistrationValidator {
 
     @Autowired
@@ -26,33 +26,27 @@ public class AccountRegistrationValidatorImpl implements AccountRegistrationVali
     @Override
     public List<ShoppingListError> validate(AccountRegistrationRequest request) {
         List<ShoppingListError> errors = new ArrayList<>();
-        emptyTitleSharedRule.execute(request.getLogin(), "login").ifPresent(errors::add);
+        emptyLoginAndPasswordCheck(request).stream().findFirst().ifPresent(errors::add);
+        if (!errors.isEmpty()) {
+            return errors;
+        }
+        loginRules.longerThat100symbols(request.getLogin()).ifPresent(errors::add);
         loginRules.containsAtSignAndDotSign(request.getLogin()).ifPresent(errors::add);
         loginRules.doesNotContainLetters(request.getLogin()).ifPresent(errors::add);
         loginRules.lessThan5Length(request.getLogin()).ifPresent(errors::add);
         loginRules.duplicateLogin(request.getLogin()).ifPresent(errors::add);
-        passwordRules.containsDigits(request.getPlainTextPassword()).ifPresent(errors::add);
-        passwordRules.lessThan6Length(request.getPlainTextPassword()).ifPresent(errors::add);
-////        passwordRules.matchPasswords(request.getMainPassword(), request.getPasswordToMatch()).ifPresent(errors::add);
+        passwordRules.containsDigits(request.getPassword()).ifPresent(errors::add);
+        passwordRules.lessThan6Length(request.getPassword()).ifPresent(errors::add);
         return errors;
     }
 
-//    @Override
-//    public List<ShoppingListError> validateLogin(String login) {
-//        List<ShoppingListError> loginErrors = new ArrayList<>();
-//        emptyTitleSharedRule.execute(login, "login").ifPresent(loginErrors::add);
-//        loginRules.containsAtSignAndDotSign(login).ifPresent(loginErrors::add);
-//        loginRules.doesNotContainLetters(login).ifPresent(loginErrors::add);
-//        loginRules.lessThan5Length(login).ifPresent(loginErrors::add);
-//        loginRules.duplicateLogin(login).ifPresent(loginErrors::add);
-//        return loginErrors;
-//    }
-//
-//    @Override
-//    public List<ShoppingListError> validatePassword(String plainTextPassword) {
-//        List<ShoppingListError> passwordErrors = new ArrayList<>();
-//        passwordRules.containsDigits(plainTextPassword).ifPresent(passwordErrors::add);
-//        passwordRules.lessThan6Length(plainTextPassword).ifPresent(passwordErrors::add);
-//        return passwordErrors;
-//    }
+
+    private List<ShoppingListError> emptyLoginAndPasswordCheck(AccountRegistrationRequest registrationRequest) {
+        List<ShoppingListError> emptyErrors = new ArrayList<>();
+        emptyTitleSharedRule.execute(registrationRequest.getLogin(), "login")
+                .ifPresent(emptyErrors::add);
+        emptyTitleSharedRule.execute(registrationRequest.getPassword(), "password")
+                .ifPresent(emptyErrors::add);
+        return emptyErrors;
+    }
 }

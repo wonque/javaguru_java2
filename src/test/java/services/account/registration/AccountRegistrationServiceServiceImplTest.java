@@ -65,7 +65,7 @@ public class AccountRegistrationServiceServiceImplTest {
         Account account = Mockito.mock(Account.class);
         Mockito.when(validator.validate(registrationRequest)).thenReturn(errors);
 
-        Mockito.when(passwordHashService.hashPassword(registrationRequest.getPlainTextPassword()))
+        Mockito.when(passwordHashService.hashPassword(registrationRequest.getPassword()))
                 .thenReturn("hashedPassword");
 
         Mockito.when(itemBuilder.buildInstance(registrationRequest.getLogin(),

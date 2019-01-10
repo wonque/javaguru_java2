@@ -7,11 +7,11 @@ import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.account.AccountPasswordHashService;
 import lv.java2.shopping_list.services.account.registration.validation.AccountRegistrationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class AccountRegistrationServiceImpl implements AccountRegistrationService {
 
     @Autowired
@@ -28,7 +28,7 @@ public class AccountRegistrationServiceImpl implements AccountRegistrationServic
         if (!errors.isEmpty()) {
             return new AccountRegistrationResponse(errors);
         }
-        String hashedPass = passwordHashService.hashPassword(request.getPlainTextPassword());
+        String hashedPass = passwordHashService.hashPassword(request.getPassword());
         Account account = accountFactory.buildInstance(
                 request.getLogin(),
                 hashedPass,
@@ -36,5 +36,4 @@ public class AccountRegistrationServiceImpl implements AccountRegistrationServic
         repository.addToBase(account);
         return new AccountRegistrationResponse(account);
     }
-
 }

@@ -5,11 +5,11 @@ import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import lv.java2.shopping_list.services.ShoppingListError;
 import lv.java2.shopping_list.services.item.ItemAddRemoveSharedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Component
+@Service
 public class ItemRemoveService {
 
     @Autowired

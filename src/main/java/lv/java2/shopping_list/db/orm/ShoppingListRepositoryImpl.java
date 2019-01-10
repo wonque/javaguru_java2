@@ -6,12 +6,13 @@ import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 @Transactional
 public class ShoppingListRepositoryImpl extends ORMRepository implements ShoppingListRepository {
 
@@ -20,6 +21,14 @@ public class ShoppingListRepositoryImpl extends ORMRepository implements Shoppin
     public ShoppingList addToDataBase(ShoppingList shoppingList) {
         session().save(shoppingList);
         return shoppingList;
+    }
+
+    @Override
+    public Optional<ShoppingList> findById(Long id) {
+        String query = "FROM ShoppingList sl WHERE id = :id";
+        ShoppingList shoppingList = (ShoppingList) session().createQuery(query)
+                .setParameter("id", id).uniqueResult();
+        return Optional.of(shoppingList);
     }
 
     @Override
@@ -38,12 +47,27 @@ public class ShoppingListRepositoryImpl extends ORMRepository implements Shoppin
         return true;
     }
 
+//    @Override
+//    public List<ShoppingListItem> getShoppingList(ShoppingList shoppingList) {
+//        String query = "FROM ShoppingListItem sl WHERE shoppingList = :shoppingList";
+//        return session().createQuery(query, ShoppingListItem.class)
+//                .setParameter("shoppingList", shoppingList).list();
+//    }
+
     @Override
-    public List<ShoppingListItem> getShoppingList(ShoppingList shoppingList) {
-        String query = "FROM ShoppingListItem sl WHERE shoppingList = :shoppingList";
-        return session().createQuery(query, ShoppingListItem.class)
-                .setParameter("shoppingList", shoppingList).list();
+    public List<ShoppingList> findAllLists(Account account) {
+        String query = "FROM ShoppingList sl WHERE sl.account = :account";
+        return session().createQuery(query, ShoppingList.class)
+                .setParameter("account", account).getResultList();
     }
+
+    @Override
+    public List<ShoppingList> findAllListsById(Long accountId) {
+        String query = "FROM ShoppingList sl WHERE sl.account_id = :account_id";
+        return session().createQuery(query, ShoppingList.class)
+                .setParameter("account_id", accountId).getResultList();
+    }
+
 }
 
 

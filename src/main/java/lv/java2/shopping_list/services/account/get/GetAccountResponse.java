@@ -32,4 +32,8 @@ public class GetAccountResponse {
     public void setError(ShoppingListError error) {
         this.error = error;
     }
+
+    public boolean isSuccess() {
+        return (account != null && error == null);
+    }
 }

@@ -3,9 +3,11 @@ package lv.java2.shopping_list.services.account.get;
 import lv.java2.shopping_list.db.AccountRepository;
 import lv.java2.shopping_list.services.ShoppingListError;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.Optional;
+
+@Service
 public class GetAccountService {
 
     @Autowired

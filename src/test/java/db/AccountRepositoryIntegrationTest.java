@@ -9,13 +9,15 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.annotation.Resource;
+import java.util.Optional;
 
 import static junit.framework.TestCase.*;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringAppConfig.class)
+@ContextConfiguration (classes = SpringAppConfig.class)
 public class AccountRepositoryIntegrationTest {
 
     @Autowired
@@ -32,17 +34,16 @@ public class AccountRepositoryIntegrationTest {
     }
 
 
-//    @Test
-//    public void testA_falseIfLoginDoesNotExists() {
-//        Optional<Account> founded = accountRepository.findByLogin("somelogin");
-//        assertFalse(founded.isPresent());
-//    }
-//
-//    @Test
-//    public void testB_trueIfLoginExists() {
-//        Optional<Account> founded = accountRepository.findByLogin("onetwo@in.out");
-//        assertTrue(founded.isPresent());
-//    }
+    @Test
+    public void testA_falseIfLoginDoesNotExists() {
+        Optional<Account> founded = accountRepository.findByLogin("somelogin");
+        assertFalse(founded.isPresent());
+    }
 
-
+    @Test
+    public void testB_trueIfLoginExists() {
+        Optional<Account> founded = accountRepository.findByLogin("login@foo.bar");
+        assertTrue(founded.isPresent());
+    }
 }
+

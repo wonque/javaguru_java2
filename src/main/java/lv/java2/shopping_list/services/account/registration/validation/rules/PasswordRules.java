@@ -10,9 +10,7 @@ public class PasswordRules {
 
     public Optional<ShoppingListError> lessThan6Length(String password) {
         if (password.length() < 6) {
-            ShoppingListError error = new ShoppingListError("password",
-                    "Password too short! Minimum length is 6 symbols");
-            return Optional.of(error);
+            return Optional.of(createError("Password too short! Minimum length is 6 symbols"));
         } else {
             return Optional.empty();
         }
@@ -28,26 +26,12 @@ public class PasswordRules {
                 return Optional.empty();
             }
         }
-        ShoppingListError error = new ShoppingListError("password",
-                "Password must contain at least three digits");
-        return Optional.of(error);
-//        if (!password.matches(".*[0-9].*")) {
-//            ShoppingListError error = new ShoppingListError("password",
-//                    "Password must contain at least three digits");
-//            return Optional.of(error);
-//        } else {
-//            return Optional.empty();
-//        }
+        return Optional.of(createError("Password must contain at least three digits"));
     }
 
-//    public Optional<ShoppingListError> matchPasswords(String enteredPassword, String confirmationPassword) {
-//        if (!enteredPassword.equals(confirmationPassword)) {
-//            ShoppingListError error =
-//                    new ShoppingListError("password", "Entered password and confirmation password must match!");
-//            return Optional.of(error);
-//
-//        } else {
-//            return Optional.empty();
-//        }
-//    }
+    private ShoppingListError createError(String description) {
+        return new ShoppingListError("password", description);
+    }
+
+
 }

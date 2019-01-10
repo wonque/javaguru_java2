@@ -4,12 +4,13 @@ import lv.java2.shopping_list.db.ShoppingListItemRepository;
 import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.domain.item.ShoppingListItem;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@Component
+@Repository
 @Transactional
 public class ShoppingListItemRepositoryImpl extends ORMRepository implements ShoppingListItemRepository {
 

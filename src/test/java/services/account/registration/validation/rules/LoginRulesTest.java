@@ -82,6 +82,6 @@ public class LoginRulesTest {
         Optional<ShoppingListError> error = loginRules.duplicateLogin("login@one.ku");
         assertTrue(error.isPresent());
         assertEquals("login", error.get().getField());
-        assertEquals("Account login@one.ku already registered!", error.get().getErrorDescription());
+        assertEquals("Account with this login is already registered", error.get().getErrorDescription());
     }
 }

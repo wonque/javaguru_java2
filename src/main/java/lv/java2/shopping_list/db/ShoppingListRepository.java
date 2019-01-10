@@ -11,10 +11,17 @@ public interface ShoppingListRepository {
 
     ShoppingList addToDataBase(ShoppingList shoppingList);
 
+    Optional<ShoppingList> findById(Long id);
+
     Optional<ShoppingList> findByAccountAndTitle(Account account, String title);
 
     boolean remove(ShoppingList shoppingList);
 
-    List<ShoppingListItem> getShoppingList (ShoppingList shoppingList);
+//    List<ShoppingListItem> getShoppingList (ShoppingList shoppingList);
+
+    List<ShoppingList> findAllLists(Account account);
+
+    List<ShoppingList> findAllListsById(Long accountId);
+
 
 }

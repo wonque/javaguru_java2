@@ -2,22 +2,18 @@ package lv.java2.shopping_list.db.orm;
 
 import lv.java2.shopping_list.db.AccountRepository;
 import lv.java2.shopping_list.domain.account.Account;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
+import lv.java2.shopping_list.domain.shoppinglist.ShoppingListStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 @Transactional
 public class AccountRepositoryImpl extends ORMRepository implements AccountRepository {
-
-
-//    @Override
-//    public boolean checkIfLoginExists(String login) {
-//        Query query = session().createQuery("FROM Account WHERE lower(login) = :login");
-//        query.setParameter("login", login);
-//        return query.uniqueResult() != null;
-//    }
 
     @Override
     public Account addToBase(Account account) {
@@ -40,7 +36,6 @@ public class AccountRepositoryImpl extends ORMRepository implements AccountRepos
                 .setParameter("id", id).uniqueResult();
         return Optional.ofNullable(account);
     }
-
 
     @Override
     public boolean deleteAccount(Account account) {
