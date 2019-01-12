@@ -7,6 +7,8 @@ public class ShoppingListSharedRequest {
     private String title;
     private Account account;
 
+    public ShoppingListSharedRequest(){}
+
     public ShoppingListSharedRequest(Account account, String title) {
         this.account = account;
         this.title = title;

@@ -5,14 +5,16 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManagerFactory;
+
 @Component
 public abstract class ORMRepository {
 
     @Autowired
-    private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     protected Session session() {
-        return sessionFactory.getCurrentSession();
+        return entityManagerFactory.unwrap(SessionFactory.class).openSession();
     }
 
 

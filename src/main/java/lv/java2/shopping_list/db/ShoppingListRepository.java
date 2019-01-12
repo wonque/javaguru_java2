@@ -21,7 +21,4 @@ public interface ShoppingListRepository {
 
     List<ShoppingList> findAllLists(Account account);
 
-    List<ShoppingList> findAllListsById(Long accountId);
-
-
 }

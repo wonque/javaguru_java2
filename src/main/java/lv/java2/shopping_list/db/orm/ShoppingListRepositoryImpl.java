@@ -61,13 +61,6 @@ public class ShoppingListRepositoryImpl extends ORMRepository implements Shoppin
                 .setParameter("account", account).getResultList();
     }
 
-    @Override
-    public List<ShoppingList> findAllListsById(Long accountId) {
-        String query = "FROM ShoppingList sl WHERE sl.account_id = :account_id";
-        return session().createQuery(query, ShoppingList.class)
-                .setParameter("account_id", accountId).getResultList();
-    }
-
 }
 
 

@@ -1,5 +1,6 @@
 package lv.java2.shopping_list.web.dtos;
 
+
 public class AccountDTO {
 
     private Long id;
@@ -7,11 +8,11 @@ public class AccountDTO {
     private String userName;
     private String password;
 
-    public AccountDTO() {
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public AccountDTO() {
     }
 
     public void setId(Long id) {

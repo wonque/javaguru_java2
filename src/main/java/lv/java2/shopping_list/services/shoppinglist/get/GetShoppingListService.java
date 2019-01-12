@@ -4,6 +4,7 @@ import lv.java2.shopping_list.db.ShoppingListRepository;
 import lv.java2.shopping_list.domain.account.Account;
 import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
 import lv.java2.shopping_list.services.ShoppingListError;
+import lv.java2.shopping_list.services.shoppinglist.ShoppingListSharedRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class GetShoppingListService {
     @Autowired
     private ShoppingListRepository repository;
 
-    public GetShoppingListResponse getSingleShoppingList(GetShoppingListRequest request) {
+    public GetShoppingListResponse getSingleShoppingList(ShoppingListSharedRequest request) {
         Optional<ShoppingList> founded = repository.findByAccountAndTitle(request.getAccount(), request.getTitle());
         if (founded.isPresent()) {
             return new GetShoppingListResponse(founded.get());

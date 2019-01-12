@@ -96,4 +96,15 @@ public class Account {
     public int hashCode() {
         return Objects.hash(id, login, password, userName, dateCreated);
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", userName='" + userName + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }

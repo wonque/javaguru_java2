@@ -1,4 +1,4 @@
-package lv.java2.shopping_list.web.mapping;
+package lv.java2.shopping_list.web.dtos.mappers;
 
 import lv.java2.shopping_list.domain.account.Account;
 import lv.java2.shopping_list.web.dtos.AccountDTO;
@@ -11,7 +11,7 @@ import org.mapstruct.Mappings;
 public interface AccountMapper {
 
     @Mappings({
-            @Mapping(target = "password", ignore = true)
+            @Mapping(target = "password", ignore = true),
     })
     AccountDTO accountToAccountDTO(Account account);
 
