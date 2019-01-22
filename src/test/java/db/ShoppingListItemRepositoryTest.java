@@ -1,15 +1,15 @@
 //package db;
 //
 //import lv.java2.shopping_list.config.SpringAppConfig;
-//import lv.java2.shopping_list.db.AccountRepository;
-//import lv.java2.shopping_list.db.ShoppingListItemRepository;
-//import lv.java2.shopping_list.db.ShoppingListRepository;
-//import lv.java2.shopping_list.domain.account.Account;
-//import lv.java2.shopping_list.domain.shoppinglist.ShoppingList;
-//import lv.java2.shopping_list.domain.item.ShoppingListItem;
-//import lv.java2.shopping_list.domain.account.AccountFactory;
-//import lv.java2.shopping_list.domain.shoppinglist.ShoppingListFactory;
-//import lv.java2.shopping_list.domain.item.ShoppingListItemFactory;
+//import lv.java2.shopping_list.account.repository.AccountRepository;
+//import lv.java2.shopping_list.item.repository.ItemRepository;
+//import lv.java2.shopping_list.shoppinglist.repository.ShoppingListRepository;
+//import lv.java2.shopping_list.account.domain.Account;
+//import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
+//import lv.java2.shopping_list.item.domain.Item;
+//import lv.java2.shopping_list.account.domain.AccountFactory;
+//import lv.java2.shopping_list.shoppinglist.domain.ShoppingListFactory;
+//import lv.java2.shopping_list.item.domain.ItemFactory;
 //import org.junit.BeforeClass;
 //import org.junit.FixMethodOrder;
 //import org.junit.Test;
@@ -30,7 +30,7 @@
 //public class ShoppingListItemRepositoryTest {
 //
 //    @Autowired
-//    private ShoppingListItemRepository itemRepository;
+//    private ItemRepository itemRepository;
 //    @Autowired
 //    private AccountRepository accountRepository;
 //    @Autowired
@@ -40,15 +40,15 @@
 //    private static ShoppingList shoppingList;
 //    private static ShoppingListFactory shoppingListFactory;
 //    private static AccountFactory accountFactory;
-//    private static ShoppingListItem item;
-//    private static ShoppingListItemFactory itemBuilder;
+//    private static Item item;
+//    private static ItemFactory itemBuilder;
 //
 //    @BeforeClass
 //    public static void init() {
 //        accountFactory = new AccountFactory();
 //        account = accountFactory.buildInstance("login@login.com", "12345", "Dude");
 //        shoppingListFactory = new ShoppingListFactory();
-//        itemBuilder = new ShoppingListItemFactory();
+//        itemBuilder = new ItemFactory();
 //    }
 //
 //
@@ -63,7 +63,7 @@
 //        itemRepository.addItemToShoppingList(item);
 //        assertNotNull(item.getItemId());
 //
-//        Optional<ShoppingListItem> shoppingListItem = itemRepository.findItemByTitle(shoppingList, "item1");
+//        Optional<Item> shoppingListItem = itemRepository.findItemByTitle(shoppingList, "item1");
 //        assertTrue(shoppingListItem.isPresent());
 //
 //        assertNull(shoppingListItem.get().getDescription());

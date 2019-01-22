@@ -2,17 +2,12 @@ package db;
 
 
 import lv.java2.shopping_list.ShoppingListApp;
-import lv.java2.shopping_list.db.AccountRepository;
-import lv.java2.shopping_list.domain.account.Account;
+import lv.java2.shopping_list.account.repository.AccountRepository;
+import lv.java2.shopping_list.account.domain.Account;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -34,7 +29,7 @@ public class AccountRepositoryIntegrationTest {
         account.setLogin("poooooo@foo.bar");
         account.setPassword("123456");
         assertNull(account.getId());
-        accountRepository.addToBase(account);
+        accountRepository.save(account);
         assertNotNull(account.getId());
     }
 
