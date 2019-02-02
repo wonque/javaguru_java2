@@ -2,27 +2,35 @@ package lv.java2.shopping_list.account.services.get;
 
 import lv.java2.shopping_list.account.domain.Account;
 import lv.java2.shopping_list.ShoppingListError;
+import lv.java2.shopping_list.web.dto.AccountDTO;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.http.HttpStatus;
 
-public class GetAccountResponse {
+public class GetAccountResponse extends ResourceSupport {
 
-    private Account account;
-
+    private AccountDTO accountDTO;
     private ShoppingListError error;
+    private HttpStatus httpStatus;
 
-    public GetAccountResponse(Account account) {
-        this.account = account;
+    public GetAccountResponse() {
     }
 
-    public GetAccountResponse(ShoppingListError error) {
+    public GetAccountResponse(AccountDTO accountDTO, HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+        this.accountDTO = accountDTO;
+    }
+
+    public GetAccountResponse(ShoppingListError error, HttpStatus status) {
+        this.httpStatus = status;
         this.error = error;
     }
 
-    public Account getAccount() {
-        return account;
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
     }
 
     public ShoppingListError getError() {
@@ -33,7 +41,12 @@ public class GetAccountResponse {
         this.error = error;
     }
 
-    public boolean isSuccess() {
-        return (account != null && error == null);
+    public HttpStatus getStatus() {
+        return httpStatus;
     }
+
+    public void setStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
 }

@@ -5,7 +5,7 @@ import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
 import lv.java2.shopping_list.shoppinglist.domain.ShoppingListFactory;
 import lv.java2.shopping_list.ShoppingListError;
 import lv.java2.shopping_list.shoppinglist.services.ShoppingListSharedRequest;
-import lv.java2.shopping_list.shoppinglist.services.validation.addition.ShoppingListAdditionValidator;
+import lv.java2.shopping_list.shoppinglist.services.addition.validation.ShoppingListAdditionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class ShoppingListAdditionService {
             return new ShoppingListAdditionResponse(errors);
         }
         ShoppingList newEntry = shoppingListFactory.createInstance(request.getAccount(), request.getTitle());
-        repository.addToDataBase(newEntry);
+        repository.save(newEntry);
         return new ShoppingListAdditionResponse(newEntry);
     }
 }

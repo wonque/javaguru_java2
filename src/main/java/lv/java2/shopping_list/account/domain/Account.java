@@ -2,6 +2,7 @@ package lv.java2.shopping_list.account.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.hateoas.Identifiable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,9 +21,9 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "LOGIN", nullable = false)
+    @Column(name = "EMAIL", nullable = false)
     @NotNull
-    private String loginAsEmail;
+    private String email;
 
     @Column(name = "PASSWORD", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -30,15 +31,12 @@ public class Account {
     private String password;
 
     @Column(name = "USERNAME")
-    private String userName;
+    private String username;
 
     @CreationTimestamp
     @Column(name = "DATE_CREATED")
     private Date dateCreated;
-//    public Account(String login, String password) {
-//        this.login = login;
-//        this.password = password;
-//    }
+
 
     public Long getId() {
         return id;
@@ -48,20 +46,20 @@ public class Account {
         this.id = id;
     }
 
-    public String getLogin() {
-        return loginAsEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.loginAsEmail = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -76,8 +74,8 @@ public class Account {
         this.dateCreated = dateCreated;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     @Override
@@ -86,24 +84,24 @@ public class Account {
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
         return Objects.equals(id, account.id) &&
-                Objects.equals(loginAsEmail, account.loginAsEmail) &&
+                Objects.equals(email, account.email) &&
                 Objects.equals(password, account.password) &&
-                Objects.equals(userName, account.userName) &&
+                Objects.equals(username, account.username) &&
                 Objects.equals(dateCreated, account.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loginAsEmail, password, userName, dateCreated);
+        return Objects.hash(id, email, password, username, dateCreated);
     }
 
     @Override
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", login='" + loginAsEmail + '\'' +
+                ", login='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", dateCreated=" + dateCreated +
                 '}';
     }

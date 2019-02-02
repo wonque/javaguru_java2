@@ -2,25 +2,30 @@ package lv.java2.shopping_list.shoppinglist.services.get;
 
 import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
 import lv.java2.shopping_list.ShoppingListError;
-import lv.java2.shopping_list.shoppinglist.services.ShoppingListResponse;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class GetShoppingListResponse extends ShoppingListResponse {
+public class GetShoppingListResponse extends ResourceSupport {
 
     private ShoppingList shoppingList;
     private List<ShoppingList> listOfShoppingLists;
     private ShoppingListError error;
+    private HttpStatus httpStatus;
 
-    public GetShoppingListResponse(ShoppingList shoppingList) {
+    public GetShoppingListResponse(ShoppingList shoppingList, HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
         this.shoppingList = shoppingList;
     }
 
-    public GetShoppingListResponse(List<ShoppingList> listOfShoppingLists) {
+    public GetShoppingListResponse(List<ShoppingList> listOfShoppingLists, HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
         this.listOfShoppingLists = listOfShoppingLists;
     }
 
-    public GetShoppingListResponse(ShoppingListError error) {
+    public GetShoppingListResponse(ShoppingListError error, HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
         this.error = error;
     }
 
@@ -48,7 +53,12 @@ public class GetShoppingListResponse extends ShoppingListResponse {
         this.error = error;
     }
 
-    public boolean isSuccess() {
-        return (shoppingList != null || listOfShoppingLists != null) && error == null;
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
+    }
+
 }

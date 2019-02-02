@@ -31,7 +31,7 @@ public class ItemAdditionService {
             return new ItemAdditionResponse(errors);
         }
         Item newEntry = itemBuilder.createWithTitle(request.getShoppingList(), request.getTitle());
-        itemRepository.addItemToShoppingList(newEntry);
+        itemRepository.save(newEntry);
         return new ItemAdditionResponse(newEntry);
     }
 }

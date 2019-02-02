@@ -2,14 +2,16 @@ package lv.java2.shopping_list.shoppinglist.services.addition;
 
 import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
 import lv.java2.shopping_list.ShoppingListError;
-import lv.java2.shopping_list.shoppinglist.services.ShoppingListResponse;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class ShoppingListAdditionResponse extends ShoppingListResponse {
+public class ShoppingListAdditionResponse extends ResourceSupport {
 
     private ShoppingList shoppingList;
     private List<ShoppingListError> errors;
+    private HttpStatus httpStatus;
 
     public ShoppingListAdditionResponse(List<ShoppingListError> errors) {
         this.errors = errors;
@@ -35,8 +37,15 @@ public class ShoppingListAdditionResponse extends ShoppingListResponse {
         this.errors = errors;
     }
 
-    public void displayErrors() {
-        errors.forEach(error -> System.out.println(error.getErrorDescription()));
+    public ShoppingList getShoppingList() {
+        return shoppingList;
     }
 
+    public List<ShoppingListError> getErrors() {
+        return errors;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
 }

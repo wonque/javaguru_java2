@@ -2,11 +2,19 @@ package lv.java2.shopping_list;
 
 import org.springframework.http.HttpStatus;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class ShoppingListError {
 
     private String field;
     private String errorDescription;
     private HttpStatus status;
+    private Date errorDate;
+
+    public ShoppingListError(){}
 
 
     public ShoppingListError(String field, String errorDescription) {
@@ -38,12 +46,11 @@ public class ShoppingListError {
         this.errorDescription = errorDescription;
     }
 
-    @Override
-    public String toString() {
-        return "Error{" +
-                "field='" + field + '\'' +
-                ", errorDescription='" + errorDescription + '\'' +
-                ", HttpStatus ='" + status + '\'' +
-                '}';
+    public Date getErrorDate() {
+        return errorDate;
+    }
+
+    public void setErrorDatetimeToNow() {
+        this.errorDate = Timestamp.valueOf(LocalDateTime.now());
     }
 }

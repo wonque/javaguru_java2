@@ -1,12 +1,12 @@
 package lv.java2.shopping_list.shoppinglist.services.removal;
 
 import lv.java2.shopping_list.ShoppingListError;
-import lv.java2.shopping_list.shoppinglist.services.ShoppingListResponse;
+import org.springframework.hateoas.ResourceSupport;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class ShoppingListRemovalResponse extends ShoppingListResponse {
+public class ShoppingListRemovalResponse extends ResourceSupport {
 
     private List<ShoppingListError> errors;
     private HttpStatus status;
@@ -36,7 +36,6 @@ public class ShoppingListRemovalResponse extends ShoppingListResponse {
         this.listRemoved = listRemoved;
     }
 
-    @Override
     public boolean isSuccess() {
         return (errors == null || errors.isEmpty() && listRemoved);
     }

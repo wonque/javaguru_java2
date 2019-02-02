@@ -10,14 +10,7 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-//    Account save(Account account);
+    @Query ("FROM Account ac WHERE lower(ac.email) = :email")
+    Optional<Account> findByEmail(String email);
 
-    @Query ("FROM Account ac WHERE lower(ac.login) = :login")
-    Optional<Account> findByLogin(String login);
-
-    Optional<Account> findById(Long id);
-
-//    List<ShoppingList> findAllActiveLists (Account account);
-//
-//    List<ShoppingList> findAllArchivedLists(Account account);
 }

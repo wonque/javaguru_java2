@@ -1,29 +1,31 @@
 package lv.java2.shopping_list.account.services.registration;
 
-import lv.java2.shopping_list.account.domain.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lv.java2.shopping_list.ShoppingListError;
+import lv.java2.shopping_list.web.dto.AccountDTO;
+import org.springframework.hateoas.ResourceSupport;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
-public class AccountRegistrationResponse {
+public class AccountRegistrationResponse extends ResourceSupport {
 
-    private Account account;
+    private AccountDTO accountDTO;
     private List<ShoppingListError> errors;
+    private HttpStatus httpStatus;
 
-    public AccountRegistrationResponse(Account account) {
-        this.account = account;
+    public AccountRegistrationResponse() {
     }
 
-    public AccountRegistrationResponse(List<ShoppingListError> errors) {
+    public AccountRegistrationResponse (AccountDTO accountDTO, HttpStatus httpStatus){
+        this.accountDTO = accountDTO;
+        this.httpStatus = httpStatus;
+    }
+
+    public AccountRegistrationResponse(List<ShoppingListError> errors, HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
         this.errors = errors;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public List<ShoppingListError> getErrors() {
@@ -34,12 +36,21 @@ public class AccountRegistrationResponse {
         this.errors = errors;
     }
 
-    public void displayErrors(){
-        errors.forEach(System.out::println);
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 
-    public boolean isSuccess() {
-        return (account != null && errors == null || errors.isEmpty());
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
+//    @JsonProperty("account_info")
+    @JsonIgnore
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
+    }
+
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
+    }
 }

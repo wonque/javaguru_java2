@@ -19,7 +19,7 @@ public class ItemRemoveService {
         Optional<Item> founded = itemRepository.findItemByTitle(request.getShoppingList(),
                 request.getTitle());
         if (founded.isPresent()) {
-            itemRepository.removeSingleItem(founded.get());
+            itemRepository.delete(founded.get());
             return new ItemRemoveResponse(true);
         } else {
             ShoppingListError error = new ShoppingListError("title",

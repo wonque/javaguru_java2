@@ -1,6 +1,7 @@
 package lv.java2.shopping_list.shoppinglist.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lv.java2.shopping_list.account.domain.Account;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,6 +26,7 @@ public class ShoppingList {
 
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Account account;
 
     @Column(name = "title", nullable = false, unique = true)
