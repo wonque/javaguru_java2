@@ -58,4 +58,6 @@ public class ShoppingListError {
         this.errorDate = Timestamp.valueOf(LocalDateTime.now());
     }
 
+    //TODO Refactor to ValidationError
+
 }

@@ -3,6 +3,8 @@ package lv.java2.shopping_list.shoppinglist.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 import lv.java2.shopping_list.user.domain.User;
 
@@ -26,10 +28,11 @@ public class ShoppingList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne (optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(name = "title", nullable = false, unique = true)

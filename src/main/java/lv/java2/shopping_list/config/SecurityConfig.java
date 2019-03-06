@@ -25,4 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated();
     }
 
+    //TODO Implement Token Based authentication and authorization
+    //TODO Use JWT
+
 }

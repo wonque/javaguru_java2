@@ -36,4 +36,11 @@ public class ShoppingListController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @RequestMapping(value = "/lists/{listId}", method = RequestMethod.GET)
+    public ResponseEntity<ServiceResponse> getSingleById(@PathVariable("userId") Long userId
+            , @PathVariable("listId") Long listId) {
+        ServiceResponse<ShoppingListDTO> response = getListService.getSingleById(userId, listId);
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+    }
+
 }

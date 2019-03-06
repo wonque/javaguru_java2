@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.shoppinglist.services.get;
 
-import lv.java2.shopping_list.ApiError;
 import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
 import lv.java2.shopping_list.shoppinglist.repository.ShoppingListRepository;
@@ -9,7 +8,6 @@ import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +35,7 @@ public class GetShoppingListService {
         return new ServiceResponse<>(lists);
     }
 
-    public ServiceResponse<ShoppingListDTO> getSingleList(Long userId, Long listId) {
+    public ServiceResponse<ShoppingListDTO> getSingleById(Long userId, Long listId) {
         validateUserId(userId);
         Optional<ShoppingList> founded = repository.getByUserIdAndListId(userId, listId);
         if (!founded.isPresent()) {

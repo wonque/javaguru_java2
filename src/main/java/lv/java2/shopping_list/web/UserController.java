@@ -32,10 +32,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResponseEntity<ServiceResponse> register(@Validated @RequestBody UserDTO userDTO) {
         ServiceResponse<UserDTO> response = registrationService.register(userDTO);
-        URI location = UriComponentsBuilder.newInstance().scheme("http")
-                .host("localhost")
-                .port("8080")
-                .path("/users/{id}").buildAndExpand(userDTO.getUserId()).toUri();
+        URI location = buildLocationUri(response.getData());
         return ResponseEntity.status(HttpStatus.CREATED).location(location).body(response);
     }
 
@@ -44,5 +41,15 @@ public class UserController {
         ServiceResponse response = getUserService.findById(userId);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    private URI buildLocationUri(UserDTO userDTO) {
+        return UriComponentsBuilder.newInstance().scheme("http")
+                .host("localhost")
+                .port("8080")
+                .path("/users/{id}").buildAndExpand(userDTO.getUserId()).toUri();
+    }
+
+
+    //TODO Delete User method
 
 }
