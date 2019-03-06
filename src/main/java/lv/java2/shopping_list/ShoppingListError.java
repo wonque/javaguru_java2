@@ -3,31 +3,35 @@ package lv.java2.shopping_list;
 import org.springframework.http.HttpStatus;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public class ShoppingListError {
 
     private String field;
-    private String errorDescription;
-    private HttpStatus status;
+    private String message;
+    private HttpStatus httpStatus;
     private Date errorDate;
 
-    public ShoppingListError(){}
+    public ShoppingListError() {
+    }
 
-
-    public ShoppingListError(String field, String errorDescription) {
+    public ShoppingListError(String field, String message) {
         this.field = field;
-        this.errorDescription = errorDescription;
+        this.message = message;
     }
 
-    public HttpStatus getStatus() {
-        return status;
+    public ShoppingListError(String message) {
+        this.message = message;
     }
 
-    public void setStatus(HttpStatus status) {
-        this.status = status;
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public void setHttpStatus(HttpStatus httpStatus) {
+        this.httpStatus = httpStatus;
     }
 
     public String getField() {
@@ -38,12 +42,12 @@ public class ShoppingListError {
         this.field = field;
     }
 
-    public String getErrorDescription() {
-        return errorDescription;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorDescription(String errorDescription) {
-        this.errorDescription = errorDescription;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Date getErrorDate() {
@@ -53,4 +57,5 @@ public class ShoppingListError {
     public void setErrorDatetimeToNow() {
         this.errorDate = Timestamp.valueOf(LocalDateTime.now());
     }
+
 }

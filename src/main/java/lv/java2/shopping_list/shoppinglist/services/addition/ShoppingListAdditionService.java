@@ -1,37 +1,38 @@
 package lv.java2.shopping_list.shoppinglist.services.addition;
 
-import lv.java2.shopping_list.shoppinglist.repository.ShoppingListRepository;
+import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
-import lv.java2.shopping_list.shoppinglist.domain.ShoppingListFactory;
-import lv.java2.shopping_list.ShoppingListError;
-import lv.java2.shopping_list.shoppinglist.services.ShoppingListSharedRequest;
-import lv.java2.shopping_list.shoppinglist.services.addition.validation.ShoppingListAdditionValidator;
+import lv.java2.shopping_list.shoppinglist.domain.ShoppingListStatus;
+import lv.java2.shopping_list.shoppinglist.repository.ShoppingListRepository;
+import lv.java2.shopping_list.shoppinglist.services.ShoppingListDBValidator;
+import lv.java2.shopping_list.web.dto.ShoppingListDTO;
+import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
+import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ShoppingListAdditionService {
 
     @Autowired
     private ShoppingListRepository repository;
-
     @Autowired
-    private ShoppingListAdditionValidator validator;
-
+    private ShoppingListMapper mapper;
     @Autowired
-    private ShoppingListFactory shoppingListFactory;
+    private ShoppingListDBValidator validator;
 
     @Transactional
-    public ShoppingListAdditionResponse addList(ShoppingListSharedRequest request) {
-        List<ShoppingListError> errors = validator.validate(request);
-        if (!errors.isEmpty()) {
-            return new ShoppingListAdditionResponse(errors);
+    public ServiceResponse<ShoppingListDTO> addList(ShoppingListDTO shoppingListDTO) {
+        ShoppingList newEntry = mapper.toDomain(shoppingListDTO);
+        if (validator.isShoppingListTitleExists(newEntry.getUser(), shoppingListDTO.getTitle())) {
+            throw new DuplicateResourceException("Shopping list with title = "
+                    + shoppingListDTO.getTitle() + " already exists!");
         }
-        ShoppingList newEntry = shoppingListFactory.createInstance(request.getAccount(), request.getTitle());
+        newEntry.setStatus(ShoppingListStatus.ACTIVE);
         repository.save(newEntry);
-        return new ShoppingListAdditionResponse(newEntry);
+        shoppingListDTO = mapper.toDTO(newEntry);
+        return new ServiceResponse<>(shoppingListDTO);
     }
 }

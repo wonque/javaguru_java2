@@ -1,14 +1,14 @@
 package lv.java2.shopping_list.shoppinglist.domain;
 
-import lv.java2.shopping_list.account.domain.Account;
+import lv.java2.shopping_list.user.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ShoppingListFactory {
 
-    public ShoppingList createInstance(Account account, String title) {
+    public ShoppingList createInstance(User user, String title) {
         ShoppingList newList = new ShoppingList();
-        newList.setAccount(account);
+        newList.setUser(user);
         newList.setTitle(title);
         newList.setStatus(ShoppingListStatus.ACTIVE);
         return newList;

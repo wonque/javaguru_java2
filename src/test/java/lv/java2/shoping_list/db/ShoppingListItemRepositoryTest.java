@@ -1,10 +1,10 @@
 //package shoping_list.db;
 //
 //import lv.java2.shopping_list.config.SpringAppConfig;
-//import lv.java2.shopping_list.account.repository.AccountRepository;
+//import lv.java2.shopping_list.account.repository.UserRepository;
 //import lv.java2.shopping_list.item.repository.ItemRepository;
 //import lv.java2.shopping_list.shoppinglist.repository.ShoppingListRepository;
-//import lv.java2.shopping_list.account.domain.Account;
+//import lv.java2.shopping_list.account.domain.User;
 //import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
 //import lv.java2.shopping_list.item.domain.Item;
 //import lv.java2.shopping_list.account.domain.AccountFactory;
@@ -32,11 +32,11 @@
 //    @Autowired
 //    private ItemRepository itemRepository;
 //    @Autowired
-//    private AccountRepository accountRepository;
+//    private UserRepository accountRepository;
 //    @Autowired
 //    private ShoppingListRepository shoppingListRepository;
 //
-//    private static Account account;
+//    private static User account;
 //    private static ShoppingList shoppingList;
 //    private static ShoppingListFactory shoppingListFactory;
 //    private static AccountFactory accountFactory;
@@ -80,7 +80,7 @@
 //
 //        shoppingListRepository.remove(shoppingList);
 //        Optional<ShoppingList> optionalShoppingList =
-//                shoppingListRepository.findByAccountAndTitle(account, shoppingList.getTitle());
+//                shoppingListRepository.getByUserAndTitle(account, shoppingList.getTitle());
 //        assertFalse(optionalShoppingList.isPresent());
 //
 //        accountRepository.deleteAccount(account);

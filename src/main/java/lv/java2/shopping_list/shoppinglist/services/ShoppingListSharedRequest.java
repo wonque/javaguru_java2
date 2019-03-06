@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.shoppinglist.services;
 
-import lv.java2.shopping_list.account.domain.Account;
+import lv.java2.shopping_list.user.domain.User;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,17 +13,17 @@ public class ShoppingListSharedRequest {
 
     @NotNull
     @NotEmpty
-    private Account account;
+    private User user;
 
     public ShoppingListSharedRequest() {
     }
 
-    public ShoppingListSharedRequest(Account account) {
-        this.account = account;
+    public ShoppingListSharedRequest(User user) {
+        this.user = user;
     }
 
-    public ShoppingListSharedRequest(Account account, String title) {
-        this.account = account;
+    public ShoppingListSharedRequest(User user, String title) {
+        this.user = user;
         this.title = title;
     }
 
@@ -35,12 +35,12 @@ public class ShoppingListSharedRequest {
         this.title = title;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getUser() {
+        return user;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

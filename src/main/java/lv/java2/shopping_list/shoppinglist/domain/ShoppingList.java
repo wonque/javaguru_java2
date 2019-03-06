@@ -2,11 +2,13 @@ package lv.java2.shopping_list.shoppinglist.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lv.java2.shopping_list.account.domain.Account;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import lv.java2.shopping_list.user.domain.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -24,12 +26,14 @@ public class ShoppingList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+    @ManyToOne (optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Account account;
+    @NotNull
+    private User user;
 
     @Column(name = "title", nullable = false, unique = true)
+    @NotBlank
     private String title;
 
     @Column(name = "category")
@@ -90,12 +94,12 @@ public class ShoppingList {
         this.category = category;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Account getAccount() {
-        return account;
+    public User getUser() {
+        return user;
     }
 
     public ShoppingListStatus getStatus() {
@@ -106,26 +110,33 @@ public class ShoppingList {
         this.status = status;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShoppingList that = (ShoppingList) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(title, that.title);
+                Objects.equals(user, that.user) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(category, that.category) &&
+                status == that.status &&
+                Objects.equals(dateCreated, that.dateCreated) &&
+                Objects.equals(dateModified, that.dateModified);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title);
+        return Objects.hash(id, user, title, category, status, dateCreated, dateModified);
     }
 
     @Override
     public String toString() {
         return "ShoppingList{" +
                 "id=" + id +
+                ", user=" + user +
                 ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", status=" + status +
                 ", dateCreated=" + dateCreated +
                 ", dateModified=" + dateModified +
                 '}';
