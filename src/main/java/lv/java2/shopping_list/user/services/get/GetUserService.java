@@ -24,16 +24,15 @@ public class GetUserService {
     private UserMapper userMapper;
 
     @Transactional
-    public ServiceResponse<UserDTO> findById(Long id) {
+    public UserDTO findById(Long id) {
         Optional<User> founded = userRepository.findById(id);
         return founded.map(this::buildUserFoundedResponse)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         MessageFormat.format("User with ID = {0} not found!", id)));
     }
 
-    private ServiceResponse<UserDTO> buildUserFoundedResponse(User user) {
-        UserDTO userDTO = userMapper.toDTO(user);
-        return new ServiceResponse<>(userDTO);
+    private UserDTO buildUserFoundedResponse(User user) {
+        return userMapper.toDTO(user);
     }
 
 }

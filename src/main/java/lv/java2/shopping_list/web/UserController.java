@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
-
 @RestController
 public class UserController {
 
@@ -28,18 +27,17 @@ public class UserController {
     private UserMapper mapper;
 
 
-    @PostMapping
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping (value = "/register")
     public ResponseEntity<ServiceResponse> register(@Validated @RequestBody UserDTO userDTO) {
         ServiceResponse<UserDTO> response = registrationService.register(userDTO);
         URI location = buildLocationUri(response.getData());
         return ResponseEntity.status(HttpStatus.CREATED).location(location).body(response);
     }
 
-    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<ServiceResponse> getAccount(@PathVariable("userId") Long userId) {
-        ServiceResponse response = getUserService.findById(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    @GetMapping(value = "/users/{userId}")
+    public ResponseEntity<UserDTO> getAccount(@PathVariable("userId") Long userId) {
+        UserDTO userDTO = getUserService.findById(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
     private URI buildLocationUri(UserDTO userDTO) {

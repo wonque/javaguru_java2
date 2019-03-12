@@ -42,7 +42,7 @@ public class GetUserServiceTest {
         when(repository.findById(id)).thenReturn(Optional.empty());
         expectedException.expect(ResourceNotFoundException.class);
         expectedException.expectMessage("User with ID = 1 not found!");
-        ServiceResponse response = getUserService.findById(id);
+        getUserService.findById(id);
 
     }
 
@@ -52,7 +52,7 @@ public class GetUserServiceTest {
         UserDTO userDTO = Mockito.mock(UserDTO.class);
         when(repository.findById(id)).thenReturn(Optional.of(user));
         when(userMapper.toDTO(user)).thenReturn(userDTO);
-        ServiceResponse response = getUserService.findById(id);
-        assertNotNull(response.getData());
+        UserDTO response = getUserService.findById(id);
+        assertNotNull(response.getUserId());
     }
 }

@@ -27,7 +27,7 @@ public class ShoppingListAdditionService {
     public ServiceResponse<ShoppingListDTO> addList(ShoppingListDTO shoppingListDTO) {
         ShoppingList newEntry = mapper.toDomain(shoppingListDTO);
         validateDuplicateTitle(newEntry.getUser(), shoppingListDTO.getTitle());
-        newEntry.setStatus(ShoppingListStatus.ACTIVE);
+        newEntry.activateShoppingList();
         repository.save(newEntry);
         shoppingListDTO = mapper.toDTO(newEntry);
         return new ServiceResponse<>(shoppingListDTO);

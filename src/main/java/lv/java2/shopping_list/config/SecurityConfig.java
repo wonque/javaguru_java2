@@ -22,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/register")
                 .permitAll()
                 .antMatchers("/**/*")
-                .authenticated();
+                .authenticated()
+                .and()
+                .formLogin();
     }
 
     //TODO Implement Token Based authentication and authorization

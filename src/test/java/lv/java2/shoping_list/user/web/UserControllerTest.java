@@ -52,7 +52,7 @@ public class UserControllerTest {
     public void getAccount_returnResponseWithAccount() throws Exception {
         UserDTO userDTO = new UserDTO();
         Mockito.when(getUserService.findById(1L))
-                .thenReturn(new ServiceResponse<>(userDTO));
+                .thenReturn(userDTO);
         this.mockMvc.perform(get("/users/1")).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().json("{}"));
     }

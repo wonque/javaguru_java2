@@ -6,6 +6,7 @@ import org.apache.tomcat.util.ExceptionUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,6 +36,7 @@ public class ControllerAdviceHandler {
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(detailedErrors);
     }
+
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex){
