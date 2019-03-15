@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.web.dto.mappers;
 
-import lv.java2.shopping_list.shoppinglist.domain.ShoppingList;
+import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

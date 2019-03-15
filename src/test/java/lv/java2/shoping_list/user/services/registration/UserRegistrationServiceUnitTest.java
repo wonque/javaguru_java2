@@ -2,10 +2,10 @@ package lv.java2.shoping_list.user.services.registration;
 
 
 import lv.java2.shopping_list.ServiceResponse;
-import lv.java2.shopping_list.user.domain.User;
-import lv.java2.shopping_list.user.repository.UserRepository;
-import lv.java2.shopping_list.user.services.registration.UserRegistrationServiceImpl;
-import lv.java2.shopping_list.user.services.registration.UserRegistrationValidator;
+import lv.java2.shopping_list.domain.User;
+import lv.java2.shopping_list.repository.UserRepository;
+import lv.java2.shopping_list.services.user.registration.UserRegistrationServiceImpl;
+import lv.java2.shopping_list.services.user.registration.UserRegistrationValidator;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;

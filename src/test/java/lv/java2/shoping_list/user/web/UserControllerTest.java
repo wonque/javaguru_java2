@@ -1,10 +1,9 @@
 package lv.java2.shoping_list.user.web;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.ShoppingListApp;
-import lv.java2.shopping_list.user.services.get.GetUserService;
-import lv.java2.shopping_list.user.services.registration.UserRegistrationService;
-import lv.java2.shopping_list.web.UserController;
+import lv.java2.shopping_list.services.user.get.GetUserService;
+import lv.java2.shopping_list.services.user.registration.UserRegistrationService;
+import lv.java2.shopping_list.web.controllers.UserController;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import org.junit.Test;

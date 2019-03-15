@@ -1,7 +1,7 @@
 package lv.java2.shopping_list.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lv.java2.shopping_list.shoppinglist.domain.ShoppingListStatus;
+import lv.java2.shopping_list.domain.ShoppingListStatus;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;

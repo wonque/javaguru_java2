@@ -2,8 +2,8 @@ package lv.java2.shoping_list.db;
 
 
 import lv.java2.shopping_list.ShoppingListApp;
-import lv.java2.shopping_list.user.domain.User;
-import lv.java2.shopping_list.user.repository.UserRepository;
+import lv.java2.shopping_list.domain.User;
+import lv.java2.shopping_list.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
