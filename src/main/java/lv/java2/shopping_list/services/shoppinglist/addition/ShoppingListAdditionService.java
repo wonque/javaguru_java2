@@ -1,9 +1,8 @@
 package lv.java2.shopping_list.services.shoppinglist.addition;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.domain.User;
+import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
@@ -23,13 +22,13 @@ public class ShoppingListAdditionService {
     private ShoppingListDBValidator validator;
 
     @Transactional
-    public ServiceResponse<ShoppingListDTO> addList(ShoppingListDTO shoppingListDTO) {
+    public ShoppingListDTO addList(ShoppingListDTO shoppingListDTO) {
         ShoppingList newEntry = mapper.toDomain(shoppingListDTO);
         validateDuplicateTitle(newEntry.getUser(), shoppingListDTO.getTitle());
         newEntry.activateShoppingList();
         repository.save(newEntry);
         shoppingListDTO = mapper.toDTO(newEntry);
-        return new ServiceResponse<>(shoppingListDTO);
+        return shoppingListDTO;
     }
 
 

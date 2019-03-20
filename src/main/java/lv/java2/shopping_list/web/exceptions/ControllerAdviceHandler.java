@@ -27,7 +27,6 @@ public class ControllerAdviceHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException occurredErrors) {
         List<FieldError> errors = occurredErrors.getBindingResult().getFieldErrors();
 

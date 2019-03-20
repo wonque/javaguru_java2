@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.web.controllers;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.services.user.get.GetUserService;
 import lv.java2.shopping_list.services.user.registration.UserRegistrationService;
 import lv.java2.shopping_list.web.dto.UserDTO;
@@ -27,11 +26,11 @@ public class UserController {
     private UserMapper mapper;
 
 
-    @PostMapping (value = "/register")
-    public ResponseEntity<ServiceResponse> register(@Validated @RequestBody UserDTO userDTO) {
-        ServiceResponse<UserDTO> response = registrationService.register(userDTO);
-        URI location = buildLocationUri(response.getData());
-        return ResponseEntity.status(HttpStatus.CREATED).location(location).body(response);
+    @PostMapping(value = "/register")
+    public ResponseEntity<UserDTO> register(@Validated @RequestBody UserDTO userDTO) {
+        UserDTO responseDto = registrationService.register(userDTO);
+        URI location = buildLocationUri(responseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).location(location).body(responseDto);
     }
 
     @GetMapping(value = "/users/{userId}")

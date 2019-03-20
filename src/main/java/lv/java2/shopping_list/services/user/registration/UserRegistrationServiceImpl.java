@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.services.user.registration;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
 import lv.java2.shopping_list.web.dto.UserDTO;
@@ -23,7 +22,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
 
     @Transactional
-    public ServiceResponse<UserDTO> register(UserDTO userDTO) {
+    public UserDTO register(UserDTO userDTO) {
         if (validator.isLoginExists(userDTO.getEmail())) {
             throw new DuplicateResourceException("User with " + userDTO.getEmail() + " already registered!");
         }
@@ -32,11 +31,11 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         user.setPassword(hashedPass);
         repository.save(user);
         userDTO.setUserId(user.getId());
-        return new ServiceResponse<>(userDTO);
+        return userDTO;
     }
 
     private String hashPassword(String userPassword) {
         return BCrypt.hashpw(userPassword, BCrypt.gensalt());
     }
-    
+
 }

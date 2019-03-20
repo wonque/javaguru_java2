@@ -1,8 +1,9 @@
 package lv.java2.shopping_list.services.shoppinglist.removal;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.domain.ShoppingList;
+import lv.java2.shopping_list.domain.ShoppingListStatus;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
+import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,25 +18,29 @@ public class ShoppingListRemovalService {
     private ShoppingListRepository repository;
 
     @Transactional
-    public ServiceResponse removeById(Long listId) {
-        Optional<ShoppingList> founded = repository.findById(listId);
-        if (!founded.isPresent()) {
+    public ShoppingListDTO removeById(Long userId, Long listId) {
+        Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);
+        if (founded.isPresent()) {
+            repository.delete(founded.get());
+            ShoppingListDTO dto = new ShoppingListDTO();
+            dto.setStatus(ShoppingListStatus.DELETED);
+            return dto;
+        } else {
             throw new ResourceNotFoundException("Shopping list with ID = " + listId + " not found!");
         }
-        repository.delete(founded.get());
-        return new ServiceResponse<>("Shopping list removed!");
     }
 
     @Transactional
-    public ServiceResponse removeByTitle(String title) {
+    public ShoppingListDTO removeByTitle(String title) {
         Optional<ShoppingList> founded = repository.findByTitle(title);
-        if (!founded.isPresent()) {
+        if (founded.isPresent()) {
+            repository.delete(founded.get());
+            ShoppingListDTO dto = new ShoppingListDTO();
+            dto.setStatus(ShoppingListStatus.DELETED);
+            return dto;
+        } else {
             throw new ResourceNotFoundException("Shopping list with TITLE = " + title + " not found!");
         }
-        repository.delete(founded.get());
-        return new ServiceResponse<>(new String("Shopping list " + title + " removed!"));
     }
 
-
-    //TODO implement Shopping list removal Business Logic
 }

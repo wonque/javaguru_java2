@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.services.shoppinglist.get;
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
@@ -27,28 +26,25 @@ public class GetShoppingListService {
     @Autowired
     private ShoppingListMapper mapper;
 
-    public ServiceResponse<List<ShoppingListDTO>> getAllByUserId(Long userId) {
-        //Temporary solution
-        validateUserId(userId);
-        List<ShoppingListDTO> lists = repository.findAllByUserId(userId).stream()
+    public List<ShoppingListDTO> getAllByUserId(Long userId) {
+        validateUserId(userId); //Temporary solution
+        return repository.findAllByUserId(userId).stream()
                 .map(shoppingList -> mapper.toDTO(shoppingList)).collect(Collectors.toList());
-        return new ServiceResponse<>(lists);
     }
 
-    public ServiceResponse<ShoppingListDTO> getSingleById(Long userId, Long listId) {
-        validateUserId(userId);
+    public ShoppingListDTO getSingleById(Long userId, Long listId) {
+        validateUserId(userId); //Temporary solution
         Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);
         if (!founded.isPresent()) {
             throw new ResourceNotFoundException
                     (MessageFormat.format("ShoppingList with ID = {0} not found!", listId));
         }
-        ShoppingListDTO shoppingListDTO = mapper.toDTO(founded.get());
-        return new ServiceResponse<>(shoppingListDTO);
+        return mapper.toDTO(founded.get());
     }
 
     private void validateUserId(Long userId) {
         if (!validator.isUserExists(userId)) {
-            throw new ResourceNotFoundException(MessageFormat.format("Unable to find user with {id}", userId));
+            throw new ResourceNotFoundException(MessageFormat.format("Unable to find user with ID = {0}", userId));
         }
     }
 }

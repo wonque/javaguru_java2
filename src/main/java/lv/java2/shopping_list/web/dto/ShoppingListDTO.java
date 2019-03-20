@@ -82,4 +82,5 @@ public class ShoppingListDTO {
     public void setDateModified(Date dateModified) {
         this.dateModified = dateModified;
     }
+
 }

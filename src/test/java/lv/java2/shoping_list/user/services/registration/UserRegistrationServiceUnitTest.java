@@ -1,7 +1,6 @@
 package lv.java2.shoping_list.user.services.registration;
 
 
-import lv.java2.shopping_list.ServiceResponse;
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
 import lv.java2.shopping_list.services.user.registration.UserRegistrationServiceImpl;
@@ -55,8 +54,8 @@ public class UserRegistrationServiceUnitTest {
         Mockito.when(validator.isLoginExists(userDTO.getEmail())).thenReturn(false);
         Mockito.when(userMapper.toDomain(userDTO)).thenReturn(user);
         Mockito.when(repository.save(user)).thenReturn(user);
-        ServiceResponse<UserDTO> response = registrationService.register(userDTO);
-        assertNotNull(response.getData().getUserId());
+        UserDTO response = registrationService.register(userDTO);
+        assertNotNull(response.getUserId());
     }
 
     @Test
@@ -64,8 +63,8 @@ public class UserRegistrationServiceUnitTest {
         exception.expect(DuplicateResourceException.class);
         exception.expectMessage("User with login already registered!");
         Mockito.when(validator.isLoginExists(userDTO.getEmail())).thenReturn(true);
-        ServiceResponse<UserDTO> response = registrationService.register(userDTO);
-        assertNull(response.getData());
+        userDTO = registrationService.register(userDTO);
+        assertNull(userDTO.getUserId());
     }
 
 }

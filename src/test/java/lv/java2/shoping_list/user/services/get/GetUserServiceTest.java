@@ -27,6 +27,7 @@ public class GetUserServiceTest {
     private UserRepository repository;
     @Mock
     private UserMapper userMapper;
+
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
@@ -37,7 +38,7 @@ public class GetUserServiceTest {
     private Long id = 1L;
 
     @Test
-    public void throwsExceptionIfUserNotFound() {
+    public void throwsExceptionIfUserNotFound() throws ResourceNotFoundException {
         when(repository.findById(id)).thenReturn(Optional.empty());
         expectedException.expect(ResourceNotFoundException.class);
         expectedException.expectMessage("User with ID = 1 not found!");
