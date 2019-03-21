@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolation;
@@ -31,25 +32,32 @@ public class ControllerAdviceHandler {
         List<FieldError> errors = occurredErrors.getBindingResult().getFieldErrors();
 
         List<ShoppingListError> detailedErrors = errors.stream()
-                .map(fieldError -> buildError(fieldError.getField(), fieldError.getDefaultMessage(),HttpStatus.BAD_REQUEST))
+                .map(fieldError -> buildError(fieldError.getField(), fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(detailedErrors);
     }
 
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex){
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND)
                 , HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<Object> handleDuplicateResourceException(DuplicateResourceException ex){
+    public ResponseEntity<Object> handleDuplicateResourceException(DuplicateResourceException ex) {
         return new ResponseEntity<>(new ApiError(ex.getMessage(), HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT),
                 HttpStatus.CONFLICT);
     }
 
-    private ShoppingListError buildError(String field, String message, HttpStatus httpStatus){
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+        return new ResponseEntity<>(
+                new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST)
+                , HttpStatus.BAD_REQUEST);
+    }
+
+    private ShoppingListError buildError(String field, String message, HttpStatus httpStatus) {
         ShoppingListError error = new ShoppingListError(message);
         error.setField(field);
         error.setHttpStatus(httpStatus);

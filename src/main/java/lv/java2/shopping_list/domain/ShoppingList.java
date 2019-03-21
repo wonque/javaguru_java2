@@ -104,16 +104,6 @@ public class ShoppingList {
         return user;
     }
 
-    public void activateShoppingList() {
-        this.status = ShoppingListStatus.ACTIVE;
-    }
-
-    public void archiveShoppingList() {
-        if (this.status != ShoppingListStatus.ARCHIVED) {
-            this.status = ShoppingListStatus.ARCHIVED;
-        }
-    }
-
     public ShoppingListStatus getStatus() {
         return status;
     }

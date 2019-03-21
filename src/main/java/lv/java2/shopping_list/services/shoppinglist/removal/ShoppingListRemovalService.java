@@ -22,9 +22,7 @@ public class ShoppingListRemovalService {
         Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);
         if (founded.isPresent()) {
             repository.delete(founded.get());
-            ShoppingListDTO dto = new ShoppingListDTO();
-            dto.setStatus(ShoppingListStatus.DELETED);
-            return dto;
+            return buildDTODeletedResponse();
         } else {
             throw new ResourceNotFoundException("Shopping list with ID = " + listId + " not found!");
         }
@@ -35,12 +33,16 @@ public class ShoppingListRemovalService {
         Optional<ShoppingList> founded = repository.findByTitle(title);
         if (founded.isPresent()) {
             repository.delete(founded.get());
-            ShoppingListDTO dto = new ShoppingListDTO();
-            dto.setStatus(ShoppingListStatus.DELETED);
-            return dto;
+            return buildDTODeletedResponse();
         } else {
             throw new ResourceNotFoundException("Shopping list with TITLE = " + title + " not found!");
         }
+    }
+
+    private ShoppingListDTO buildDTODeletedResponse(){
+        ShoppingListDTO dto = new ShoppingListDTO();
+        dto.setStatus(ShoppingListStatus.DELETED);
+        return dto;
     }
 
 }
