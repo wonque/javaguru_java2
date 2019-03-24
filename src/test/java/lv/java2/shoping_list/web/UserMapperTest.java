@@ -1,4 +1,4 @@
-package lv.java2.shoping_list;
+package lv.java2.shoping_list.web;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.web.dto.UserDTO;
@@ -19,9 +19,10 @@ public class UserMapperTest {
     @Autowired
     private UserMapper userMapper;
     private UserDTO userDTO = new UserDTO("email@email.email", "password", "Vasya");
+    private User newUser = new User("mail@ololo.com", "poodd123", "Elma");
 
     @Test
-    public void test(){
+    public void returnValidUserInstanceWithMappedProperties(){
         User user = userMapper.toDomain(userDTO);
         assertNotNull(user.getEmail());
         assertEquals("email@email.email", user.getEmail());
@@ -29,6 +30,16 @@ public class UserMapperTest {
         assertEquals("Vasya", user.getUsername());
         assertNull(user.getPassword());
         assertNull(user.getDateCreated());
+    }
+
+    @Test
+    public void returnDTOInstanceWithMappeduserProperties(){
+        UserDTO resultDTO = userMapper.toDTO(newUser);
+        assertNotNull(resultDTO.getEmail());
+        assertNull(resultDTO.getPassword());
+        assertNotNull(resultDTO.getUsername());
+        assertEquals("mail@ololo.com", resultDTO.getEmail());
+        assertEquals("Elma", resultDTO.getUsername());
     }
 
 
