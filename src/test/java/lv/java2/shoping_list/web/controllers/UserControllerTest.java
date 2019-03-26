@@ -21,6 +21,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -39,35 +48,33 @@ public class UserControllerTest {
     private UserMapper userMapper;
 
     @MockBean
-    private GetUserService getUserService;
+    private UserRegistrationService registrationService;
 
     @MockBean
-    private UserRegistrationService userRegistrationService;
+    private GetUserService getUserService;
 
-    private UserDTO requestDTO = new UserDTO();
+    @Mock
+    private Validator validator;
+    private UserDTO requestDTO = new UserDTO("email@valid.one", "passwordOne1Two2Three3",
+            "Yevlampiy");
+    private Set<ConstraintViolation<UserDTO>> violations = new HashSet<>();
 
-    @Before
-    public void initUserDTO(){
-        requestDTO.setEmail("email@valid.one");
-        requestDTO.setPassword("passwordOne1Two2Three3");
-        requestDTO.setUsername("Yevlampiy");
+
+    @Test
+    public void returnsCreatedStatusAndLocationHeaderWhenUserRegistered() throws Exception {
+        UserDTO responseDTO = new UserDTO();
+        responseDTO.setUserId(1L);
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonContent = mapper.writeValueAsString(requestDTO);
+        Mockito.when(validator.validate(requestDTO)).thenReturn(violations);
+        Mockito.when(registrationService.register(Mockito.any())).thenReturn(responseDTO);
+        this.mockMvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(jsonContent)).andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
-
-//    @Test
-//    public void returnsDTOWhenUserSuccessfullyRegistered() throws Exception {
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setUserId(1L);
-//        ObjectMapper mapper = new ObjectMapper();
-//        String jsonContent = mapper.writeValueAsString(requestDTO);
-//        Mockito.when(userRegistrationService.register(requestDTO)).thenReturn(userDTO);
-//        this.mockMvc.perform(post("/register")
-//                .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                .content(jsonContent)).andDo(print())
-//                .andExpect(status().isCreated())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-//                .andExpect(content().json("{ userId: 1 }"));
-//
-//    }
 
     @Test
     public void throwsExceptionWhenUserNotFoundById() throws Exception {

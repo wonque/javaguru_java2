@@ -1,5 +1,6 @@
 package lv.java2.shopping_list.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -19,9 +20,10 @@ public class UserDTO {
     @Email (regexp = ".+@.+\\..+", message = "Please provide a valid email address")
     private String email;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank (message = "This field cannot be blank")
     @Size(min = 6, message = "Password must be longer than six symbols")
+//    @JsonIgnore
     private String password;
 
     private String username;
