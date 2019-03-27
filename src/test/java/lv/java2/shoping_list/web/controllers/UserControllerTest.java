@@ -8,7 +8,6 @@ import lv.java2.shopping_list.web.controllers.UserController;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,12 +20,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
 import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,21 +48,22 @@ public class UserControllerTest {
     @MockBean
     private GetUserService getUserService;
 
-    @Mock
+    @MockBean
     private Validator validator;
+
     private UserDTO requestDTO = new UserDTO("email@valid.one", "passwordOne1Two2Three3",
             "Yevlampiy");
     private Set<ConstraintViolation<UserDTO>> violations = new HashSet<>();
+    private ObjectMapper mapper = new ObjectMapper();
 
 
     @Test
     public void returnsCreatedStatusAndLocationHeaderWhenUserRegistered() throws Exception {
         UserDTO responseDTO = new UserDTO();
         responseDTO.setUserId(1L);
-        ObjectMapper mapper = new ObjectMapper();
         String jsonContent = mapper.writeValueAsString(requestDTO);
         Mockito.when(validator.validate(requestDTO)).thenReturn(violations);
-        Mockito.when(registrationService.register(Mockito.any())).thenReturn(responseDTO);
+        Mockito.when(registrationService.register(requestDTO)).thenReturn(responseDTO);
         this.mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content(jsonContent)).andDo(print())

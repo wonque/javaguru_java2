@@ -1,4 +1,4 @@
-package lv.java2.shoping_list.shoppinglist.addition;
+package lv.java2.shoping_list.services.shoppinglist.addition;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.domain.ShoppingListStatus;

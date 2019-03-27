@@ -30,8 +30,8 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
         User user = userMapper.toDomain(userDTO);
         user.setPassword(hashedPass);
         repository.save(user);
-        UserDTO responseDTO = userMapper.toDTO(user);
-        return responseDTO;
+        userDTO.setUserId(user.getId());
+        return userDTO;
     }
 
     private String hashPassword(String userPassword) {
