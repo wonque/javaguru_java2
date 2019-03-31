@@ -22,10 +22,10 @@ public class ShoppingListDTO {
     public ShoppingListDTO() {
     }
 
-//    public ShoppingListDTO (Long userId, String title){
-//        this.userId = userId;
-//        this.title = title;
-//    }
+    public ShoppingListDTO (Long userId, String title){
+        this.userId = userId;
+        this.title = title;
+    }
 
     public Long getId() {
         return id;

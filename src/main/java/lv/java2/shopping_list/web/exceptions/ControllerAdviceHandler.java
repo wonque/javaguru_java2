@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class ControllerAdviceHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
+//    @ResponseBody
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException occurredErrors) {
         List<FieldError> errors = occurredErrors.getBindingResult().getFieldErrors();
 

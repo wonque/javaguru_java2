@@ -10,7 +10,6 @@ import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,8 +50,8 @@ public class UserControllerTest {
     @MockBean
     private Validator validator;
 
-    private UserDTO requestDTO = new UserDTO("email@valid.one", "passwordOne1Two2Three3",
-            "Yevlampiy");
+
+    private UserDTO requestDTO = new UserDTO();
     private Set<ConstraintViolation<UserDTO>> violations = new HashSet<>();
     private ObjectMapper mapper = new ObjectMapper();
 
@@ -64,7 +63,7 @@ public class UserControllerTest {
         String jsonContent = mapper.writeValueAsString(requestDTO);
         Mockito.when(validator.validate(requestDTO)).thenReturn(violations);
         Mockito.when(registrationService.register(requestDTO)).thenReturn(responseDTO);
-        this.mockMvc.perform(post("/register")
+        mockMvc.perform(post("/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content(jsonContent)).andDo(print())
                 .andExpect(status().isCreated())
@@ -75,7 +74,7 @@ public class UserControllerTest {
     @Test
     public void throwsExceptionWhenUserNotFoundById() throws Exception {
         Mockito.when(getUserService.findById(100L)).thenThrow(new ResourceNotFoundException("User with ID = 100 not found!"));
-        this.mockMvc.perform(get("/users/100")).andDo(print())
+        mockMvc.perform(get("/users/100")).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
@@ -84,7 +83,7 @@ public class UserControllerTest {
         UserDTO userDTO = new UserDTO();
         Mockito.when(getUserService.findById(1L))
                 .thenReturn(userDTO);
-        this.mockMvc.perform(get("/users/1")).andDo(print())
+        mockMvc.perform(get("/users/1")).andDo(print())
                 .andExpect(matchAll(status().isOk(),
                         content().contentType(MediaType.APPLICATION_JSON_UTF8),
                         content().json("{}")));

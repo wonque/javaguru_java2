@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ShoppingListRepository extends JpaRepository<ShoppingList, Long> {
 
-    @Query ("FROM ShoppingList sl WHERE sl.user.id = :userId AND id = :listId")
+    @Query("FROM ShoppingList sl WHERE sl.user.id = :userId AND id = :listId")
     Optional<ShoppingList> findByUserIdAndListId(Long userId, Long listId);
 
     @Query("FROM ShoppingList sl WHERE user = :user AND lower(title) = :title")

@@ -43,7 +43,7 @@ public class ShoppingListController {
     public ResponseEntity getSingleById(@PathVariable("userId") Long userId
             , @PathVariable("listId") Long listId) {
         ShoppingListDTO response = getListService.getSingleById(userId, listId);
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping(value = "/{listId}")
