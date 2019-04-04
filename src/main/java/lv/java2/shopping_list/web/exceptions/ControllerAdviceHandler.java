@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,12 @@ public class ControllerAdviceHandler {
                 .map(fieldError -> buildError(fieldError.getField(), fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(detailedErrors);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(new ApiError(ex.getMessage(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND)
+                , HttpStatus.NOT_FOUND);
     }
 
 

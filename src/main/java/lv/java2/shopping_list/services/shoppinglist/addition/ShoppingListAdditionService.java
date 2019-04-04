@@ -2,7 +2,6 @@ package lv.java2.shopping_list.services.shoppinglist.addition;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.domain.ShoppingListStatus;
-import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
@@ -24,8 +23,11 @@ public class ShoppingListAdditionService {
 
     @Transactional
     public ShoppingListDTO addList(ShoppingListDTO shoppingListDTO) {
+        if (validator.isShoppingListTitleDuplicate(shoppingListDTO.getUserId(), shoppingListDTO.getTitle())) {
+            String message = String.format("Shopping list with title = '%s' already exists!", shoppingListDTO.getTitle());
+            throw new DuplicateResourceException(message);
+        }
         ShoppingList newEntry = mapper.toDomain(shoppingListDTO);
-        validateDuplicateTitle(newEntry.getUser(), shoppingListDTO.getTitle());
         newEntry.setStatus(ShoppingListStatus.ACTIVE);
         repository.save(newEntry);
         shoppingListDTO.setDateCreated(newEntry.getDateCreated());
@@ -34,10 +36,4 @@ public class ShoppingListAdditionService {
         return shoppingListDTO;
     }
 
-    private void validateDuplicateTitle(User user, String title) {
-        if (validator.isShoppingListTitleExists(user, title)) {
-            throw new DuplicateResourceException("Shopping list with title = "
-                    + title + " already exists!");
-        }
-    }
 }

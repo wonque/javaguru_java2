@@ -18,10 +18,6 @@ import java.util.Objects;
 @Table(schema = "java2", name = "shopping_lists")
 public class ShoppingList {
 
-    //default constructor for orm (Hibernate)
-    public ShoppingList() {
-    }
-
     @Id
     @Column(name = "LIST_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +26,10 @@ public class ShoppingList {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(name = "title", nullable = false, unique = true)
-    @NotBlank
     private String title;
 
     @Column(name = "category")
@@ -54,6 +48,16 @@ public class ShoppingList {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_modified")
     private Date dateModified;
+
+    //default constructor for orm (Hibernate)
+    public ShoppingList() {
+    }
+
+    public ShoppingList(User user, String title, String category) {
+        this.user = user;
+        this.title = title;
+        this.category = category;
+    }
 
 
     public void setTitle(String title) {

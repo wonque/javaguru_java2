@@ -5,6 +5,7 @@ import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ShoppingListDBValidator {
@@ -21,7 +22,8 @@ public class ShoppingListDBValidator {
         return userRepository.findById(userId).isPresent();
     }
 
-    public boolean isShoppingListTitleExists(User user, String title) {
-        return shoppingListRepository.findByUserAndTitle(user, title).isPresent();
+    public boolean isShoppingListTitleDuplicate(Long userId, String title) {
+        return shoppingListRepository.findByUserIdAndTitle(userId, title).isPresent();
     }
+
 }

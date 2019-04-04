@@ -1,8 +1,6 @@
 package lv.java2.shopping_list.web.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +10,7 @@ import java.util.Objects;
 
 
 public class UserDTO {
+
 
     //    @Null(groups = NewEntry.PrimaryCheck.class, message = "ID field must be null")
 //    @NotNull(groups = ExistingEntry.class)
@@ -24,7 +23,6 @@ public class UserDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "This field cannot be blank")
     @Size(min = 6, message = "Password must be longer than six symbols")
-//    @JsonIgnore
     private String password;
 
     private String username;
@@ -91,7 +89,9 @@ public class UserDTO {
         if (this == obj) {
             return true;
         }
-        if(obj == null || getClass() != obj.getClass()){return false;}
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         UserDTO that = (UserDTO) obj;
         return Objects.equals(userId, that.userId) && Objects.equals(email, that.email)
                 && Objects.equals(username, that.username)

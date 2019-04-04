@@ -2,6 +2,7 @@ package lv.java2.shopping_list.services.user.registration;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
+import lv.java2.shopping_list.services.user.UserDBValidator;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
@@ -18,12 +19,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private UserRegistrationValidator validator;
+    private UserDBValidator validator;
 
 
     @Transactional
     public UserDTO register(UserDTO userDTO) {
-        if (validator.isLoginExists(userDTO.getEmail())) {
+        if (validator.isUserLoginExists(userDTO.getEmail())) {
             throw new DuplicateResourceException("User with " + userDTO.getEmail() + " already registered!");
         }
         String hashedPass = hashPassword(userDTO.getPassword());

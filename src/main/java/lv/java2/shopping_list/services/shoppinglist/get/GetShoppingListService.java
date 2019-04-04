@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional (readOnly = true)
 public class GetShoppingListService {
 
     @Autowired
@@ -26,12 +26,14 @@ public class GetShoppingListService {
     @Autowired
     private ShoppingListMapper mapper;
 
+    @Transactional
     public List<ShoppingListDTO> getAllByUserId(Long userId) {
         validateUserId(userId); //Temporary solution
         return repository.findAllByUserId(userId).stream()
                 .map(shoppingList -> mapper.toDTO(shoppingList)).collect(Collectors.toList());
     }
 
+    @Transactional
     public ShoppingListDTO getSingleById(Long userId, Long listId) {
         validateUserId(userId); //Temporary solution
         Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);

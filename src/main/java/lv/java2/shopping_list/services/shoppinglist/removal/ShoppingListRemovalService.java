@@ -28,18 +28,7 @@ public class ShoppingListRemovalService {
         }
     }
 
-    @Transactional
-    public ShoppingListDTO removeByTitle(String title) {
-        Optional<ShoppingList> founded = repository.findByTitle(title);
-        if (founded.isPresent()) {
-            repository.delete(founded.get());
-            return buildReturnDTO();
-        } else {
-            throw new ResourceNotFoundException("Shopping list with TITLE = " + title + " not found!");
-        }
-    }
-
-    private ShoppingListDTO buildReturnDTO(){
+    private ShoppingListDTO buildReturnDTO() {
         ShoppingListDTO dto = new ShoppingListDTO();
         dto.setStatus(ShoppingListStatus.DELETED);
         return dto;

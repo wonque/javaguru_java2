@@ -3,8 +3,8 @@ package lv.java2.shoping_list.user.services.registration;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
+import lv.java2.shopping_list.services.user.UserDBValidatorImpl;
 import lv.java2.shopping_list.services.user.registration.UserRegistrationServiceImpl;
-import lv.java2.shopping_list.services.user.registration.UserRegistrationValidator;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
@@ -32,7 +32,7 @@ public class UserRegistrationServiceUnitTest {
     private UserMapper userMapper;
 
     @Mock
-    private UserRegistrationValidator validator;
+    private UserDBValidatorImpl validator;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -51,7 +51,7 @@ public class UserRegistrationServiceUnitTest {
     @Test
     public void returnResponseWithRegisteredAccount() {
         User user = Mockito.mock(User.class);
-        Mockito.when(validator.isLoginExists(userDTO.getEmail())).thenReturn(false);
+        Mockito.when(validator.isUserLoginExists(userDTO.getEmail())).thenReturn(false);
         Mockito.when(userMapper.toDomain(userDTO)).thenReturn(user);
         Mockito.when(repository.save(user)).thenReturn(user);
         UserDTO response = registrationService.register(userDTO);
@@ -62,7 +62,7 @@ public class UserRegistrationServiceUnitTest {
     public void throwsExceptionIfUserRegistered() throws DuplicateResourceException {
         exception.expect(DuplicateResourceException.class);
         exception.expectMessage("User with login already registered!");
-        Mockito.when(validator.isLoginExists(userDTO.getEmail())).thenReturn(true);
+        Mockito.when(validator.isUserLoginExists(userDTO.getEmail())).thenReturn(true);
         userDTO = registrationService.register(userDTO);
         assertNull(userDTO.getUserId());
     }

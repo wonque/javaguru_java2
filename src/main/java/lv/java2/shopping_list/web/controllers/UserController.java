@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDTO> getAccount(@PathVariable("userId") Long userId) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Long userId) {
         UserDTO userDTO = getUserService.findById(userId);
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }

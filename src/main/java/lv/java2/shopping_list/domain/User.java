@@ -13,22 +13,16 @@ import java.util.Objects;
 @Table(schema = "java2", name = "users")
 public class User {
 
-    public User() {
-    }
-
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "EMAIL", nullable = false)
-    @Email
-    @NotBlank
     private String email;
 
     @Column(name = "PASSWORD", nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotBlank
     private String password;
 
     @Column(name = "USERNAME")
@@ -37,6 +31,9 @@ public class User {
     @CreationTimestamp
     @Column(name = "DATE_CREATED")
     private Date dateCreated;
+
+    public User() {
+    }
 
     public User(String email, String password, String username) {
         this.email = email;
