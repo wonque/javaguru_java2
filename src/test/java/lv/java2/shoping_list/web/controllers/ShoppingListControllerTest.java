@@ -28,8 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -60,7 +59,7 @@ public class ShoppingListControllerTest {
     private ShoppingListDTO shoppingListDTO = new ShoppingListDTO(1L, "title");
 
     @Test
-    public void createList_return201CreatedStatusAndListDTO() throws Exception{
+    public void createList_return201CreatedStatusAndListDTO() throws Exception {
         shoppingListDTO.setId(1L);
         String toPost = mapper.writeValueAsString(shoppingListDTO);
         Mockito.when(validator.validate(shoppingListDTO)).thenReturn(violations);
@@ -72,6 +71,19 @@ public class ShoppingListControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "http://localhost/users/1/lists/1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+    }
+
+    @Test
+    public void updateList_return200OKStatusAndDTO() throws Exception {
+        shoppingListDTO.setId(1L);
+        String toPost = mapper.writeValueAsString(shoppingListDTO);
+        Mockito.when(validator.validate(shoppingListDTO)).thenReturn(violations);
+        Mockito.when(additionService.addList(shoppingListDTO)).thenReturn(shoppingListDTO);
+        mockMvc.perform(put("/users/1/lists/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(toPost))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test

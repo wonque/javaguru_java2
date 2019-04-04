@@ -7,11 +7,11 @@ import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateSer
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
@@ -52,7 +52,8 @@ public class ShoppingListController {
         return ResponseEntity.status(HttpStatus.CREATED).location(selfLocation).body(response);
     }
 
-    @PutMapping(value = "/{listId}")
+    @PutMapping(value = "/{listId}",
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity updateList(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId,
                                      @Validated @RequestBody ShoppingListDTO shoppingListDTO) {
