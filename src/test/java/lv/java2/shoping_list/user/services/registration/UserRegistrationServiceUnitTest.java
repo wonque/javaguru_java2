@@ -40,7 +40,7 @@ public class UserRegistrationServiceUnitTest {
     private UserDTO userDTO;
 
     @InjectMocks
-    private UserRegistrationServiceImpl registrationService = new UserRegistrationServiceImpl();
+    private UserRegistrationServiceImpl registrationService;
 
     @Before
     public void init() {

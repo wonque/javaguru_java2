@@ -16,14 +16,18 @@ import java.util.Optional;
 @Service
 public class GetUserService {
 
+    private final UserRepository repository;
+    private final UserMapper userMapper;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserMapper userMapper;
+    public GetUserService(UserRepository repository, UserMapper userMapper) {
+        this.repository = repository;
+        this.userMapper = userMapper;
+    }
 
     @Transactional
     public UserDTO findById(Long id) {
-        Optional<User> founded = userRepository.findById(id);
+        Optional<User> founded = repository.findById(id);
         return founded.map(this::buildUserDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         MessageFormat.format("User with ID = {0} not found!", id)));

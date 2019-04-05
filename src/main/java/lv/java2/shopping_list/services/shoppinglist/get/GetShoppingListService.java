@@ -16,32 +16,34 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional (readOnly = true)
 public class GetShoppingListService {
 
+    private final ShoppingListRepository repository;
+    private final ShoppingListDBValidator validator;
+    private final ShoppingListMapper mapper;
+
     @Autowired
-    private ShoppingListRepository repository;
-    @Autowired
-    private ShoppingListDBValidator validator;
-    @Autowired
-    private ShoppingListMapper mapper;
+    public GetShoppingListService(ShoppingListRepository repository, ShoppingListDBValidator validator,
+                                  ShoppingListMapper mapper) {
+        this.repository = repository;
+        this.validator = validator;
+        this.mapper = mapper;
+    }
 
     @Transactional
     public List<ShoppingListDTO> getAllByUserId(Long userId) {
         validateUserId(userId); //Temporary solution
         return repository.findAllByUserId(userId).stream()
-                .map(shoppingList -> mapper.toDTO(shoppingList)).collect(Collectors.toList());
+                .map(mapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional
     public ShoppingListDTO getSingleById(Long userId, Long listId) {
         validateUserId(userId); //Temporary solution
-        Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);
-        if (!founded.isPresent()) {
-            throw new ResourceNotFoundException
-                    (MessageFormat.format("ShoppingList with ID = {0} not found!", listId));
-        }
-        return mapper.toDTO(founded.get());
+        return repository.findByUserIdAndListId(userId, listId).map(mapper::toDTO)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                MessageFormat.format("ShoppingList with ID = {0} not found!", listId)));
     }
 
     private void validateUserId(Long userId) {

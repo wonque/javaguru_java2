@@ -13,33 +13,35 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static junit.framework.TestCase.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingListAdditionServiceTest {
 
     @Mock
-    private ShoppingListDBValidator validator;
-    @Mock
     private ShoppingListRepository repository;
     @Mock
     private ShoppingListMapper mapper;
+    @Mock
+    private ShoppingListDBValidator validator;
+
     private ShoppingListDTO dto = new ShoppingListDTO();
-    private ShoppingList shoppingList= new ShoppingList();
+    private ShoppingList shoppingList = new ShoppingList();
 
     @InjectMocks
-    private ShoppingListAdditionService additionService = new ShoppingListAdditionService();
+    private ShoppingListAdditionService additionService;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void init(){
+    public void init() {
         dto.setTitle("title");
         dto.setUserId(1L);
         shoppingList.setStatus(ShoppingListStatus.ACTIVE);
@@ -47,10 +49,9 @@ public class ShoppingListAdditionServiceTest {
     }
 
     @Test
-    public void returnDTOWithIdIfListIsAdded(){
-        Mockito.when(validator.isShoppingListTitleDuplicate(dto.getUserId(), dto.getTitle())).thenReturn(false);
-        Mockito.when(mapper.toDomain(dto)).thenReturn(shoppingList);
-        Mockito.when(repository.save(shoppingList)).thenReturn(shoppingList);
+    public void returnDTOWithIdIfListIsAdded() {
+        when(mapper.toDomain(dto)).thenReturn(shoppingList);
+        when(repository.save(shoppingList)).thenReturn(shoppingList);
         assertNull(dto.getId());
         assertNull(dto.getStatus());
         dto = additionService.addList(dto);
@@ -58,16 +59,4 @@ public class ShoppingListAdditionServiceTest {
         assertEquals((long) dto.getId(), 2L);
         assertEquals(ShoppingListStatus.ACTIVE, dto.getStatus());
     }
-
-
-    @Test
-    public void throwsExceptionIfShoppingListExists() throws DuplicateResourceException{
-        exception.expect(DuplicateResourceException.class);
-        exception.expectMessage("Shopping list with title = 'title' already exists!");
-        Mockito.when(validator.isShoppingListTitleDuplicate(dto.getUserId(), dto.getTitle())).thenReturn(true);
-        dto = additionService.addList(dto);
-        assertNull(dto.getId());
-    }
-
-
 }

@@ -21,6 +21,6 @@ public class ShoppingListUpdateServiceTests {
     private ShoppingListMapper mapper;
 
     @InjectMocks
-    private ShoppingListUpdateService updateService = new ShoppingListUpdateService();
+    private ShoppingListUpdateService updateService;
     private ShoppingListDTO requestDTO = new ShoppingListDTO(1L, "title");
 }

@@ -40,7 +40,7 @@ public class GetShoppingListServiceTest {
     private ShoppingListDTO dto2 = new ShoppingListDTO();
 
     @InjectMocks
-    private GetShoppingListService getService = new GetShoppingListService();
+    private GetShoppingListService getService;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

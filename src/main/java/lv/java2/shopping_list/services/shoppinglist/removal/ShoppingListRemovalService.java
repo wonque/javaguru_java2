@@ -14,8 +14,12 @@ import java.util.Optional;
 @Service
 public class ShoppingListRemovalService {
 
+    private final ShoppingListRepository repository;
+
     @Autowired
-    private ShoppingListRepository repository;
+    public ShoppingListRemovalService(ShoppingListRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional
     public ShoppingListDTO removeById(Long userId, Long listId) {

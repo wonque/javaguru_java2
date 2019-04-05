@@ -14,12 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ShoppingListUpdateService {
 
+    private final ShoppingListRepository repository;
+    private final ShoppingListDBValidator validator;
+    private final ShoppingListMapper mapper;
+
     @Autowired
-    private ShoppingListRepository repository;
-    @Autowired
-    private ShoppingListDBValidator validator;
-    @Autowired
-    private ShoppingListMapper mapper;
+    public ShoppingListUpdateService(ShoppingListRepository repository,
+                                     ShoppingListDBValidator validator,
+                                     ShoppingListMapper mapper) {
+        this.repository = repository;
+        this.validator = validator;
+        this.mapper = mapper;
+    }
 
     @Transactional
     public ShoppingListDTO update(ShoppingListDTO shoppingListDTO) {

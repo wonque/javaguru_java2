@@ -3,6 +3,7 @@ package lv.java2.shopping_list.services.shoppinglist;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;
+import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +23,10 @@ public class ShoppingListDBValidator {
         return userRepository.findById(userId).isPresent();
     }
 
-    public boolean isShoppingListTitleDuplicate(Long userId, String title) {
-        return shoppingListRepository.findByUserIdAndTitle(userId, title).isPresent();
+    public void isListTitleExists(Long userId, String title) {
+        if (shoppingListRepository.findByUserIdAndTitle(userId, title).isPresent()) {
+            throw new DuplicateResourceException(String.format("Shopping list with title = '%s' already exists!", title));
+        }
     }
 
 }

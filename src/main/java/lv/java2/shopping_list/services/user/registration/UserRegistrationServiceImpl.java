@@ -14,12 +14,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserRegistrationServiceImpl implements UserRegistrationService {
 
+    private final UserRepository repository;
+    private final UserMapper userMapper;
+    private final UserDBValidator validator;
+
     @Autowired
-    private UserRepository repository;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserDBValidator validator;
+    public UserRegistrationServiceImpl(UserRepository repository, UserMapper userMapper, UserDBValidator validator) {
+        this.repository = repository;
+        this.userMapper = userMapper;
+        this.validator = validator;
+    }
 
 
     @Transactional

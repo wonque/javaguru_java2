@@ -32,7 +32,7 @@ public class GetUserServiceTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @InjectMocks
-    private GetUserService getUserService = new GetUserService();
+    private GetUserService getUserService;
 
 
     private Long id = 1L;
