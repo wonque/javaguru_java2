@@ -7,19 +7,18 @@ import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
-import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
-
-import static junit.framework.TestCase.*;
-import static org.mockito.Mockito.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ShoppingListAdditionServiceTest {
@@ -31,7 +30,8 @@ public class ShoppingListAdditionServiceTest {
     @Mock
     private ShoppingListDBValidator validator;
 
-    private ShoppingListDTO dto = new ShoppingListDTO();
+    private ShoppingListDTO requestDto = new ShoppingListDTO();
+    private ShoppingListDTO responseDto = new ShoppingListDTO();
     private ShoppingList shoppingList = new ShoppingList();
 
     @InjectMocks
@@ -42,21 +42,22 @@ public class ShoppingListAdditionServiceTest {
 
     @Before
     public void init() {
-        dto.setTitle("title");
-        dto.setUserId(1L);
+        requestDto.setTitle("title");
+        requestDto.setUserId(1L);
+        responseDto.setId(2L);
+        responseDto.setStatus(ShoppingListStatus.ACTIVE);
         shoppingList.setStatus(ShoppingListStatus.ACTIVE);
         shoppingList.setId(2L);
     }
 
     @Test
     public void returnDTOWithIdIfListIsAdded() {
-        when(mapper.toDomain(dto)).thenReturn(shoppingList);
+        when(mapper.toDomain(requestDto)).thenReturn(shoppingList);
         when(repository.save(shoppingList)).thenReturn(shoppingList);
-        assertNull(dto.getId());
-        assertNull(dto.getStatus());
-        dto = additionService.addList(dto);
-        assertNotNull(dto.getId());
-        assertEquals((long) dto.getId(), 2L);
-        assertEquals(ShoppingListStatus.ACTIVE, dto.getStatus());
+        when(mapper.toDTO(shoppingList)).thenReturn(responseDto);
+        responseDto = additionService.addList(requestDto);
+        assertNotNull(responseDto.getId());
+        assertEquals((long) responseDto.getId(), 2L);
+        assertEquals(ShoppingListStatus.ACTIVE, responseDto.getStatus());
     }
 }

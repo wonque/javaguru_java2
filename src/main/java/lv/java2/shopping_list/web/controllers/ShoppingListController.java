@@ -5,6 +5,8 @@ import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
 import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
 import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
+import lv.java2.shopping_list.web.dto.validation.ExistingEntry;
+import lv.java2.shopping_list.web.dto.validation.NewEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 
@@ -37,37 +40,49 @@ public class ShoppingListController {
     }
 
     @GetMapping(value = "/{listId}")
-    public ResponseEntity getSingleById(@PathVariable("userId") Long userId
-            , @PathVariable("listId") Long listId) {
+    public ResponseEntity getSingleById(
+            @PathVariable("userId") Long userId,
+            @PathVariable("listId") Long listId) {
+
         ShoppingListDTO response = getListService.getSingleById(userId, listId);
+
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping
     public ResponseEntity createList(@PathVariable("userId") Long userId,
-                                     @Validated @RequestBody ShoppingListDTO shoppingListDTO) {
+                                     @Validated(NewEntry.class) @RequestBody ShoppingListDTO shoppingListDTO) {
+
         shoppingListDTO.setUserId(userId);
+
         ShoppingListDTO response = additionService.addList(shoppingListDTO);
         URI selfLocation = buildLocationUri(response.getId());
+
         return ResponseEntity.status(HttpStatus.CREATED).location(selfLocation).body(response);
     }
+
 
     @PutMapping(value = "/{listId}",
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity updateList(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId,
                                      @Validated @RequestBody ShoppingListDTO shoppingListDTO) {
+
         shoppingListDTO.setUserId(userId);
         shoppingListDTO.setId(listId);
+
         ShoppingListDTO response = updateService.update(shoppingListDTO);
+
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping(value = "/{listId}")
     public ResponseEntity removeById(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId) {
+
         ShoppingListDTO response = removalService.removeById(userId, listId);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
 

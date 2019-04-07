@@ -27,14 +27,14 @@ public class ShoppingListAdditionService {
 
     @Transactional
     public ShoppingListDTO addList(ShoppingListDTO shoppingListDTO) {
+
         validator.isListTitleExists(shoppingListDTO.getUserId(), shoppingListDTO.getTitle());
+
         ShoppingList newEntry = mapper.toDomain(shoppingListDTO);
         newEntry.setStatus(ShoppingListStatus.ACTIVE);
         repository.save(newEntry);
-        shoppingListDTO.setDateCreated(newEntry.getDateCreated());
-        shoppingListDTO.setId(newEntry.getId());
-        shoppingListDTO.setStatus(newEntry.getStatus());
-        return shoppingListDTO;
+
+        return mapper.toDTO(newEntry);
     }
 
 }

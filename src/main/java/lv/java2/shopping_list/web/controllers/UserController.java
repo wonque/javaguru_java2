@@ -29,15 +29,19 @@ public class UserController {
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> register(@Validated @RequestBody UserDTO userDTO) {
+
         UserDTO responseDto = registrationService.register(userDTO);
         URI locationHeader = buildLocationUri(responseDto.getUserId());
+
         return ResponseEntity.status(HttpStatus.CREATED).location(locationHeader)
                 .body(responseDto);
     }
 
     @GetMapping(value = "/users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDTO> getUser(@PathVariable("userId") Long userId) {
+
         UserDTO userDTO = getUserService.findById(userId);
+
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 

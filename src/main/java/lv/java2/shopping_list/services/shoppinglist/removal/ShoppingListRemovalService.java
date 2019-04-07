@@ -23,6 +23,7 @@ public class ShoppingListRemovalService {
 
     @Transactional
     public ShoppingListDTO removeById(Long userId, Long listId) {
+
         Optional<ShoppingList> founded = repository.findByUserIdAndListId(userId, listId);
         if (founded.isPresent()) {
             repository.delete(founded.get());

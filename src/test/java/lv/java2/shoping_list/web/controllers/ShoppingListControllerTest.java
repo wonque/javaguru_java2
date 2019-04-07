@@ -60,10 +60,13 @@ public class ShoppingListControllerTest {
 
     @Test
     public void createList_return201CreatedStatusAndListDTO() throws Exception {
+
         shoppingListDTO.setId(1L);
         String toPost = mapper.writeValueAsString(shoppingListDTO);
+
         Mockito.when(validator.validate(shoppingListDTO)).thenReturn(violations);
         Mockito.when(additionService.addList(shoppingListDTO)).thenReturn(shoppingListDTO);
+
         mockMvc.perform(post("/users/1/lists")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content(toPost))
@@ -76,9 +79,12 @@ public class ShoppingListControllerTest {
     @Test
     public void updateList_return200OKStatusAndDTO() throws Exception {
         shoppingListDTO.setId(1L);
+
         String toPost = mapper.writeValueAsString(shoppingListDTO);
+
         Mockito.when(validator.validate(shoppingListDTO)).thenReturn(violations);
         Mockito.when(additionService.addList(shoppingListDTO)).thenReturn(shoppingListDTO);
+
         mockMvc.perform(put("/users/1/lists/1")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                 .content(toPost))
@@ -88,8 +94,10 @@ public class ShoppingListControllerTest {
 
     @Test
     public void getAllByUserID_return200OKStatusAndListOfDTOs() throws Exception {
+
         Mockito.when(getListService.getAllByUserId(1L)).thenReturn(shoppingLists);
         Mockito.when(shoppingListDBValidator.isUserExists(1L)).thenReturn(true);
+
         mockMvc.perform(get("/users/1/lists")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));
@@ -97,15 +105,19 @@ public class ShoppingListControllerTest {
 
     @Test
     public void getAllByUserId_404NotFoundWhenExceptionIsThrown() throws Exception {
+
         Mockito.when(getListService.getAllByUserId(1L)).thenThrow(new ResourceNotFoundException("Not found"));
+
         mockMvc.perform(get("/users/1/lists")).andDo(print())
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getSingleById_return200IsOkAndShoppingListDTO() throws Exception {
+
         Mockito.when(getListService.getSingleById(1L, 1L)).thenReturn(shoppingListDTO);
         Mockito.when(shoppingListDBValidator.isUserExists(1L)).thenReturn(true);
+
         mockMvc.perform(get("/users/1/lists/1")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json("{title: title}"));
@@ -113,8 +125,10 @@ public class ShoppingListControllerTest {
 
     @Test
     public void getSingleById_return404NotFoundWhenExceptionIsThrown() throws Exception {
+
         Mockito.when(getListService.getSingleById(1L, 1L))
                 .thenThrow(new ResourceNotFoundException("Not Found"));
+
         mockMvc.perform(get("/users/1/lists/1")).andExpect(status().isNotFound());
     }
 
