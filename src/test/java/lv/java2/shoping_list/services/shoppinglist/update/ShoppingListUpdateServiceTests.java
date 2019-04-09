@@ -1,9 +1,7 @@
 package lv.java2.shoping_list.services.shoppinglist.update;
 
 import lv.java2.shopping_list.domain.ShoppingList;
-import lv.java2.shopping_list.domain.ShoppingListStatus;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
@@ -16,16 +14,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
@@ -57,13 +45,13 @@ public class ShoppingListUpdateServiceTests {
         requestDto.setUserId(1L);
         requestDto.setCategory("category");
         shoppingList.setId(3001L);
-        shoppingList.setTitle("title");
-        shoppingList.setCategory("category");
+        shoppingList.setTitle("OtherTitle");
+        shoppingList.setCategory("OtherCategory");
 
     }
 
     @Test
-    public void test1() {
+    public void shouldReturnUpdatedDto() {
         when(repository.getOne(requestDto.getId())).thenReturn(shoppingList);
         when(repository.save(shoppingList)).thenReturn(shoppingList);
         when(mapper.toDTO(shoppingList)).thenReturn(requestDto);

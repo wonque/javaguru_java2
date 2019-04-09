@@ -3,21 +3,22 @@ package lv.java2.shoping_list.services.shoppinglist.addition;
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.domain.ShoppingListStatus;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
+import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,10 +29,12 @@ public class ShoppingListAdditionServiceTest {
     @Mock
     private ShoppingListMapper mapper;
     @Mock
-    private ShoppingListDBValidator validator;
+    private ShoppingListValidationService validator;
 
-    private ShoppingListDTO requestDto = new ShoppingListDTO();
-    private ShoppingListDTO responseDto = new ShoppingListDTO();
+    @Captor
+    public ArgumentCaptor<ShoppingListDTO> listDTOCaptor;
+
+    private ShoppingListDTO shoppingListDTO = new ShoppingListDTO();
     private ShoppingList shoppingList = new ShoppingList();
 
     @InjectMocks
@@ -39,25 +42,30 @@ public class ShoppingListAdditionServiceTest {
 
     @Before
     public void init() {
-        requestDto.setTitle("title");
-        requestDto.setUserId(1L);
-        responseDto.setId(2L);
-        responseDto.setStatus(ShoppingListStatus.ACTIVE);
+        shoppingListDTO.setTitle("title");
+        shoppingListDTO.setUserId(1L);
+        shoppingListDTO.setStatus(ShoppingListStatus.ACTIVE);
+        shoppingListDTO.setId(2L);
         shoppingList.setStatus(ShoppingListStatus.ACTIVE);
+        shoppingList.setTitle("title");
         shoppingList.setId(2L);
     }
 
     @Test
-    public void returnDTOWithIdIfListIsAdded() {
+    public void shouldAddNewList() {
 
-        when(mapper.toDomain(requestDto)).thenReturn(shoppingList);
+        when(mapper.toDomain(shoppingListDTO)).thenReturn(shoppingList);
         when(repository.save(shoppingList)).thenReturn(shoppingList);
-        when(mapper.toDTO(shoppingList)).thenReturn(responseDto);
+        when(mapper.toDTO(shoppingList)).thenReturn(shoppingListDTO);
 
-        responseDto = additionService.addList(requestDto);
+        ShoppingListDTO result = additionService.addList(shoppingListDTO);
+        verify(validator).validate(listDTOCaptor.capture());
+        ShoppingListDTO captorResult = listDTOCaptor.getValue();
 
-        assertNotNull(responseDto.getId());
-        assertEquals((long) responseDto.getId(), 2L);
-        assertEquals(ShoppingListStatus.ACTIVE, responseDto.getStatus());
+        assertEquals((long) result.getId(), (long) shoppingListDTO.getId());
+        assertThat(result).hasSameClassAs(shoppingListDTO);
+        assertThat(result.getStatus()).isEqualTo(ShoppingListStatus.ACTIVE);
+        assertThat(captorResult).isEqualTo(shoppingListDTO);
+
     }
 }
