@@ -13,9 +13,9 @@ public interface ShoppingListMapper {
 
     @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "status", source = "status")
-    ShoppingListDTO toDTO (ShoppingList shoppingList);
+    ShoppingListDTO toDTO(ShoppingList shoppingList);
 
     @Mapping(target = "user.id", source = "userId")
-    @Mapping(target = "id", ignore = true)
     ShoppingList toDomain(ShoppingListDTO dto);
+
 }

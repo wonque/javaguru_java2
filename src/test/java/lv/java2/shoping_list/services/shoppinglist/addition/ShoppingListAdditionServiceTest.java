@@ -37,9 +37,6 @@ public class ShoppingListAdditionServiceTest {
     @InjectMocks
     private ShoppingListAdditionService additionService;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Before
     public void init() {
         requestDto.setTitle("title");
@@ -52,10 +49,13 @@ public class ShoppingListAdditionServiceTest {
 
     @Test
     public void returnDTOWithIdIfListIsAdded() {
+
         when(mapper.toDomain(requestDto)).thenReturn(shoppingList);
         when(repository.save(shoppingList)).thenReturn(shoppingList);
         when(mapper.toDTO(shoppingList)).thenReturn(responseDto);
+
         responseDto = additionService.addList(requestDto);
+
         assertNotNull(responseDto.getId());
         assertEquals((long) responseDto.getId(), 2L);
         assertEquals(ShoppingListStatus.ACTIVE, responseDto.getStatus());

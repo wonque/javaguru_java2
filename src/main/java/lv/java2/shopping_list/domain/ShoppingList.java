@@ -116,6 +116,18 @@ public class ShoppingList {
         this.status = status;
     }
 
+    public void markAsActive() {
+        this.status = ShoppingListStatus.ACTIVE;
+    }
+
+    public void markAsArchived() {
+        this.status = ShoppingListStatus.ARCHIVED;
+    }
+
+    public void markAsDeleted() {
+        this.status = ShoppingListStatus.DELETED;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

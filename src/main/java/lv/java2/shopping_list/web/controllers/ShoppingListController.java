@@ -1,11 +1,11 @@
 package lv.java2.shopping_list.web.controllers;
 
+import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
 import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
 import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
 import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
-import lv.java2.shopping_list.web.dto.validation.ExistingEntry;
 import lv.java2.shopping_list.web.dto.validation.NewEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.List;
 
@@ -35,7 +34,9 @@ public class ShoppingListController {
 
     @GetMapping
     public ResponseEntity getAllLists(@PathVariable("userId") Long userId) {
+
         List<ShoppingListDTO> response = getListService.getAllByUserId(userId);
+
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

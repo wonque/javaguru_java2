@@ -19,36 +19,27 @@ import java.util.stream.Collectors;
 public class GetShoppingListService {
 
     private final ShoppingListRepository repository;
-    private final ShoppingListDBValidator validator;
     private final ShoppingListMapper mapper;
 
     @Autowired
-    public GetShoppingListService(ShoppingListRepository repository, ShoppingListDBValidator validator,
+    public GetShoppingListService(ShoppingListRepository repository,
                                   ShoppingListMapper mapper) {
         this.repository = repository;
-        this.validator = validator;
         this.mapper = mapper;
     }
 
     @Transactional
     public List<ShoppingListDTO> getAllByUserId(Long userId) {
-        validateUserId(userId); //Temporary solution
         return repository.findAllByUserId(userId).stream()
                 .map(mapper::toDTO).collect(Collectors.toList());
     }
 
     @Transactional
     public ShoppingListDTO getSingleById(Long userId, Long listId) {
-        validateUserId(userId); //Temporary solution
         return repository.findByUserIdAndListId(userId, listId).map(mapper::toDTO)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 MessageFormat.format("ShoppingList with ID = {0} not found!", listId)));
     }
 
-    private void validateUserId(Long userId) {
-        if (!validator.isUserExists(userId)) {
-            throw new ResourceNotFoundException(MessageFormat.format("Unable to find user with ID = {0}", userId));
-        }
-    }
 }
