@@ -8,8 +8,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -58,7 +56,6 @@ public class ShoppingList {
         this.title = title;
         this.category = category;
     }
-
 
     public void setTitle(String title) {
         this.title = title;
@@ -122,10 +119,6 @@ public class ShoppingList {
 
     public void markAsArchived() {
         this.status = ShoppingListStatus.ARCHIVED;
-    }
-
-    public void markAsDeleted() {
-        this.status = ShoppingListStatus.DELETED;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.web.controllers;
 
-import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
 import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
 import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
@@ -9,7 +8,6 @@ import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.validation.NewEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,8 +61,7 @@ public class ShoppingListController {
     }
 
 
-    @PutMapping(value = "/{listId}",
-            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PutMapping(value = "/{listId}")
     public ResponseEntity updateList(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId,
                                      @Validated @RequestBody ShoppingListDTO shoppingListDTO) {
@@ -81,9 +78,13 @@ public class ShoppingListController {
     public ResponseEntity removeById(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId) {
 
-        ShoppingListDTO response = removalService.removeById(userId, listId);
+        ShoppingListDTO requestDTO = new ShoppingListDTO();
+        requestDTO.setId(listId);
+        requestDTO.setUserId(userId);
 
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        removalService.removeById(requestDTO);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 

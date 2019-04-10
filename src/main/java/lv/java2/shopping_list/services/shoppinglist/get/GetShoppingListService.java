@@ -1,8 +1,6 @@
 package lv.java2.shopping_list.services.shoppinglist.get;
 
-import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.ShoppingListDBValidator;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
@@ -12,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
