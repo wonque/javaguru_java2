@@ -28,13 +28,9 @@ public class GetUserService {
     @Transactional
     public UserDTO findById(Long id) {
         Optional<User> founded = repository.findById(id);
-        return founded.map(this::buildUserDTO)
+        return founded.map(userMapper::toDTO)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         MessageFormat.format("User with ID = {0} not found!", id)));
-    }
-
-    private UserDTO buildUserDTO(User user) {
-        return userMapper.toDTO(user);
     }
 
 }

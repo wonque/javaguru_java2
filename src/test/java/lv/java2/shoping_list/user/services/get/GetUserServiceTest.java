@@ -6,18 +6,19 @@ import lv.java2.shopping_list.services.user.get.GetUserService;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,8 +29,14 @@ public class GetUserServiceTest {
     @Mock
     private UserMapper userMapper;
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    private UserDTO userDTO;
+    private User user;
+
+    @Before
+    public void setup() {
+        this.userDTO = userDTO();
+        this.user = user();
+    }
 
     @InjectMocks
     private GetUserService getUserService;
@@ -38,21 +45,42 @@ public class GetUserServiceTest {
     private Long id = 1L;
 
     @Test
-    public void throwsExceptionIfUserNotFound() throws ResourceNotFoundException {
+    public void throwsExceptionIfUserNotFound() {
         when(repository.findById(id)).thenReturn(Optional.empty());
-        expectedException.expect(ResourceNotFoundException.class);
-        expectedException.expectMessage("User with ID = 1 not found!");
-        getUserService.findById(id);
+
+        assertThatThrownBy(() -> getUserService.findById(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("User with ID = 1 not found!");
 
     }
 
     @Test
-    public void returnResponseWithUser(){
-        User user = Mockito.mock(User.class);
-        UserDTO userDTO = Mockito.mock(UserDTO.class);
-        when(repository.findById(id)).thenReturn(Optional.of(user));
+    public void returnResponseWithUser() {
+        when(repository.findById(userDTO.getUserId())).thenReturn(Optional.of(user));
         when(userMapper.toDTO(user)).thenReturn(userDTO);
-        UserDTO response = getUserService.findById(id);
+
+        UserDTO response = getUserService.findById(userDTO.getUserId());
+
         assertNotNull(response.getUserId());
+        assertThat(response).isEqualTo(userDTO);
+        assertEquals((long) response.getUserId(), 111L);
     }
+
+    private UserDTO userDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(111L);
+        userDTO.setEmail("TEST_EMAIL@EMAIL.TEST");
+        userDTO.setUsername("TEST_USERNAME");
+        return userDTO;
+    }
+
+    private User user() {
+        User user = new User();
+        user.setId(111L);
+        user.setEmail("TEST_EMAIL@EMAIL.TEST");
+        user.setUsername("TEST_USERNAME");
+        return user;
+
+    }
+
 }

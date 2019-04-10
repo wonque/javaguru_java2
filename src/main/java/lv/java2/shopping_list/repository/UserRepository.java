@@ -12,7 +12,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("FROM User us WHERE lower(us.email) = :email")
-    @Transactional
     Optional<User> findByEmail(String email);
 
 }

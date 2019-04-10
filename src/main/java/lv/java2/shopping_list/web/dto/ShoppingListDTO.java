@@ -2,16 +2,21 @@ package lv.java2.shopping_list.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lv.java2.shopping_list.domain.ShoppingListStatus;
+import lv.java2.shopping_list.web.dto.validation.ExistingEntry;
+import lv.java2.shopping_list.web.dto.validation.NewEntry;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.util.Date;
 import java.util.Objects;
 
 public class ShoppingListDTO {
 
+    @Null(groups = {NewEntry.class})
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "This field cannot be blank")
     private String title;
     private String category;
     private ShoppingListStatus status;
@@ -22,7 +27,7 @@ public class ShoppingListDTO {
     public ShoppingListDTO() {
     }
 
-    public ShoppingListDTO (Long userId, String title){
+    public ShoppingListDTO(Long userId, String title) {
         this.userId = userId;
         this.title = title;
     }
@@ -101,5 +106,18 @@ public class ShoppingListDTO {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, category, status, userId, dateCreated, dateModified);
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingListDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", category='" + category + '\'' +
+                ", status=" + status +
+                ", userId=" + userId +
+                ", dateCreated=" + dateCreated +
+                ", dateModified=" + dateModified +
+                '}';
     }
 }
