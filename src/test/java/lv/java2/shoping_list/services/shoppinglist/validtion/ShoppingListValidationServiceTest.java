@@ -3,7 +3,7 @@ package lv.java2.shoping_list.services.shoppinglist.validtion;
 import lv.java2.shopping_list.services.shoppinglist.validation.ListNotExistsRule;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationRule;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationService;
-import lv.java2.shopping_list.services.shoppinglist.validation.UniqueTitleRule;
+import lv.java2.shopping_list.services.shoppinglist.validation.UniqueShoppingListTitleRule;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class ShoppingListValidationServiceTest {
     @Mock
     private ListNotExistsRule notExistsRule;
     @Mock
-    private UniqueTitleRule uniqueTitleRule;
+    private UniqueShoppingListTitleRule uniqueShoppingListTitleRule;
 
     private ShoppingListDTO dto;
     private ShoppingListValidationService validationService;
@@ -38,7 +38,7 @@ public class ShoppingListValidationServiceTest {
     public void setup() {
         Set<ShoppingListValidationRule> rules = new HashSet<>();
         rules.add(notExistsRule);
-        rules.add(uniqueTitleRule);
+        rules.add(uniqueShoppingListTitleRule);
         dto = listDto();
         validationService = new ShoppingListValidationService(rules);
     }
@@ -48,7 +48,7 @@ public class ShoppingListValidationServiceTest {
         validationService.validate(dto);
 
         verify(notExistsRule).validate(dtoCaptor.capture());
-        verify(uniqueTitleRule).validate(dtoCaptor.capture());
+        verify(uniqueShoppingListTitleRule).validate(dtoCaptor.capture());
 
         List<ShoppingListDTO> result = dtoCaptor.getAllValues();
 

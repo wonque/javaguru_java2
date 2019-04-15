@@ -4,6 +4,6 @@ import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 
 public interface ShoppingListValidationRule {
 
-    void validate (ShoppingListDTO dto);
+    void validate(ShoppingListDTO dto);
 
 }

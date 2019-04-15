@@ -1,6 +1,7 @@
 package lv.java2.shopping_list.domain;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(schema = "java2", name = "items")
@@ -17,12 +18,14 @@ public class Item {
     @Column(name = "description")
     private String description;
 
-    public Item() {
-    }
+    @Column(name = "quantity")
+    private double quantity;
 
-    public Item(String title, String description) {
-        this.title = title;
-        this.description = description;
+    @Column(name = "price")
+    private BigDecimal price;
+
+
+    public Item() {
     }
 
     public String getDescription() {

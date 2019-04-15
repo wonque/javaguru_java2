@@ -2,7 +2,7 @@ package lv.java2.shoping_list.services.shoppinglist.validtion;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.validation.UniqueTitleRule;
+import lv.java2.shopping_list.services.shoppinglist.validation.UniqueShoppingListTitleRule;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.junit.Before;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UniqueTitleRuleTest {
+public class UniqueShoppingListTitleRuleTest {
 
     @Mock
     private ShoppingListRepository repository;
@@ -29,7 +29,7 @@ public class UniqueTitleRuleTest {
 
     @InjectMocks
     @Spy
-    public UniqueTitleRule rule;
+    public UniqueShoppingListTitleRule rule;
 
     @Before
     public void setup() {
