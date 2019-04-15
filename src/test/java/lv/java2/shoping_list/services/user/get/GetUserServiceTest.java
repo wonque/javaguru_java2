@@ -1,4 +1,4 @@
-package lv.java2.shoping_list.user.services.get;
+package lv.java2.shoping_list.services.user.get;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.repository.UserRepository;

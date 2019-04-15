@@ -21,6 +21,5 @@ public class ListNotExistsRule implements ShoppingListValidationRule {
         if (!repository.findByUserIdAndListId(dto.getUserId(), dto.getId()).isPresent()) {
             throw new ResourceNotFoundException("Shopping list not found!");
         }
-
     }
 }

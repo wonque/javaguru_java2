@@ -1,4 +1,4 @@
-package lv.java2.shoping_list.user.services.registration;
+package lv.java2.shoping_list.services.user.registration;
 
 
 import lv.java2.shopping_list.domain.User;
