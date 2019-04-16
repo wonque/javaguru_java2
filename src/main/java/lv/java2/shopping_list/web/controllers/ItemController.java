@@ -15,7 +15,7 @@ public class ItemController {
     private ItemAdditionService additionService;
 
     @PostMapping
-    public ResponseEntity createList(@PathVariable("userId") Long userId,
+    public ResponseEntity createItem(@PathVariable("userId") Long userId,
                                      @PathVariable("listId") Long listId,
                                      @RequestBody ItemDTO itemDTO) {
 

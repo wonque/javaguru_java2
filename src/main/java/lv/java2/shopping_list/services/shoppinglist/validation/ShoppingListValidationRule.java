@@ -6,4 +6,5 @@ public interface ShoppingListValidationRule {
 
     void validate(ShoppingListDTO dto);
 
+
 }

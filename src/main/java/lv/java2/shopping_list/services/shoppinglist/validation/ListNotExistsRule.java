@@ -2,9 +2,10 @@ package lv.java2.shopping_list.services.shoppinglist.validation;
 
 import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.persistence.EntityNotFoundException;
 
 @Component
 public class ListNotExistsRule implements ShoppingListValidationRule {
@@ -18,8 +19,12 @@ public class ListNotExistsRule implements ShoppingListValidationRule {
 
     @Override
     public void validate(ShoppingListDTO dto) {
-        if (!repository.findByUserIdAndListId(dto.getUserId(), dto.getId()).isPresent()) {
-            throw new ResourceNotFoundException("Shopping list not found!");
+        if (dto.getId() != null && listNotPresent(dto)) {
+            throw new EntityNotFoundException("Shopping list not found!");
         }
+    }
+
+    private boolean listNotPresent(ShoppingListDTO dto) {
+        return !repository.findByUserIdAndListId(dto.getUserId(), dto.getId()).isPresent();
     }
 }

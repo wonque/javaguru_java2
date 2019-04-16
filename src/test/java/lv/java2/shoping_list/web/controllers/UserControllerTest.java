@@ -7,7 +7,6 @@ import lv.java2.shopping_list.services.user.registration.UserRegistrationService
 import lv.java2.shopping_list.web.controllers.UserController;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -19,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.HashSet;
@@ -73,7 +73,8 @@ public class UserControllerTest {
 
     @Test
     public void throwsExceptionWhenUserNotFoundById() throws Exception {
-        Mockito.when(getUserService.findById(100L)).thenThrow(new ResourceNotFoundException("User with ID = 100 not found!"));
+        Mockito.when(getUserService.findById(100L))
+                .thenThrow(new EntityNotFoundException("User with ID = 100 not found!"));
         mockMvc.perform(get("/users/100")).andDo(print())
                 .andExpect(status().isNotFound());
     }

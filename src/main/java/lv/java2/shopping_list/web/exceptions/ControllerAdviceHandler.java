@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,13 +28,6 @@ public class ControllerAdviceHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(detailedErrors);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiError> handleResourceNotFoundException(ResourceNotFoundException ex) {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(buildApiErrorFromException(ex, HttpStatus.NOT_FOUND));
-    }
-
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<ApiError> handleDuplicateResourceException(DuplicateResourceException ex) {
         return ResponseEntity
@@ -46,6 +40,13 @@ public class ControllerAdviceHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(buildApiErrorFromException(ex, HttpStatus.BAD_REQUEST));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApiError> handleEntityNotFoundException(EntityNotFoundException ex){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(buildApiErrorFromException(ex, HttpStatus.NOT_FOUND));
     }
 
     private ApiError buildApiErrorFromFieldError(FieldError fieldError) {

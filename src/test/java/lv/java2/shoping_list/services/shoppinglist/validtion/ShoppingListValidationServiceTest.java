@@ -1,6 +1,5 @@
 package lv.java2.shoping_list.services.shoppinglist.validtion;
 
-import lv.java2.shopping_list.services.shoppinglist.validation.ListNotExistsRule;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationRule;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationService;
 import lv.java2.shopping_list.services.shoppinglist.validation.UniqueShoppingListTitleRule;
@@ -25,8 +24,6 @@ import static org.mockito.Mockito.verify;
 public class ShoppingListValidationServiceTest {
 
     @Mock
-    private ListNotExistsRule notExistsRule;
-    @Mock
     private UniqueShoppingListTitleRule uniqueShoppingListTitleRule;
 
     private ShoppingListDTO dto;
@@ -37,7 +34,6 @@ public class ShoppingListValidationServiceTest {
     @Before
     public void setup() {
         Set<ShoppingListValidationRule> rules = new HashSet<>();
-        rules.add(notExistsRule);
         rules.add(uniqueShoppingListTitleRule);
         dto = listDto();
         validationService = new ShoppingListValidationService(rules);
@@ -47,12 +43,11 @@ public class ShoppingListValidationServiceTest {
     public void shouldValidate() {
         validationService.validate(dto);
 
-        verify(notExistsRule).validate(dtoCaptor.capture());
         verify(uniqueShoppingListTitleRule).validate(dtoCaptor.capture());
 
         List<ShoppingListDTO> result = dtoCaptor.getAllValues();
 
-        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.size()).isEqualTo(1);
         assertThat(result).containsOnly(dto);
 
     }

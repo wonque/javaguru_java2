@@ -4,7 +4,6 @@ import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.services.shoppinglist.validation.ListNotExistsRule;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -41,7 +41,7 @@ public class ListNotExistsRuleTest {
     public void shouldThrowException() {
         when(repository.findByUserIdAndListId(dto.getUserId(), dto.getId())).thenReturn(Optional.empty());
         assertThatThrownBy(() -> rule.validate(dto))
-                .isInstanceOf(ResourceNotFoundException.class)
+                .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("Shopping list not found!");
     }
 

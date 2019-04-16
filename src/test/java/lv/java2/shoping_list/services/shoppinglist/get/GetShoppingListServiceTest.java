@@ -5,7 +5,6 @@ import lv.java2.shopping_list.repository.ShoppingListRepository;
 import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import lv.java2.shopping_list.web.dto.mappers.ShoppingListMapper;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -75,7 +75,7 @@ public class GetShoppingListServiceTest {
         when(repository.findByUserIdAndListId(1L, 1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> getService.getSingleById(1L, 1L))
-                .isInstanceOf(ResourceNotFoundException.class)
+                .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("ShoppingList with ID = 1 not found!");
 
     }

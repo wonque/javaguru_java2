@@ -8,7 +8,6 @@ import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalS
 import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
 import lv.java2.shopping_list.web.controllers.ShoppingListController;
 import lv.java2.shopping_list.web.dto.ShoppingListDTO;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.ArrayList;
@@ -102,7 +102,7 @@ public class ShoppingListControllerTest {
     @Test
     public void getAllByUserId_404NotFoundWhenExceptionIsThrown() throws Exception {
 
-        when(getListService.getAllByUserId(1L)).thenThrow(new ResourceNotFoundException("Not found"));
+        when(getListService.getAllByUserId(1L)).thenThrow(new EntityNotFoundException("Not found"));
 
         mockMvc.perform(get("/users/1/lists")).andDo(print())
                 .andExpect(status().isNotFound());
@@ -122,7 +122,7 @@ public class ShoppingListControllerTest {
     public void getSingleById_return404NotFoundWhenExceptionIsThrown() throws Exception {
 
         when(getListService.getSingleById(1L, 1L))
-                .thenThrow(new ResourceNotFoundException("Not Found"));
+                .thenThrow(new EntityNotFoundException("Not Found"));
 
         mockMvc.perform(get("/users/1/lists/1")).andExpect(status().isNotFound());
     }

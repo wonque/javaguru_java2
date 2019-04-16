@@ -5,7 +5,6 @@ import lv.java2.shopping_list.repository.UserRepository;
 import lv.java2.shopping_list.services.user.get.GetUserService;
 import lv.java2.shopping_list.web.dto.UserDTO;
 import lv.java2.shopping_list.web.dto.mappers.UserMapper;
-import lv.java2.shopping_list.web.exceptions.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 import static junit.framework.TestCase.assertEquals;
@@ -49,7 +49,7 @@ public class GetUserServiceTest {
         when(repository.findById(id)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> getUserService.findById(id))
-                .isInstanceOf(ResourceNotFoundException.class)
+                .isInstanceOf(EntityNotFoundException.class)
                 .hasMessage("User with ID = 1 not found!");
 
     }
