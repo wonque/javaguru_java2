@@ -32,21 +32,21 @@ public class ControllerAdviceHandler {
     public ResponseEntity<ApiError> handleDuplicateResourceException(DuplicateResourceException ex) {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(buildApiErrorFromException(ex, HttpStatus.CONFLICT));
+                .body(buildApiErrorWithCustomMessage(ex.getMessage(), HttpStatus.CONFLICT));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiError> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(buildApiErrorFromException(ex, HttpStatus.BAD_REQUEST));
+                .body(buildApiErrorWithCustomMessage(ex.getMessage(), HttpStatus.BAD_REQUEST));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ApiError> handleEntityNotFoundException(EntityNotFoundException ex){
+    public ResponseEntity<ApiError> handleEntityNotFoundException(EntityNotFoundException ex) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
-                .body(buildApiErrorFromException(ex, HttpStatus.NOT_FOUND));
+                .body(buildApiErrorWithCustomMessage(ex.getMessage(), HttpStatus.NOT_FOUND));
     }
 
     private ApiError buildApiErrorFromFieldError(FieldError fieldError) {
@@ -56,8 +56,8 @@ public class ControllerAdviceHandler {
         return error;
     }
 
-    private ApiError buildApiErrorFromException(Exception ex, HttpStatus httpStatus) {
-        return new ApiError(ex.getMessage(), httpStatus.value(), httpStatus);
+    private ApiError buildApiErrorWithCustomMessage(String message, HttpStatus httpStatus) {
+        return new ApiError(message, httpStatus.value(), httpStatus);
     }
 
 }

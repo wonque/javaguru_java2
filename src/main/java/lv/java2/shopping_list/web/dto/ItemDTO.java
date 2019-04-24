@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class ItemDTO {
 
+    private Long id;
+    private Long listId;
     private String title;
     private String description;
     private Double price;
@@ -11,7 +13,8 @@ public class ItemDTO {
     public ItemDTO() {
     }
 
-    public ItemDTO(String title, String description, Double price) {
+    public ItemDTO(Long listId, String title, String description, Double price) {
+        this.listId = listId;
         this.title = title;
         this.description = description;
         this.price = price;
@@ -41,6 +44,22 @@ public class ItemDTO {
         this.price = price;
     }
 
+    public Long getListId() {
+        return listId;
+    }
+
+    public void setListId(Long listId) {
+        this.listId = listId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,11 +67,13 @@ public class ItemDTO {
         ItemDTO itemDTO = (ItemDTO) o;
         return Objects.equals(title, itemDTO.title) &&
                 Objects.equals(description, itemDTO.description) &&
-                Objects.equals(price, itemDTO.price);
+                Objects.equals(price, itemDTO.price)
+                && Objects.equals(id, itemDTO.id)
+                && Objects.equals(listId, itemDTO.listId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, price);
+        return Objects.hash(id, listId, title, description, price);
     }
 }

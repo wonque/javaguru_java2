@@ -27,4 +27,5 @@ public class ListNotExistsRule implements ShoppingListValidationRule {
     private boolean listNotPresent(ShoppingListDTO dto) {
         return !repository.findByUserIdAndListId(dto.getUserId(), dto.getId()).isPresent();
     }
+
 }
