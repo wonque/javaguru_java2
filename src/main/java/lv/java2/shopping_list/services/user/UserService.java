@@ -1,4 +1,4 @@
-package lv.java2.shopping_list.services.user.registration;
+package lv.java2.shopping_list.services.user;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.dto.UserDTO;
@@ -8,41 +8,46 @@ import lv.java2.shopping_list.services.user.validation.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
-public class UserRegistrationServiceImpl implements UserRegistrationService {
+public class UserService {
 
     private final UserRepository repository;
     private final UserMapper userMapper;
     private final UserValidationService validator;
 
     @Autowired
-    public UserRegistrationServiceImpl(UserRepository repository,
-                                       UserMapper userMapper,
-                                       UserValidationService validator) {
+    public UserService(UserRepository repository, UserMapper userMapper, UserValidationService validator) {
         this.repository = repository;
         this.userMapper = userMapper;
         this.validator = validator;
     }
 
-
-    @Transactional
     public UserDTO register(UserDTO userDTO) {
         validator.validate(userDTO);
 
-        String hashedPass = hashPassword(userDTO.getPassword());
-
         User user = userMapper.toDomain(userDTO);
-        user.setPassword(hashedPass);
+        user.setPassword(UserService.PasswordService.encodePass(userDTO));
 
         repository.save(user);
-
         return userMapper.toDTO(user);
     }
 
-    private String hashPassword(String userPassword) {
-        return BCrypt.hashpw(userPassword, BCrypt.gensalt());
+    public UserDTO findById(Long userId) {
+        Optional<User> foundedUser = repository.findById(userId);
+        return foundedUser.map(userMapper::toDTO)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("User not found, id: " + userId));
+    }
+
+    private static class PasswordService {
+
+        private static String encodePass(UserDTO userDTO) {
+            return BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt());
+        }
     }
 
 }

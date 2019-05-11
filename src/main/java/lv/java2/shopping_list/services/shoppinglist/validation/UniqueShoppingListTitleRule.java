@@ -1,8 +1,8 @@
 package lv.java2.shopping_list.services.shoppinglist.validation;
 
+import lv.java2.shopping_list.dto.ShoppingListDTO;
+import lv.java2.shopping_list.exceptions.DuplicateResourceException;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.web.dto.ShoppingListDTO;
-import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ public class UniqueShoppingListTitleRule implements ShoppingListValidationRule {
     private ShoppingListRepository repository;
 
     @Autowired
-    public UniqueShoppingListTitleRule(ShoppingListRepository repository) {
+    private UniqueShoppingListTitleRule(ShoppingListRepository repository) {
         this.repository = repository;
     }
 

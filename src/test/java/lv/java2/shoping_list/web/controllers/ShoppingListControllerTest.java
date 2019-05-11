@@ -2,12 +2,12 @@ package lv.java2.shoping_list.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lv.java2.shopping_list.ShoppingListApp;
+import lv.java2.shopping_list.controllers.ShoppingListController;
+import lv.java2.shopping_list.dto.ShoppingListDTO;
 import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
 import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
 import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
 import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
-import lv.java2.shopping_list.web.controllers.ShoppingListController;
-import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

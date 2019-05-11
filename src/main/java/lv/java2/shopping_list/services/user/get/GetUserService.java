@@ -1,9 +1,9 @@
 package lv.java2.shopping_list.services.user.get;
 
 import lv.java2.shopping_list.domain.User;
+import lv.java2.shopping_list.dto.UserDTO;
+import lv.java2.shopping_list.dto.mappers.UserMapper;
 import lv.java2.shopping_list.repository.UserRepository;
-import lv.java2.shopping_list.web.dto.UserDTO;
-import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

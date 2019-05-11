@@ -1,6 +1,5 @@
 package lv.java2.shopping_list.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -12,7 +11,7 @@ import java.util.Objects;
 public class User {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -20,11 +19,8 @@ public class User {
     private String email;
 
     @Column(name = "PASSWORD", nullable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    @Column(name = "USERNAME")
-    private String username;
 
     @CreationTimestamp
     @Column(name = "DATE_CREATED")
@@ -33,10 +29,9 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String username) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.username = username;
     }
 
     public Long getId() {
@@ -59,10 +54,6 @@ public class User {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -71,8 +62,8 @@ public class User {
         this.dateCreated = dateCreated;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -85,13 +76,12 @@ public class User {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (username != null ? !username.equals(user.username) : user.username != null) return false;
         return dateCreated != null ? dateCreated.equals(user.dateCreated) : user.dateCreated == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, username, dateCreated);
+        return Objects.hash(id, email, password, dateCreated);
     }
 
     @Override
@@ -100,7 +90,6 @@ public class User {
                 "id=" + id +
                 ", login='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", userName='" + username + '\'' +
                 ", dateCreated=" + dateCreated +
                 '}';
     }

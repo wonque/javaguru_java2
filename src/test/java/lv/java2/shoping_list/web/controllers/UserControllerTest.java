@@ -2,11 +2,11 @@ package lv.java2.shoping_list.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lv.java2.shopping_list.ShoppingListApp;
+import lv.java2.shopping_list.controllers.UserController;
+import lv.java2.shopping_list.dto.UserDTO;
+import lv.java2.shopping_list.dto.mappers.UserMapper;
 import lv.java2.shopping_list.services.user.get.GetUserService;
 import lv.java2.shopping_list.services.user.registration.UserRegistrationService;
-import lv.java2.shopping_list.web.controllers.UserController;
-import lv.java2.shopping_list.web.dto.UserDTO;
-import lv.java2.shopping_list.web.dto.mappers.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;

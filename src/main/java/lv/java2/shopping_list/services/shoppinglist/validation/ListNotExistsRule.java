@@ -1,7 +1,7 @@
 package lv.java2.shopping_list.services.shoppinglist.validation;
 
+import lv.java2.shopping_list.dto.ShoppingListDTO;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.web.dto.ShoppingListDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +13,7 @@ public class ListNotExistsRule implements ShoppingListValidationRule {
     private ShoppingListRepository repository;
 
     @Autowired
-    public ListNotExistsRule(ShoppingListRepository repository) {
+    private ListNotExistsRule(ShoppingListRepository repository) {
         this.repository = repository;
     }
 

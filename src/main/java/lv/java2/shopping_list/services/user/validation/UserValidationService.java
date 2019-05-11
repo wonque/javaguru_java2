@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.user.validation;
 
-import lv.java2.shopping_list.web.dto.UserDTO;
+import lv.java2.shopping_list.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

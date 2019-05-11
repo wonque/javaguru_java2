@@ -1,8 +1,8 @@
 package lv.java2.shopping_list.services.user.validation;
 
+import lv.java2.shopping_list.dto.UserDTO;
+import lv.java2.shopping_list.exceptions.DuplicateResourceException;
 import lv.java2.shopping_list.repository.UserRepository;
-import lv.java2.shopping_list.web.dto.UserDTO;
-import lv.java2.shopping_list.web.exceptions.DuplicateResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

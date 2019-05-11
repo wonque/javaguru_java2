@@ -1,6 +1,6 @@
 package lv.java2.shopping_list.services.shoppinglist.validation;
 
-import lv.java2.shopping_list.web.dto.ShoppingListDTO;
+import lv.java2.shopping_list.dto.ShoppingListDTO;
 
 public interface ShoppingListValidationRule {
 
