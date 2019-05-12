@@ -1,10 +1,9 @@
-package lv.java2.shoping_list.services.shoppinglist.update;
+package lv.java2.shopping_list.services.shoppinglist.update;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.dto.ShoppingListDTO;
 import lv.java2.shopping_list.dto.mappers.ShoppingListMapper;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
 import lv.java2.shopping_list.services.shoppinglist.validation.ShoppingListValidationService;
 import org.junit.Before;
 import org.junit.Test;

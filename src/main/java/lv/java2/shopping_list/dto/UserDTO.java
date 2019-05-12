@@ -3,8 +3,12 @@ package lv.java2.shopping_list.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lv.java2.shopping_list.controllers.validation.CreateEntity;
 import lv.java2.shopping_list.controllers.validation.UpdateEntity;
+import lv.java2.shopping_list.dto.validation.UserEmailCostraint;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
@@ -15,8 +19,7 @@ public class UserDTO {
     @Null(groups = CreateEntity.class)
     private Long userId;
 
-    @NotBlank(groups = CreateEntity.class, message = "This field cannot be blank")
-    @Email(regexp = ".+@.+\\..+", message = "Please provide a valid email address")
+    @UserEmailCostraint(groups = {CreateEntity.class, UpdateEntity.class})
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

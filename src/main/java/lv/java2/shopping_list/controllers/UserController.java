@@ -3,9 +3,6 @@ package lv.java2.shopping_list.controllers;
 import lv.java2.shopping_list.controllers.validation.CreateEntity;
 import lv.java2.shopping_list.dto.UserDTO;
 import lv.java2.shopping_list.services.user.UserService;
-import lv.java2.shopping_list.services.user.get.GetUserService;
-import lv.java2.shopping_list.services.user.registration.UserRegistrationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +15,6 @@ import java.net.URI;
 @RestController
 public class UserController {
 
-    @Autowired
-    private UserRegistrationService registrationService;
-
-    @Autowired
-    private GetUserService getUserService;
 
     private UserService userService;
 
@@ -49,9 +41,7 @@ public class UserController {
     }
 
     private URI buildLocationUri(Long userId) {
-        return UriComponentsBuilder.newInstance().scheme("http")
-                .host("localhost")
-                .port("8080")
-                .path("/users/{userId}").buildAndExpand(userId).toUri();
+        return UriComponentsBuilder.newInstance().path("/users/{userId}").buildAndExpand(userId).toUri();
+
     }
 }

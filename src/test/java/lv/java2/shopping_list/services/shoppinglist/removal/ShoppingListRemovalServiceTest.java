@@ -1,9 +1,8 @@
-package lv.java2.shoping_list.services.shoppinglist.removal;
+package lv.java2.shopping_list.services.shoppinglist.removal;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.dto.ShoppingListDTO;
 import lv.java2.shopping_list.repository.ShoppingListRepository;
-import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,10 +1,9 @@
-package lv.java2.shoping_list.services.user;
+package lv.java2.shopping_list.services.user;
 
 import lv.java2.shopping_list.domain.User;
 import lv.java2.shopping_list.dto.UserDTO;
 import lv.java2.shopping_list.dto.mappers.UserMapper;
 import lv.java2.shopping_list.repository.UserRepository;
-import lv.java2.shopping_list.services.user.UserService;
 import lv.java2.shopping_list.services.user.validation.UserValidationService;
 import org.junit.Before;
 import org.junit.Test;

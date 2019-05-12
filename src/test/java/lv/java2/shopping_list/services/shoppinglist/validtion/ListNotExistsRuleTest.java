@@ -1,4 +1,4 @@
-package lv.java2.shoping_list.services.shoppinglist.validtion;
+package lv.java2.shopping_list.services.shoppinglist.validtion;
 
 import lv.java2.shopping_list.domain.ShoppingList;
 import lv.java2.shopping_list.dto.ShoppingListDTO;

@@ -8,6 +8,7 @@ import lv.java2.shopping_list.services.user.validation.UserValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -26,6 +27,7 @@ public class UserService {
         this.validator = validator;
     }
 
+    @Transactional
     public UserDTO register(UserDTO userDTO) {
         validator.validate(userDTO);
 
