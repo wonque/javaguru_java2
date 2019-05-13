@@ -20,9 +20,7 @@ public class UserNotExistsRule implements ShoppingListValidationRule {
     @Override
     public void validate(ShoppingListDTO dto) {
         if (!userRepository.existsById(dto.getUserId())) {
-            String message = String.format("User with id = %s not found!", dto.getUserId());
-            throw new EntityNotFoundException(message);
+            throw new EntityNotFoundException("User not exists, id: " + dto.getUserId());
         }
-
     }
 }

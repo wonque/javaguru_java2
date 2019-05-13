@@ -3,10 +3,7 @@ package lv.java2.shopping_list.controllers;
 import lv.java2.shopping_list.controllers.validation.CreateEntity;
 import lv.java2.shopping_list.controllers.validation.UpdateEntity;
 import lv.java2.shopping_list.dto.ShoppingListDTO;
-import lv.java2.shopping_list.services.shoppinglist.addition.ShoppingListAdditionService;
-import lv.java2.shopping_list.services.shoppinglist.get.GetShoppingListService;
-import lv.java2.shopping_list.services.shoppinglist.removal.ShoppingListRemovalService;
-import lv.java2.shopping_list.services.shoppinglist.update.ShoppingListUpdateService;
+import lv.java2.shopping_list.services.shoppinglist.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +19,13 @@ import java.util.List;
 public class ShoppingListController {
 
     @Autowired
-    private GetShoppingListService getListService;
-    @Autowired
-    private ShoppingListAdditionService additionService;
-    @Autowired
-    private ShoppingListRemovalService removalService;
-    @Autowired
-    private ShoppingListUpdateService updateService;
+    private ShoppingListService service;
 
 
     @GetMapping
     public ResponseEntity getAllLists(@PathVariable("userId") Long userId) {
 
-        List<ShoppingListDTO> response = getListService.getAllByUserId(userId);
+        List<ShoppingListDTO> response = service.getAllByUserId(userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -44,7 +35,7 @@ public class ShoppingListController {
             @PathVariable("userId") Long userId,
             @PathVariable("listId") Long listId) {
 
-        ShoppingListDTO response = getListService.getSingleById(userId, listId);
+        ShoppingListDTO response = service.getSingleList(userId, listId);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -55,7 +46,7 @@ public class ShoppingListController {
 
         shoppingListDTO.setUserId(userId);
 
-        ShoppingListDTO response = additionService.addList(shoppingListDTO);
+        ShoppingListDTO response = service.create(shoppingListDTO);
         URI selfLocation = buildLocationUri(response.getId());
 
         return ResponseEntity.status(HttpStatus.CREATED).location(selfLocation).body(response);
@@ -70,7 +61,7 @@ public class ShoppingListController {
         shoppingListDTO.setUserId(userId);
         shoppingListDTO.setId(listId);
 
-        ShoppingListDTO response = updateService.update(shoppingListDTO);
+        ShoppingListDTO response = service.update(shoppingListDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -83,7 +74,7 @@ public class ShoppingListController {
         requestDTO.setId(listId);
         requestDTO.setUserId(userId);
 
-        removalService.removeById(requestDTO);
+        service.removeById(requestDTO);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

@@ -25,13 +25,13 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     @Mock
-    public UserRepository repository;
+    private UserRepository repository;
 
     @Mock
-    public UserMapper mapper;
+    private UserMapper mapper;
 
     @Mock
-    public UserValidationService validator;
+    private UserValidationService validator;
 
     @Captor
     ArgumentCaptor<UserDTO> userCaptor;
