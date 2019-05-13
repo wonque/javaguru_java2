@@ -15,8 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -41,21 +40,14 @@ public class ShoppingListControllerIT {
     @Test
     public void shouldCreate() throws Exception {
 
-        mockMvc.perform(post("/users/1/lists")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(shoppingListJsonObject()))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("Location", Matchers.endsWith("/lists/1")));
+        performPostList();
+
     }
 
     @Test
     public void shouldFindByUserIdAndListId() throws Exception {
 
-        mockMvc.perform(post("/users/1/lists")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(shoppingListJsonObject()))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("Location", Matchers.endsWith("/lists/1")));
+        performPostList();
 
         mockMvc.perform(get("/users/1/lists/1"))
                 .andExpect(status().isOk())
@@ -69,16 +61,33 @@ public class ShoppingListControllerIT {
     @Test
     public void shouldGetAllByUserId() throws Exception {
 
-        mockMvc.perform(post("/users/1/lists")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(shoppingListJsonObject()))
-                .andExpect(status().isCreated())
-                .andExpect(header().string("Location", Matchers.endsWith("/lists/1")));
+        performPostList();
 
         mockMvc.perform(get("/users/1/lists/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(1L));
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].title").value("TEST_TITLE"))
+                .andExpect(jsonPath("$[0].category").value("TEST_CATEGORY"));
+
+    }
+
+    @Test
+    public void shouldUpdate() throws Exception {
+
+        performPostList();
+
+        mockMvc.perform(put("/users/1/lists/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(updatedShoppingListJsonObject()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.title").value("UPDATED_TITLE"))
+                .andExpect(jsonPath("$.category").value("UPDATED_CATEGORY"));
+    }
+
+    @Test
+    public void shouldDelete() throws Exception {
 
     }
 
@@ -88,10 +97,27 @@ public class ShoppingListControllerIT {
                 .toString();
     }
 
-    private String userJsonObject() throws JSONException {
+    private String updatedShoppingListJsonObject() throws JSONException {
+        return new JSONObject().put("id", "1")
+                .put("title", "UPDATED_TITLE")
+                .put("category", "UPDATED_CATEGORY")
+                .toString();
+    }
+
+    public String userJsonObject() throws JSONException {
         return new JSONObject().put("email", "TEST@EMAIL.COM")
                 .put("password", "TESTPASSWORD123")
                 .toString();
+    }
+
+    private void performPostList() throws Exception {
+
+        mockMvc.perform(post("/users/1/lists")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(shoppingListJsonObject()))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", Matchers.endsWith("/lists/1")));
+
     }
 
 }
